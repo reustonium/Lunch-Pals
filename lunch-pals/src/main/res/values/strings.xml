@@ -3,5 +3,13 @@
 
     <string name="app_name">Lunch Pals</string>
     <string name="title_activity_main">Lunch Pals</string>
+    <string name="title_activity_home">HomeActivity</string>
+
+    <string name="title_section1">Home</string>
+    <string name="title_section2">Locations</string>
+    <string name="title_section3">Results</string>
+<!--
+    <string name="action_settings">Settings</string>
+-->
 
 </resources>
