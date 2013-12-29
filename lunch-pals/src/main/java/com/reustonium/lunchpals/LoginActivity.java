@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +15,11 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.parse.Parse;
+import com.parse.ParseAnalytics;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -44,6 +50,7 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
+        ParseAnalytics.trackAppOpened(getIntent());
 
         // Set up the login form.
         mUsername = getIntent().getStringExtra(EXTRA_USERNAME);
@@ -237,6 +244,16 @@ public class LoginActivity extends Activity {
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: Login the existing account here.
+            try {
+                ParseUser user = new ParseUser();
+                user.logIn(mUsername, mPassword);
+
+                //TODO make sure the user is really logged in, something is fucky
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             return true;
         }
 
@@ -264,6 +281,16 @@ public class LoginActivity extends Activity {
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: register the new account here.
+            ParseUser user = new ParseUser();
+            try {
+                user.setUsername(mUsername);
+                user.setPassword(mPassword);
+                user.signUp();
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             return true;
         }
 
@@ -275,7 +302,7 @@ public class LoginActivity extends Activity {
             if (success) {
                 finish();
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
+                mPasswordView.setError(getString(R.string.error_username_taken));
                 mPasswordView.requestFocus();
             }
         }

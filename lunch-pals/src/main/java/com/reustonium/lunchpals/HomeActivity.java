@@ -2,6 +2,7 @@ package com.reustonium.lunchpals;
 
 import java.util.Locale;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.parse.ParseAnalytics;
+import com.parse.ParseUser;
 
 public class HomeActivity extends ActionBarActivity implements ActionBar.TabListener {
 
@@ -38,7 +42,9 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_home);
+        ParseAnalytics.trackAppOpened(getIntent());
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -158,9 +164,13 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_home, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
+            if(ParseUser.getCurrentUser() != null){
+                textView.setText("HI PAL: " + ParseUser.getCurrentUser().getUsername().toString());
+            } else {
+                textView.setText("HI STRANGER: ");// + ParseUser.getCurrentUser().getUsername().toString());
+            }
+
             return rootView;
         }
     }
-
 }
