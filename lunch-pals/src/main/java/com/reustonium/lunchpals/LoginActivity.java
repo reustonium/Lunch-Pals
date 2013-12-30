@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,10 +15,11 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.parse.Parse;
+import com.parse.LogInCallback;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -28,18 +28,13 @@ import com.parse.ParseUser;
 public class LoginActivity extends Activity {
 
     private static final String EXTRA_USERNAME = "Username";
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-    private UserLoginTask mLoginTask = null;
-    private UserRegisterTask mRegisterTask = null;
 
     // Values for email and password at the time of the login attempt.
     private String mUsername;
     private String mPassword;
 
     // UI references.
-    private EditText mEmailView;
+    private EditText mUsernameView;
     private EditText mPasswordView;
     private View mLoginFormView;
     private View mLoginStatusView;
@@ -54,8 +49,8 @@ public class LoginActivity extends Activity {
 
         // Set up the login form.
         mUsername = getIntent().getStringExtra(EXTRA_USERNAME);
-        mEmailView = (EditText) findViewById(R.id.email);
-        mEmailView.setText(mUsername);
+        mUsernameView = (EditText) findViewById(R.id.email);
+        mUsernameView.setText(mUsername);
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -101,16 +96,13 @@ public class LoginActivity extends Activity {
      * errors are presented and no actual login attempt is made.
      */
     public void attemptLogin() {
-        if (mLoginTask != null) {
-            return;
-        }
 
         // Reset errors.
-        mEmailView.setError(null);
+        mUsernameView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        mUsername = mEmailView.getText().toString();
+        mUsername = mUsernameView.getText().toString();
         mPassword = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -127,10 +119,10 @@ public class LoginActivity extends Activity {
             cancel = true;
         }
 
-        // Check for a valid email address.
+        // Check for a valid username
         if (TextUtils.isEmpty(mUsername)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
+            mUsernameView.setError(getString(R.string.error_field_required));
+            focusView = mUsernameView;
             cancel = true;
         }
 
@@ -143,22 +135,36 @@ public class LoginActivity extends Activity {
             // perform the user login attempt.
             mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
             showProgress(true);
-            mLoginTask = new UserLoginTask();
-            mLoginTask.execute((Void) null);
+
+            //TODO Login
+            ParseUser.logInInBackground(mUsername, mPassword, new LogInCallback() {
+                @Override
+                public void done(ParseUser parseUser, ParseException e) {
+                    if(parseUser !=null){
+                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        startActivity(intent);
+                    }
+                    if(e!=null){
+                        e.printStackTrace();
+                        showProgress(false);
+                        mPasswordView.setError(getString(R.string.error_incorrect_password));
+                        mPasswordView.requestFocus();
+                    }
+                }
+            });
+            //mLoginTask = new UserLoginTask();
+            //mLoginTask.execute((Void) null);
         }
     }
 
     public void attemptRegister() {
-        if (mRegisterTask != null) {
-            return;
-        }
 
         // Reset errors.
-        mEmailView.setError(null);
+        mUsernameView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        mUsername = mEmailView.getText().toString();
+        mUsername = mUsernameView.getText().toString();
         mPassword = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -177,8 +183,8 @@ public class LoginActivity extends Activity {
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(mUsername)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
+            mUsernameView.setError(getString(R.string.error_field_required));
+            focusView = mUsernameView;
             cancel = true;
         }
 
@@ -191,8 +197,26 @@ public class LoginActivity extends Activity {
             // perform the user login attempt.
             mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
             showProgress(true);
-            mRegisterTask = new UserRegisterTask();
-            mRegisterTask.execute((Void) null);
+
+            ParseUser user = new ParseUser();
+            user.setUsername(mUsername);
+            user.setPassword(mPassword);
+            user.signUpInBackground(new SignUpCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if(e==null){
+                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        startActivity(intent);
+                    } else{
+                        e.printStackTrace();
+                        showProgress(false);
+                        mUsernameView.setError(getString(R.string.error_username_taken));
+                        mUsernameView.requestFocus();
+                    }
+                }
+            });
+            //mRegisterTask = new UserRegisterTask();
+            //mRegisterTask.execute((Void) null);
         }
     }
 
@@ -233,84 +257,6 @@ public class LoginActivity extends Activity {
             // and hide the relevant UI components.
             mLoginStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
-
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: Login the existing account here.
-            try {
-                ParseUser user = new ParseUser();
-                user.logIn(mUsername, mPassword);
-
-                //TODO make sure the user is really logged in, something is fucky
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                startActivity(intent);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mLoginTask = null;
-            showProgress(false);
-
-            if (success) {
-                finish();
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mLoginTask = null;
-            showProgress(false);
-        }
-    }
-
-    public class UserRegisterTask extends AsyncTask<Void, Void, Boolean> {
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: register the new account here.
-            ParseUser user = new ParseUser();
-            try {
-                user.setUsername(mUsername);
-                user.setPassword(mPassword);
-                user.signUp();
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                startActivity(intent);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mRegisterTask = null;
-            showProgress(false);
-
-            if (success) {
-                finish();
-            } else {
-                mPasswordView.setError(getString(R.string.error_username_taken));
-                mPasswordView.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mRegisterTask = null;
-            showProgress(false);
         }
     }
 }
