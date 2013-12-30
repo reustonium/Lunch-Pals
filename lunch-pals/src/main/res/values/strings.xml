@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Lunch Pals</string>
-    <string name="title_section1">Home</string>
+    <string name="app_name">LunchPals</string>
+    <string name="title_section1">Status</string>
     <string name="title_section2">Locations</string>
     <string name="title_section3">Results</string>
     <string name="error_username_taken">Error - Username already taken</string>
-    <string name="title_activity_facade">FacadeActivity</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
 </resources>

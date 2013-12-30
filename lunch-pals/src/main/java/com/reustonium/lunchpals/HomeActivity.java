@@ -3,6 +3,7 @@ package com.reustonium.lunchpals;
 import java.util.Locale;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -22,7 +23,7 @@ import android.widget.TextView;
 import com.parse.ParseAnalytics;
 import com.parse.ParseUser;
 
-public class HomeActivity extends ActionBarActivity implements ActionBar.TabListener {
+public class HomeActivity extends ActionBarActivity implements ActionBar.TabListener,StatusFragment.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -96,6 +97,15 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    public void onUpdateStatus(View view){
+
+    }
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -108,9 +118,15 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            switch(position){
+                case 0:
+                    return new StatusFragment();
+                case 1:
+                    return new StatusFragment();
+                case 2:
+                    return new StatusFragment();
+            }
+            return new StatusFragment();
         }
 
         @Override
@@ -131,46 +147,6 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
                     return getString(R.string.title_section3).toUpperCase(l);
             }
             return null;
-        }
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            if(ParseUser.getCurrentUser() != null){
-                textView.setText("HI PAL: " + ParseUser.getCurrentUser().getUsername().toString());
-            } else {
-                textView.setText("HI STRANGER: ");// + ParseUser.getCurrentUser().getUsername().toString());
-            }
-
-            return rootView;
         }
     }
 }
