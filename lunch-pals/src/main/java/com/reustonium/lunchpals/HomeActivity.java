@@ -102,10 +102,6 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
 
     }
 
-    public void onUpdateStatus(View view){
-
-    }
-
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -122,7 +118,7 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
                 case 0:
                     return new StatusFragment();
                 case 1:
-                    return new StatusFragment();
+                    return new LocationsFragment();
                 case 2:
                     return new StatusFragment();
             }

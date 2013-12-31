@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.parse.Parse;
 import com.parse.ParseAnalytics;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 /**
@@ -20,8 +21,6 @@ public class LunchPalsApplication extends Application{
         Parse.initialize(this, AppConsts.APPID, AppConsts.CLIENTKEY);
 
         ParseUser user = ParseUser.getCurrentUser();
-        user.logOut();
-        user = null;
 
         if(user!=null){
             intent = new Intent(getApplicationContext(), HomeActivity.class);

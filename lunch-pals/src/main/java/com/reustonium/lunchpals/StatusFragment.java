@@ -7,8 +7,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.ToggleButton;
+import android.widget.Toast;
+
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.SaveCallback;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 
 /**
@@ -31,7 +40,9 @@ public class StatusFragment extends Fragment {
     private String mParam2;
 
     TextView statusDate;
-    ToggleButton tButton;
+    Switch tButton;
+    ParseObject status;
+    String date;
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,11 +75,7 @@ public class StatusFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
-
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,12 +84,42 @@ public class StatusFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_status, container, false);
 
         statusDate = (TextView) v.findViewById(R.id.text_status_date);
-        tButton = (ToggleButton)v.findViewById(R.id.toggle_status);
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("EEEE MMMM dd");
+        date = df.format(c.getTime());
+        statusDate.setText(date);
+
+        tButton = (Switch) v.findViewById(R.id.toggle_status);
+        tButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                ParseObject status = new ParseObject("status");
+                status.put("date", date);
+                status.put("haz?", b);
+
+                try {
+                    status.save();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                String msg;
+                if(b){
+                    msg = "Awesome!";
+                } else {
+                    msg = "LAME!";
+                }
+                Toast toast = Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+
         return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void onUpdateStatus(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }

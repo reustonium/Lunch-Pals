@@ -16,27 +16,26 @@
             android:gravity="center"
             android:text="Hi Pal! Do you haz pangs?" />
     <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="125dp">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/text_status_date"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="30dp"
             android:gravity="center"
             android:layout_alignParentLeft="true"/>
-        <ToggleButton
+        <Switch
             android:id="@+id/toggle_status"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="30dp"
             android:paddingLeft="25dp"
             android:paddingRight="25dp"
             android:layout_alignParentRight="true"
-            android:textOn="Haz!"
-            android:textOff="No Haz"
-            android:onClick="onUpdateStatus"/>
+            android:textOn="HAZ!"
+            android:textOff="NO"/>
 
     </RelativeLayout>
 
