@@ -32,6 +32,7 @@ public class LocationsFragment extends Fragment {
     private String mParam2;
 
     ListView listLocations;
+    TextView addNewLocation;
 
     /**
      * Use this factory method to create a new instance of
@@ -69,12 +70,21 @@ public class LocationsFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_locations, container, false);
 
-        //ParseQueryAdapter<ParseObject> adapter = new ParseQueryAdapter<ParseObject>(getActivity().getApplicationContext(), "Location" );
         MyAdapter adapter = new MyAdapter(getActivity().getApplicationContext(), "Location");
         adapter.setTextKey("name");
 
         listLocations = (ListView) v.findViewById(R.id.list_locations);
         listLocations.setAdapter(adapter);
+
+        addNewLocation = (TextView) v.findViewById(R.id.textView_AddLocation);
+        addNewLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO New DialogFragment for Adding a Location
+                AddLocationDialog addLocale = new AddLocationDialog();
+                addLocale.show(getActivity().getFragmentManager(), "dialog");
+            }
+        });
         return v;
     }
 
@@ -90,10 +100,10 @@ public class LocationsFragment extends Fragment {
         @Override
         public View getItemView(ParseObject object, View v, ViewGroup parent) {
             if (v == null) {
-                v = View.inflate(this.context, R.layout.test, null);
+                v = View.inflate(this.context, R.layout.location_listitem, null);
             }
 
-            TextView textView = (TextView) v.findViewById(R.id.textView);
+            TextView textView = (TextView) v.findViewById(R.id.textView_LocationItem);
             textView.setText(object.get("name").toString());
             return v;
         }

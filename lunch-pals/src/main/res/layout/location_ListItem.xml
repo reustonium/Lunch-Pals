@@ -11,5 +11,5 @@
         android:text="Large Text"
         android:gravity="center"
         android:textColor="@android:color/holo_blue_dark"
-        android:id="@+id/textView" />
+        android:id="@+id/textView_LocationItem" />
 </LinearLayout>

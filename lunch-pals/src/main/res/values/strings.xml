@@ -6,7 +6,6 @@
     <string name="title_section2">Locations</string>
     <string name="title_section3">Results</string>
     <string name="error_username_taken">Error - Username already taken</string>
-    <string name="action_settings">Settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
