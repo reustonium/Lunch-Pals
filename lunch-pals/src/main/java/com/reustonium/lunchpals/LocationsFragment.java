@@ -70,7 +70,7 @@ public class LocationsFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_locations, container, false);
 
-        MyAdapter adapter = new MyAdapter(getActivity().getApplicationContext(), "Location");
+        final MyAdapter adapter = new MyAdapter(getActivity().getApplicationContext(), "Location");
         adapter.setTextKey("name");
 
         listLocations = (ListView) v.findViewById(R.id.list_locations);
@@ -80,9 +80,10 @@ public class LocationsFragment extends Fragment {
         addNewLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO New DialogFragment for Adding a Location
+
                 AddLocationDialog addLocale = new AddLocationDialog();
                 addLocale.show(getActivity().getFragmentManager(), "dialog");
+                adapter.notifyDataSetChanged();
             }
         });
         return v;
