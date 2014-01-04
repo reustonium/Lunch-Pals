@@ -7,9 +7,13 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.EditText;
 
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.SaveCallback;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import java.util.List;
 
 /**
  * Created by Andrew on 1/1/14.
@@ -17,6 +21,7 @@ import com.parse.SaveCallback;
 public class AddLocationDialog extends DialogFragment {
 
     public Dialog onCreateDialog(Bundle savedInstanceState){
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Add New Location");
         final EditText editText = new EditText(getActivity());
@@ -25,10 +30,25 @@ public class AddLocationDialog extends DialogFragment {
         builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                ParseObject location = new ParseObject("Location");
 
-                location.put("name", editText.getText().toString());
-                location.saveInBackground();
+                //TODO check if name is unique
+                ParseQuery<ParseObject> nameQuery = ParseQuery.getQuery("Location");
+                nameQuery.whereEqualTo("name", editText.getText().toString());
+                nameQuery.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> parseObjects, ParseException e) {
+                        if (parseObjects.size() > 0 || editText.getText().toString().length() < 1) {
+                            return;
+                        } else {
+                            ParseObject location = new ParseObject("Location");
+
+                            location.put("name", editText.getText().toString());
+                            location.put("createdBy", ParseUser.getCurrentUser());
+                            location.saveInBackground();
+                        }
+                    }
+                });
+
                 return;
             }
         });
