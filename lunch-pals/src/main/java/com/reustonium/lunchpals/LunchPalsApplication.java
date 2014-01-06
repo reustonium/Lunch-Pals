@@ -4,8 +4,6 @@ import android.app.Application;
 import android.content.Intent;
 
 import com.parse.Parse;
-import com.parse.ParseAnalytics;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 /**
