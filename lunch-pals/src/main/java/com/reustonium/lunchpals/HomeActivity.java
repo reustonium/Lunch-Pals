@@ -2,8 +2,8 @@ package com.reustonium.lunchpals;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +18,10 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 public class HomeActivity extends Activity {
 
@@ -44,30 +40,32 @@ public class HomeActivity extends Activity {
     public static class PlaceholderFragment extends Fragment {
 
         public PlaceholderFragment() {
+
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
+
+            ParseQuery<ParseUser> query = ParseUser.getQuery();
+            
+            //Setup View
             final View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-
-            // Set Greeting
-            final ParseUser user = ParseUser.getCurrentUser();
-
-            TextView textView = (TextView) rootView.findViewById(R.id.textView_greeting);
-            String greeting = String.format("Hi Pal! Do you haz pangs today %s?", user.getUsername());
-            textView.setText(greeting);
-
-            // Setup Switch - Pull current status if already set
+            final ListView listView = (ListView) rootView.findViewById(R.id.listView_palsList);
             final Switch mSwitch = (Switch) rootView.findViewById(R.id.switch_hazPangs);
+            TextView textView = (TextView) rootView.findViewById(R.id.textView_greeting);
+
+            // Get User Stuffz
+            final ParseUser user = ParseUser.getCurrentUser();
             user.fetchInBackground(new GetCallback<ParseObject>() {
                 @Override
                 public void done(ParseObject parseObject, ParseException e) {
                     mSwitch.setChecked(user.getBoolean("hazPangs"));
                 }
             });
-
-            // Setup Switch to default to false
+            
+            // Set Greeting
+            textView.setText(String.format("Hi Pal! Do you haz pangs today %s?", user.getUsername()));
 
             // Handle Switch OnClick
             mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -79,21 +77,45 @@ public class HomeActivity extends Activity {
             });
 
             // Setup Listview
-            ParseQuery<ParseUser> query = ParseUser.getQuery();
+
             query.findInBackground(new FindCallback<ParseUser>() {
                 @Override
                 public void done(List<ParseUser> parseUsers, ParseException e) {
-                    List<String> usernames = new ArrayList<String>();
+                    List<ParseUser> users = new ArrayList<ParseUser>();
                     for(ParseUser user : parseUsers){
-                        usernames.add(user.getUsername());
+                        users.add(user);
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, usernames);
-                    ListView listView = (ListView) rootView.findViewById(R.id.listView_palsList);
-                    listView.setAdapter(adapter);
+                    ParseUser[] usersArray = users.toArray(new ParseUser[users.size()]);
+                    listView.setAdapter(new HazPangsAdapter(getActivity(), usersArray));
                 }
             });
 
             return rootView;
+        }
+
+        class HazPangsAdapter extends ArrayAdapter<ParseUser>{
+            private ParseUser[] users;
+
+            public HazPangsAdapter(Context context, ParseUser[] users){
+                super(context, R.layout.fragment_home_row,R.id.frag_home_username ,users);
+                this.users = users;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View row = super.getView(position, convertView, parent);
+
+                TextView username = (TextView)row.findViewById(R.id.frag_home_username);
+                TextView hazPangs = (TextView)row.findViewById(R.id.frag_home_hazPang);
+
+                username.setText(users[position].getUsername());
+                if(users[position].getBoolean("hazPangs")){
+                    hazPangs.setText("HAZ!");
+                } else {
+                    hazPangs.setText("No Haz");
+                }
+                return row;
+            }
         }
     }
 
