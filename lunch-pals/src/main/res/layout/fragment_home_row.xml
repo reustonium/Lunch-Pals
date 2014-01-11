@@ -1,19 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="10dp">
 
-    <TextView
-        android:id="@+id/frag_home_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/frag_home_indicator"
+        android:layout_width="60dp"
+        android:layout_height="fill_parent"
+        android:padding="5dp"
+        android:src="@android:drawable/presence_online"
         android:layout_alignParentLeft="true"
-        android:textSize="24sp"/>
-    <TextView
-        android:id="@+id/frag_home_hazPang"
+        android:adjustViewBounds="true"/>
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:textSize="24sp"/>
-</RelativeLayout>
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:padding="5dp">
+        <TextView
+            android:id="@+id/frag_home_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:text="Andy"/>
+        <TextView
+            android:id="@+id/frag_home_updatedAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Updated at: Jan 11th 4:00pm"
+            android:textSize="14sp"/>
+
+        </LinearLayout>
+
+</LinearLayout>

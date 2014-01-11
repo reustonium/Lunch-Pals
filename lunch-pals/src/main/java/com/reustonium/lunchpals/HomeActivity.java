@@ -9,18 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
+import java.util.Date;
 
-import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends Activity {
@@ -46,8 +46,6 @@ public class HomeActivity extends Activity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-
-            ParseQuery<ParseUser> query = ParseUser.getQuery();
             
             //Setup View
             final View rootView = inflater.inflate(R.layout.fragment_home, container, false);
@@ -57,6 +55,7 @@ public class HomeActivity extends Activity {
 
             // Get User Stuffz
             final ParseUser user = ParseUser.getCurrentUser();
+
             user.fetchInBackground(new GetCallback<ParseObject>() {
                 @Override
                 public void done(ParseObject parseObject, ParseException e) {
@@ -72,25 +71,37 @@ public class HomeActivity extends Activity {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     user.put("hazPangs", b);
-                    user.saveInBackground();
+                    user.put("pangsUpdatedAt", new Date());
+                    try {
+                        user.save();
+                        listView.setAdapter(new HazPangsAdapter(getActivity(), GetUsers()));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    //TODO update data for ListView
+
                 }
             });
 
             // Setup Listview
-
-            query.findInBackground(new FindCallback<ParseUser>() {
-                @Override
-                public void done(List<ParseUser> parseUsers, ParseException e) {
-                    List<ParseUser> users = new ArrayList<ParseUser>();
-                    for(ParseUser user : parseUsers){
-                        users.add(user);
-                    }
-                    ParseUser[] usersArray = users.toArray(new ParseUser[users.size()]);
-                    listView.setAdapter(new HazPangsAdapter(getActivity(), usersArray));
-                }
-            });
+            listView.setAdapter(new HazPangsAdapter(getActivity(), GetUsers()));
 
             return rootView;
+        }
+
+        private ParseUser[] GetUsers(){
+
+            final ParseQuery<ParseUser> query = ParseUser.getQuery();
+            ParseUser[] usersArray;
+
+            try {
+                List<ParseUser> users = query.find();
+                usersArray = users.toArray(new ParseUser[users.size()]);
+            } catch (ParseException e) {
+                usersArray = null;
+                e.printStackTrace();
+            }
+            return usersArray;
         }
 
         class HazPangsAdapter extends ArrayAdapter<ParseUser>{
@@ -106,13 +117,16 @@ public class HomeActivity extends Activity {
                 View row = super.getView(position, convertView, parent);
 
                 TextView username = (TextView)row.findViewById(R.id.frag_home_username);
-                TextView hazPangs = (TextView)row.findViewById(R.id.frag_home_hazPang);
+                TextView updatedAt = (TextView)row.findViewById(R.id.frag_home_updatedAt);
+                ImageView indicator = (ImageView)row.findViewById(R.id.frag_home_indicator);
 
                 username.setText(users[position].getUsername());
+                updatedAt.setText(users[position].getDate("pangsUpdatedAt").toString());
+
                 if(users[position].getBoolean("hazPangs")){
-                    hazPangs.setText("HAZ!");
+                    indicator.setImageResource(android.R.drawable.presence_online);
                 } else {
-                    hazPangs.setText("No Haz");
+                    indicator.setImageResource(android.R.drawable.presence_busy);
                 }
                 return row;
             }
