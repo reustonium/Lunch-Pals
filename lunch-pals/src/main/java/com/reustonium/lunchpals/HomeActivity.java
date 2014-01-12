@@ -1,8 +1,10 @@
 package com.reustonium.lunchpals;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -36,7 +38,8 @@ public class HomeActivity extends Activity {
 
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    //.add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, new PlaceholderFragment(), "mFragment")
                     .commit();
         }
     }
@@ -57,7 +60,25 @@ public class HomeActivity extends Activity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 return true;
+            case R.id.home_ab_about:
+                new AlertDialog.Builder(this)
+                        .setTitle("About LunchPals")
+                        .setMessage("Alpha Release 0.2.2")
+                        .setPositiveButton("Thanks Pal!", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        })
+                        .show();
+                return true;
 
+            case R.id.home_ab_refresh:
+                //TODO Update users
+                PlaceholderFragment pFrag = (PlaceholderFragment) getFragmentManager().findFragmentByTag("mFragment");
+                pFrag.users = pFrag.GetUsers();
+                //TODO Update ListView
+                pFrag.mAdapter.notifyDataSetChanged();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
