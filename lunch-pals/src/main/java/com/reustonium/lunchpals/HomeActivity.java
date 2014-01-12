@@ -56,15 +56,16 @@ public class HomeActivity extends Activity {
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
-
-}
+    }
 
     public static class PlaceholderFragment extends Fragment {
+        ParseUser[] users;
+        HazPangsAdapter mAdapter;
 
         public PlaceholderFragment() {
 
@@ -73,7 +74,10 @@ public class HomeActivity extends Activity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            
+
+            users = GetUsers();
+            mAdapter = new HazPangsAdapter(getActivity(), users);
+
             //Setup View
             final View rootView = inflater.inflate(R.layout.fragment_home, container, false);
             final ListView listView = (ListView) rootView.findViewById(R.id.listView_palsList);
@@ -95,31 +99,23 @@ public class HomeActivity extends Activity {
             textView.setText(String.format("Hi Pal! Do you haz pangs today %s?", user.getUsername()));
             userText.setText(user.getUsername());
 
+            // Setup Listview
+            listView.setAdapter(mAdapter);
+
             // Handle Switch OnClick
             mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     user.put("hazPangs", b);
                     user.put("pangsUpdatedAt", new Date());
-                    try {
-                        user.save();
-                        listView.setAdapter(new HazPangsAdapter(getActivity(), GetUsers()));
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    //TODO update data for ListView
-
+                    user.saveInBackground();
                 }
             });
-
-            // Setup Listview
-            listView.setAdapter(new HazPangsAdapter(getActivity(), GetUsers()));
 
             return rootView;
         }
 
         private ParseUser[] GetUsers(){
-
             final ParseQuery<ParseUser> query = ParseUser.getQuery();
             ParseUser[] usersArray;
 
@@ -161,5 +157,4 @@ public class HomeActivity extends Activity {
             }
         }
     }
-
 }
