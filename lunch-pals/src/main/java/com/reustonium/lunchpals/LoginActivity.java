@@ -15,6 +15,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.Date;
+
 import com.parse.LogInCallback;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
@@ -201,6 +203,8 @@ public class LoginActivity extends Activity {
             ParseUser user = new ParseUser();
             user.setUsername(mUsername);
             user.setPassword(mPassword);
+            user.put("hazPangs", false);
+            user.put("pangsUpdatedAt", new Date());
             user.signUpInBackground(new SignUpCallback() {
                 @Override
                 public void done(ParseException e) {

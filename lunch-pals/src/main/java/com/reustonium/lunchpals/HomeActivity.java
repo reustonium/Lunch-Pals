@@ -3,8 +3,12 @@ package com.reustonium.lunchpals;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -37,6 +41,29 @@ public class HomeActivity extends Activity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.home_actionbar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.home_ab_logout:
+                ParseUser.logOut();
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+}
+
     public static class PlaceholderFragment extends Fragment {
 
         public PlaceholderFragment() {
@@ -52,6 +79,7 @@ public class HomeActivity extends Activity {
             final ListView listView = (ListView) rootView.findViewById(R.id.listView_palsList);
             final Switch mSwitch = (Switch) rootView.findViewById(R.id.switch_hazPangs);
             TextView textView = (TextView) rootView.findViewById(R.id.textView_greeting);
+            TextView userText = (TextView) rootView.findViewById(R.id.home_username);
 
             // Get User Stuffz
             final ParseUser user = ParseUser.getCurrentUser();
@@ -65,6 +93,7 @@ public class HomeActivity extends Activity {
             
             // Set Greeting
             textView.setText(String.format("Hi Pal! Do you haz pangs today %s?", user.getUsername()));
+            userText.setText(user.getUsername());
 
             // Handle Switch OnClick
             mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
