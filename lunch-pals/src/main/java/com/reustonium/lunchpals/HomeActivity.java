@@ -19,7 +19,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.Date;
+import java.util.ArrayList;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -75,9 +78,7 @@ public class HomeActivity extends Activity {
             case R.id.home_ab_refresh:
                 //TODO Update users
                 PlaceholderFragment pFrag = (PlaceholderFragment) getFragmentManager().findFragmentByTag("mFragment");
-                pFrag.users = pFrag.GetUsers();
-                //TODO Update ListView
-                pFrag.mAdapter.notifyDataSetChanged();
+                pFrag.UpdateStatus();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -85,7 +86,7 @@ public class HomeActivity extends Activity {
     }
 
     public static class PlaceholderFragment extends Fragment {
-        ParseUser[] users;
+        ArrayList<ParseUser> users;
         HazPangsAdapter mAdapter;
 
         public PlaceholderFragment() {
@@ -96,8 +97,10 @@ public class HomeActivity extends Activity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
 
-            users = GetUsers();
-            mAdapter = new HazPangsAdapter(getActivity(), users);
+            this.users = new ArrayList<ParseUser>();
+            this.mAdapter = new HazPangsAdapter(getActivity(), users);
+
+            UpdateStatus();
 
             //Setup View
             final View rootView = inflater.inflate(R.layout.fragment_home, container, false);
@@ -121,7 +124,7 @@ public class HomeActivity extends Activity {
             userText.setText(user.getUsername());
 
             // Setup Listview
-            listView.setAdapter(mAdapter);
+            listView.setAdapter(this.mAdapter);
 
             // Handle Switch OnClick
             mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -130,30 +133,33 @@ public class HomeActivity extends Activity {
                     user.put("hazPangs", b);
                     user.put("pangsUpdatedAt", new Date());
                     user.saveInBackground();
+                    Toast mToast = Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT);
+                    mToast.show();
                 }
             });
 
             return rootView;
         }
 
-        private ParseUser[] GetUsers(){
+        private void UpdateStatus(){
             final ParseQuery<ParseUser> query = ParseUser.getQuery();
-            ParseUser[] usersArray;
 
-            try {
-                List<ParseUser> users = query.find();
-                usersArray = users.toArray(new ParseUser[users.size()]);
-            } catch (ParseException e) {
-                usersArray = null;
-                e.printStackTrace();
+            try{
+                mAdapter.clear();
+                List<ParseUser> usersList = query.find();
+                mAdapter.addAll(usersList);
+                mAdapter.notifyDataSetChanged();
+
+            }catch(Exception ex){
+                ex.printStackTrace();
             }
-            return usersArray;
+
         }
 
         class HazPangsAdapter extends ArrayAdapter<ParseUser>{
-            private ParseUser[] users;
+            private ArrayList<ParseUser> users;
 
-            public HazPangsAdapter(Context context, ParseUser[] users){
+            public HazPangsAdapter(Context context, ArrayList<ParseUser> users){
                 super(context, R.layout.fragment_home_row,R.id.frag_home_username ,users);
                 this.users = users;
             }
@@ -166,10 +172,10 @@ public class HomeActivity extends Activity {
                 TextView updatedAt = (TextView)row.findViewById(R.id.frag_home_updatedAt);
                 ImageView indicator = (ImageView)row.findViewById(R.id.frag_home_indicator);
 
-                username.setText(users[position].getUsername());
-                updatedAt.setText(users[position].getDate("pangsUpdatedAt").toString());
+                username.setText(users.get(position).getUsername());
+                updatedAt.setText(users.get(position).getDate("pangsUpdatedAt").toString());
 
-                if(users[position].getBoolean("hazPangs")){
+                if(users.get(position).getBoolean("hazPangs")){
                     indicator.setImageResource(android.R.drawable.presence_online);
                 } else {
                     indicator.setImageResource(android.R.drawable.presence_busy);
