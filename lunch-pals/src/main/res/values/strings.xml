@@ -3,7 +3,10 @@
 
     <string name="app_name">LunchPals</string>
     <string name="error_username_taken">Error - Username already taken</string>
-    <string name="title_activity_home">HomeActivity</string>
     <string name="frag_home_greeting">Greetings</string>
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="splash_message">Alpha Release v0.2.3</string>
 
 </resources>

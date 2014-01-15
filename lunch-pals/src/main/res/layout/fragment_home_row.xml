@@ -12,7 +12,6 @@
         android:layout_height="fill_parent"
         android:padding="5dp"
         android:src="@android:drawable/presence_online"
-        android:layout_alignParentLeft="true"
         android:adjustViewBounds="true"/>
     <LinearLayout
         android:layout_width="wrap_content"

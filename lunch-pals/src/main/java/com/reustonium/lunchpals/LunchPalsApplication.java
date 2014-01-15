@@ -20,18 +20,6 @@ public class LunchPalsApplication extends Application{
     public void onCreate() {
         super.onCreate();
 
-        Parse.initialize(this, AppConsts.APPID, AppConsts.CLIENTKEY);
 
-        ParseUser user = ParseUser.getCurrentUser();
-
-        if(user!=null){
-            intent = new Intent(getApplicationContext(), HomeActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        } else {
-            intent = new Intent(getApplicationContext(), LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        }
     }
 }
