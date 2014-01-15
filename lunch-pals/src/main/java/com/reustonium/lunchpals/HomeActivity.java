@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -79,6 +80,11 @@ public class HomeActivity extends Activity {
                 //TODO Update users
                 PlaceholderFragment pFrag = (PlaceholderFragment) getFragmentManager().findFragmentByTag("mFragment");
                 pFrag.UpdateStatus();
+                return true;
+
+            case R.id.home_ab_featReq:
+                Intent github = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/reustonium/Lunch-Pals/issues/new"));
+                startActivity(github);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

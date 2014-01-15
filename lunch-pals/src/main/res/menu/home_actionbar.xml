@@ -18,5 +18,8 @@
         android:title="Logout"
         android:showAsAction="ifRoom"
         />
+    <item
+        android:id="@+id/home_ab_featReq"
+        android:title="Request a Feature"/>
 
 </menu>
