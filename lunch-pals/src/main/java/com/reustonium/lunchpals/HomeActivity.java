@@ -180,11 +180,10 @@ public class HomeActivity extends Activity {
                 ImageView indicator = (ImageView)row.findViewById(R.id.frag_home_indicator);
 
                 username.setText(users.get(position).getUsername());
-                Date now = new Date();
-                Date lastUpdate = users.get(position).getDate("pangsUpdatedAt");
-                int sinceLast = Math.round(now.getTime() - lastUpdate.getTime());
 
-                updatedAt.setText(String.format("%d minutes since last updated",sinceLast/60000));
+                String timeString = LPUtil.calcTimeBetween(users.get(position).getDate("pangsUpdatedAt"), new Date());
+
+                updatedAt.setText(String.format("%s since last updated", timeString));
 
                 if(users.get(position).getBoolean("hazPangs")){
                     indicator.setImageResource(android.R.drawable.presence_online);
