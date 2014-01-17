@@ -143,6 +143,7 @@ public class HomeActivity extends Activity {
                     user.saveInBackground();
                     Toast mToast = Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT);
                     mToast.show();
+                    UpdateStatus();
                 }
             });
 
@@ -165,7 +166,7 @@ public class HomeActivity extends Activity {
 
         class HazPangsAdapter extends ArrayAdapter<ParseUser>{
             private ArrayList<ParseUser> users;
-            final int TIMEOUT = 1000 * 60* 60 * 24;
+            final int TIMEOUT = 1000 * 60* 60 * 12;
 
             public HazPangsAdapter(Context context, ArrayList<ParseUser> users){
                 super(context, R.layout.fragment_home_row,R.id.frag_home_username ,users);
