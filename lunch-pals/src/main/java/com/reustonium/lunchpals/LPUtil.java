@@ -16,15 +16,15 @@ public class LPUtil {
         int milliSeconds = Math.round(end.getTime() - start.getTime());
 
         if(milliSeconds > DAY){
-            return String.format("%d days", milliSeconds % DAY);
+            return String.format("%d days", Math.round(milliSeconds / DAY));
         }
 
         if(milliSeconds < DAY && milliSeconds > HOUR){
-            return String.format("%d hours", milliSeconds % HOUR);
+            return String.format("%d hours", Math.round(milliSeconds / HOUR));
         }
 
         if(milliSeconds < HOUR){
-            return String.format("%d minutes", milliSeconds % MINUTE);
+            return String.format("%d minutes", Math.round(milliSeconds / MINUTE));
         }
 
         //Throw an exception instead?

@@ -165,6 +165,7 @@ public class HomeActivity extends Activity {
 
         class HazPangsAdapter extends ArrayAdapter<ParseUser>{
             private ArrayList<ParseUser> users;
+            final int TIMEOUT = 1000 * 60* 60 * 24;
 
             public HazPangsAdapter(Context context, ArrayList<ParseUser> users){
                 super(context, R.layout.fragment_home_row,R.id.frag_home_username ,users);
@@ -189,6 +190,11 @@ public class HomeActivity extends Activity {
                     indicator.setImageResource(android.R.drawable.presence_online);
                 } else {
                     indicator.setImageResource(android.R.drawable.presence_busy);
+                }
+
+                Date now = new Date();
+                if(Math.round(now.getTime() - users.get(position).getDate("pangsUpdatedAt").getTime()) > TIMEOUT){
+                    indicator.setImageResource(android.R.drawable.presence_offline);
                 }
                 return row;
             }
