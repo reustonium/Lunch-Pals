@@ -18,6 +18,7 @@ import android.widget.TextView;
 import java.util.Date;
 
 import com.parse.LogInCallback;
+import com.parse.Parse;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -45,6 +46,8 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Parse.initialize(this, AppConsts.APPID, AppConsts.CLIENTKEY);
 
         setContentView(R.layout.activity_login);
         ParseAnalytics.trackAppOpened(getIntent());

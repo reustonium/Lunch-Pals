@@ -16,12 +16,17 @@ import android.os.Build;
 import com.parse.Parse;
 import com.parse.ParseUser;
 
-public class SplashScreenActivity extends Activity {
+public class SplashActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         Parse.initialize(this, AppConsts.APPID, AppConsts.CLIENTKEY);
 
@@ -40,7 +45,6 @@ public class SplashScreenActivity extends Activity {
                 startActivity(intent);
                 finish();
             }
-        }, 2000);
-
+        }, 1500);
     }
 }

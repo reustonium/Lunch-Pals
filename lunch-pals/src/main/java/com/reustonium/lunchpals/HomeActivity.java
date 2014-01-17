@@ -1,10 +1,8 @@
 package com.reustonium.lunchpals;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,6 +24,7 @@ import java.util.Date;
 import java.util.ArrayList;
 
 import com.parse.GetCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -40,9 +39,10 @@ public class HomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        Parse.initialize(this, AppConsts.APPID, AppConsts.CLIENTKEY);
+
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
-                    //.add(R.id.container, new PlaceholderFragment())
                     .add(R.id.container, new PlaceholderFragment(), "mFragment")
                     .commit();
         }
@@ -64,17 +64,6 @@ public class HomeActivity extends Activity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 return true;
-            case R.id.home_ab_about:
-                new AlertDialog.Builder(this)
-                        .setTitle("About LunchPals")
-                        .setMessage("Alpha Release 0.2.2")
-                        .setPositiveButton("Thanks Pal!", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                            }
-                        })
-                        .show();
-                return true;
 
             case R.id.home_ab_refresh:
                 //TODO Update users
@@ -94,6 +83,11 @@ public class HomeActivity extends Activity {
     public static class PlaceholderFragment extends Fragment {
         ArrayList<ParseUser> users;
         HazPangsAdapter mAdapter;
+        View rootView;
+        ListView listView;
+        Switch mSwitch;
+        TextView textView;
+        TextView userText;
 
         public PlaceholderFragment() {
 
@@ -103,17 +97,24 @@ public class HomeActivity extends Activity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
 
-            this.users = new ArrayList<ParseUser>();
-            this.mAdapter = new HazPangsAdapter(getActivity(), users);
-
-            UpdateStatus();
+            users = new ArrayList<ParseUser>();
+            mAdapter = new HazPangsAdapter(getActivity(), users);
 
             //Setup View
-            final View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-            final ListView listView = (ListView) rootView.findViewById(R.id.listView_palsList);
-            final Switch mSwitch = (Switch) rootView.findViewById(R.id.switch_hazPangs);
-            TextView textView = (TextView) rootView.findViewById(R.id.textView_greeting);
-            TextView userText = (TextView) rootView.findViewById(R.id.home_username);
+            rootView = inflater.inflate(R.layout.fragment_home, container, false);
+            listView = (ListView) rootView.findViewById(R.id.listView_palsList);
+            mSwitch = (Switch) rootView.findViewById(R.id.switch_hazPangs);
+            textView = (TextView) rootView.findViewById(R.id.textView_greeting);
+            userText = (TextView) rootView.findViewById(R.id.home_username);
+
+            return rootView;
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+
+            UpdateStatus();
 
             // Get User Stuffz
             final ParseUser user = ParseUser.getCurrentUser();
@@ -124,7 +125,7 @@ public class HomeActivity extends Activity {
                     mSwitch.setChecked(user.getBoolean("hazPangs"));
                 }
             });
-            
+
             // Set Greeting
             textView.setText(String.format("Hi Pal! Do you haz pangs today %s?", user.getUsername()));
             userText.setText(user.getUsername());
@@ -144,7 +145,6 @@ public class HomeActivity extends Activity {
                 }
             });
 
-            return rootView;
         }
 
         private void UpdateStatus(){
@@ -179,7 +179,11 @@ public class HomeActivity extends Activity {
                 ImageView indicator = (ImageView)row.findViewById(R.id.frag_home_indicator);
 
                 username.setText(users.get(position).getUsername());
-                updatedAt.setText(users.get(position).getDate("pangsUpdatedAt").toString());
+                Date now = new Date();
+                Date lastUpdate = users.get(position).getDate("pangsUpdatedAt");
+                int sinceLast = Math.round(now.getTime() - lastUpdate.getTime());
+
+                updatedAt.setText(String.format("%d minutes since last updated",sinceLast/60000));
 
                 if(users.get(position).getBoolean("hazPangs")){
                     indicator.setImageResource(android.R.drawable.presence_online);
