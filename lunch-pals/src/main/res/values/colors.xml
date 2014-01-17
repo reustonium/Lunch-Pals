@@ -1,5 +1,5 @@
 <resources>
     <color name="black_overlay">#66000000</color>
-    <color name="splash">#FF333333</color>
+    <color name="splash">#ff202020</color>
     <color name="splash_text">#FFFFFF</color>
 </resources>
