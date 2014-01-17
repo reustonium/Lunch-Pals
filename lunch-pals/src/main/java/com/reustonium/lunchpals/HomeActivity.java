@@ -135,10 +135,10 @@ public class HomeActivity extends Activity {
             listView.setAdapter(this.mAdapter);
 
             // Handle Switch OnClick
-            mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            mSwitch.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    user.put("hazPangs", b);
+                public void onClick(View view) {
+                    user.put("hazPangs", mSwitch.isChecked());
                     user.put("pangsUpdatedAt", new Date());
                     user.saveInBackground();
                     Toast mToast = Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT);
