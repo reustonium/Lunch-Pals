@@ -63,6 +63,7 @@ public class HomeActivity extends Activity {
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
+                finish();
                 return true;
 
             case R.id.home_ab_refresh:

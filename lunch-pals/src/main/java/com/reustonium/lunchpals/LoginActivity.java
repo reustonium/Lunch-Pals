@@ -148,6 +148,7 @@ public class LoginActivity extends Activity {
                     if(parseUser !=null){
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                         startActivity(intent);
+                        finish();
                     }
                     if(e!=null){
                         e.printStackTrace();
@@ -214,6 +215,7 @@ public class LoginActivity extends Activity {
                     if(e==null){
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                         startActivity(intent);
+                        finish();
                     } else{
                         e.printStackTrace();
                         showProgress(false);
