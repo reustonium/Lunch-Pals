@@ -29,6 +29,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.List;
 
@@ -140,10 +141,17 @@ public class HomeActivity extends Activity {
                 public void onClick(View view) {
                     user.put("hazPangs", mSwitch.isChecked());
                     user.put("pangsUpdatedAt", new Date());
-                    user.saveInBackground();
+                    user.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if(e!=null){
+                                e.printStackTrace();
+                            }
+                            UpdateStatus();
+                        }
+                    });
                     Toast mToast = Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT);
                     mToast.show();
-                    UpdateStatus();
                 }
             });
 
