@@ -14,7 +14,9 @@ import android.view.ViewGroup;
 import android.os.Build;
 
 import com.parse.Parse;
+import com.parse.ParseAnalytics;
 import com.parse.ParseUser;
+import com.parse.PushService;
 
 public class SplashActivity extends Activity {
 

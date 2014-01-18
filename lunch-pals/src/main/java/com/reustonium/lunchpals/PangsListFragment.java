@@ -3,9 +3,11 @@ package com.reustonium.lunchpals;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.method.CharacterPickerDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -15,10 +17,15 @@ import android.widget.Toast;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -79,6 +86,16 @@ public class PangsListFragment extends Fragment {
 
             // Setup Listview
             listView.setAdapter(this.mAdapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                    ParsePush push = new ParsePush();
+                    push.setChannel(String.format("user_%s",users.get(position).getObjectId()));
+                    push.setMessage(String.format("hey %s, you got nudged by %s",users.get(position).getUsername(),user.getUsername()));
+                    push.sendInBackground();
+                }
+            });
 
             // Handle Switch OnClick
             mSwitch.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +106,7 @@ public class PangsListFragment extends Fragment {
                     user.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-                            if(e!=null){
+                            if (e != null) {
                                 e.printStackTrace();
                             }
                             UpdateStatus();

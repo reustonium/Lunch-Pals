@@ -9,7 +9,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.parse.Parse;
+import com.parse.ParseAnalytics;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
+import com.parse.PushService;
 
 public class HomeActivity extends Activity {
 
@@ -19,6 +22,14 @@ public class HomeActivity extends Activity {
         setContentView(R.layout.activity_home);
 
         Parse.initialize(this, AppConsts.APPID, AppConsts.CLIENTKEY);
+        ParseAnalytics.trackAppOpened(getIntent());
+
+        PushService.setDefaultPushCallback(getApplicationContext(), SplashActivity.class);
+        PushService.subscribe(getApplicationContext(), "updates", SplashActivity.class);
+        PushService.subscribe(getApplicationContext(),
+                String.format("user_%s", ParseUser.getCurrentUser().getObjectId()),
+                SplashActivity.class);
+        ParseInstallation.getCurrentInstallation().saveInBackground();
 
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
