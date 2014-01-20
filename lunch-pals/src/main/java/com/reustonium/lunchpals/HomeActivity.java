@@ -4,15 +4,18 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.parse.Parse;
 import com.parse.ParseAnalytics;
+import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 import com.parse.PushService;
+import com.parse.SaveCallback;
 
 public class HomeActivity extends Activity {
 
@@ -29,7 +32,12 @@ public class HomeActivity extends Activity {
         PushService.subscribe(getApplicationContext(),
                 String.format("user_%s", ParseUser.getCurrentUser().getObjectId()),
                 SplashActivity.class);
-        ParseInstallation.getCurrentInstallation().saveInBackground();
+        ParseInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                Log.v("!!!", "hi!");
+            }
+        });
 
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()

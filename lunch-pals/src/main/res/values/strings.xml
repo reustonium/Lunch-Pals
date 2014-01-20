@@ -4,6 +4,6 @@
     <string name="app_name">LunchPals</string>
     <string name="error_username_taken">Error - Username already taken</string>
     <string name="frag_home_greeting">Greetings</string>
-    <string name="splash_message">Alpha Release v0.2.4</string>
+    <string name="splash_message">Alpha Release v0.2.5</string>
 
 </resources>

@@ -1,9 +1,10 @@
 package com.reustonium.lunchpals;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.method.CharacterPickerDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,15 +18,10 @@ import android.widget.Toast;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
-import com.parse.ParseInstallation;
 import com.parse.ParseObject;
-import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,6 +31,7 @@ import java.util.List;
  * Created by Andrew on 1/16/14.
  */
 public class PangsListFragment extends Fragment {
+
         ArrayList<ParseUser> users;
         HazPangsAdapter mAdapter;
         View rootView;
@@ -89,11 +86,36 @@ public class PangsListFragment extends Fragment {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                    String msg = String.format("You've been nudged by %s", user.getUsername());
+                    final Nudge nudge = new Nudge(user, users.get(position), msg);
+                    if(!nudge.canNudge()){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage(String.format("%s doesn't need a nudge", users.get(position).getUsername()))
+                                .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
 
-                    ParsePush push = new ParsePush();
-                    push.setChannel(String.format("user_%s",users.get(position).getObjectId()));
-                    push.setMessage(String.format("hey %s, you got nudged by %s",users.get(position).getUsername(),user.getUsername()));
-                    push.sendInBackground();
+                                    }
+                                });
+                        builder.show();
+                    } else{
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage(String.format("Nudge %s?", users.get(position).getUsername()))
+                                .setPositiveButton("Yep!", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        nudge.sendNudge();
+                                    }
+                                })
+                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    }
+                                });
+                        builder.show();
+                    }
+
                 }
             });
 
