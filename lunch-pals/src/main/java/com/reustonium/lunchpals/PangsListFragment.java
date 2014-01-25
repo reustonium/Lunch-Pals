@@ -143,7 +143,7 @@ public class PangsListFragment extends Fragment {
 
         public void UpdateStatus(){
             final ParseQuery<ParseUser> query = ParseUser.getQuery();
-
+            query.orderByDescending("pangsUpdatedAt");
             try{
                 mAdapter.clear();
                 List<ParseUser> usersList = query.find();
