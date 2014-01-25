@@ -24,7 +24,6 @@ public class HomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Parse.initialize(this, AppConsts.APPID, AppConsts.CLIENTKEY);
         ParseAnalytics.trackAppOpened(getIntent());
 
         PushService.setDefaultPushCallback(getApplicationContext(), SplashActivity.class);
