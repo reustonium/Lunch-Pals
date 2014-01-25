@@ -37,7 +37,6 @@ public class PangsListFragment extends Fragment {
         View rootView;
         ListView listView;
         Switch mSwitch;
-        TextView textView;
         TextView userText;
 
         public PangsListFragment() {
@@ -50,12 +49,9 @@ public class PangsListFragment extends Fragment {
 
             users = new ArrayList<ParseUser>();
             mAdapter = new HazPangsAdapter(getActivity(), users);
-
-            //Setup View
             rootView = inflater.inflate(R.layout.fragment_home, container, false);
             listView = (ListView) rootView.findViewById(R.id.listView_palsList);
             mSwitch = (Switch) rootView.findViewById(R.id.switch_hazPangs);
-            textView = (TextView) rootView.findViewById(R.id.textView_greeting);
             userText = (TextView) rootView.findViewById(R.id.home_username);
 
             return rootView;
@@ -67,7 +63,6 @@ public class PangsListFragment extends Fragment {
 
             UpdateStatus();
 
-            // Get User Stuffz
             final ParseUser user = ParseUser.getCurrentUser();
 
             user.fetchInBackground(new GetCallback<ParseObject>() {
@@ -77,68 +72,10 @@ public class PangsListFragment extends Fragment {
                 }
             });
 
-            // Set Greeting
-            textView.setText(String.format("Hi Pal! Do you haz pangs today %s?", user.getUsername()));
             userText.setText(user.getUsername());
-
-            // Setup Listview
             listView.setAdapter(this.mAdapter);
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                    String msg = String.format("You've been nudged by %s", user.getUsername());
-                    final Nudge nudge = new Nudge(user, users.get(position), msg);
-                    if(!nudge.canNudge()){
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage(String.format("%s doesn't need a nudge", users.get(position).getUsername()))
-                                .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                                    }
-                                });
-                        builder.show();
-                    } else{
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage(String.format("Nudge %s?", users.get(position).getUsername()))
-                                .setPositiveButton("Yep!", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        nudge.sendNudge();
-                                    }
-                                })
-                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                                    }
-                                });
-                        builder.show();
-                    }
-
-                }
-            });
-
-            // Handle Switch OnClick
-            mSwitch.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    user.put("hazPangs", mSwitch.isChecked());
-                    user.put("pangsUpdatedAt", new Date());
-                    user.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            if (e != null) {
-                                e.printStackTrace();
-                            }
-                            UpdateStatus();
-                        }
-                    });
-                    Toast mToast = Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT);
-                    mToast.show();
-                }
-            });
-
+            listView.setOnItemClickListener(new PalsListOnClickListener());
+            mSwitch.setOnClickListener(new StatusSwitchOnClickListener());
         }
 
         public void UpdateStatus(){
@@ -153,7 +90,66 @@ public class PangsListFragment extends Fragment {
             }catch(Exception ex){
                 ex.printStackTrace();
             }
+        }
 
+        class StatusSwitchOnClickListener implements View.OnClickListener{
+
+            ParseUser user = ParseUser.getCurrentUser();
+
+            @Override
+            public void onClick(View view) {
+                user.put("hazPangs", mSwitch.isChecked());
+                user.put("pangsUpdatedAt", new Date());
+                user.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            e.printStackTrace();
+                        }
+                        UpdateStatus();
+                    }
+                });
+                Toast mToast = Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT);
+                mToast.show();
+            }
+        }
+
+        class PalsListOnClickListener implements AdapterView.OnItemClickListener{
+
+            ParseUser user = ParseUser.getCurrentUser();
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                String msg = String.format("You've been nudged by %s", user.getUsername());
+                final Nudge nudge = new Nudge(user, users.get(position), msg);
+                if(!nudge.canNudge()){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage(String.format("%s doesn't need a nudge", users.get(position).getUsername()))
+                            .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            });
+                    builder.show();
+                } else{
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage(String.format("Nudge %s?", users.get(position).getUsername()))
+                            .setPositiveButton("Yep!", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    nudge.sendNudge();
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                }
+                            });
+                    builder.show();
+                }
+
+            }
         }
 
         class HazPangsAdapter extends ArrayAdapter<ParseUser> {
