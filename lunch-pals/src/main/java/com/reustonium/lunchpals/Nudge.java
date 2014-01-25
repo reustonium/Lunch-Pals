@@ -1,6 +1,9 @@
 package com.reustonium.lunchpals;
 
+import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParsePush;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.Date;
@@ -8,11 +11,12 @@ import java.util.Date;
 /**
  * Created by Andrew on 1/19/14.
  */
-public class Nudge {
+public class Nudge{
     private ParseUser fromUser;
     private ParseUser toUser;
     private String message;
-    final int TIMEOUT = 1000 * 60* 60 * 12;
+    final int TIMEOUT = 1000 * 60* 30;
+    final int SLEEPTIMER = 1000 * 60* 60 * 12;
 
     /**
      * @param _to The ParseUser who will receive the nudge
@@ -29,23 +33,6 @@ public class Nudge {
 
     }
 
-
-    public ParseUser getFromUser() {
-        return fromUser;
-    }
-
-    public void setFromUser(ParseUser fromUser) {
-        this.fromUser = fromUser;
-    }
-
-    public ParseUser getToUser() {
-        return toUser;
-    }
-
-    public void setToUser(ParseUser toUser) {
-        this.toUser = toUser;
-    }
-
     public String getMessage() {
         return message;
     }
@@ -56,14 +43,14 @@ public class Nudge {
 
     public boolean sendNudge() {
         boolean sent;
-        boolean uniqueNudge = true;//!toUser.getUsername().equals(fromUser.getUsername());
+        boolean uniqueNudge = !toUser.getUsername().equals(fromUser.getUsername());
 
         if(uniqueNudge && canNudge()){
             ParsePush push = new ParsePush();
             push.setChannel(String.format("user_%s", toUser.getObjectId()));
             push.setMessage(message);
             push.sendInBackground();
-
+            postToDB();
             sent = true;
         } else {
             sent = false;
@@ -71,8 +58,29 @@ public class Nudge {
         return sent;
     }
 
+    private void postToDB() {
+        ParseObject nudge = new ParseObject("Nudge");
+        nudge.put("fromUser", fromUser);
+        nudge.put("toUser", toUser);
+        nudge.put("message", message);
+        nudge.saveInBackground();
+    }
+
     public boolean canNudge(){
-        Date now = new Date();
-        return (Math.round(now.getTime() - toUser.getDate("pangsUpdatedAt").getTime()) > TIMEOUT);
+        final Date now = new Date();
+        boolean isAway = Math.round(now.getTime() - toUser.getDate("pangsUpdatedAt").getTime()) > SLEEPTIMER;
+        boolean alreadyNudged = false;
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Nudge");
+        query.whereEqualTo("toUser", toUser);
+        try {
+            ParseObject firstNudge = query.getFirst();
+            alreadyNudged = Math.round(now.getTime() - firstNudge.getCreatedAt().getTime()) < TIMEOUT;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return (isAway && !alreadyNudged);
     }
 }
