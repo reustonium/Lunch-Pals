@@ -21,8 +21,10 @@ import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 import com.parse.PushService;
 import com.parse.SaveCallback;
+import com.reustonium.lunchpals.fragments.LocationsFragment;
 import com.reustonium.lunchpals.fragments.PangsListFragment;
 import com.reustonium.lunchpals.R;
+import com.reustonium.lunchpals.fragments.StatsFragment;
 
 import java.util.Locale;
 
@@ -146,9 +148,9 @@ public class HomeActivity extends Activity implements ActionBar.TabListener{
                 case 0:
                     return new PangsListFragment();
                 case 1:
-                    return new PangsListFragment();
+                    return new LocationsFragment();
                 case 2:
-                    return new PangsListFragment();
+                    return new StatsFragment();
             }
             return null;
         }
