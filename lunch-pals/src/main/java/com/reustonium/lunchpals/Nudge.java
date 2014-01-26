@@ -73,6 +73,7 @@ public class Nudge{
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Nudge");
         query.whereEqualTo("toUser", toUser);
+        query.addDescendingOrder("createdAt");
         try {
             ParseObject firstNudge = query.getFirst();
             alreadyNudged = Math.round(now.getTime() - firstNudge.getCreatedAt().getTime()) < TIMEOUT;
