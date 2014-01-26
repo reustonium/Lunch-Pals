@@ -43,9 +43,7 @@ public class Nudge{
 
     public boolean sendNudge() {
         boolean sent;
-        boolean uniqueNudge = !toUser.getUsername().equals(fromUser.getUsername());
-
-        if(uniqueNudge && canNudge()){
+        if(canNudge()){
             ParsePush push = new ParsePush();
             push.setChannel(String.format("user_%s", toUser.getObjectId()));
             push.setMessage(message);
@@ -71,6 +69,7 @@ public class Nudge{
         boolean isAway = Math.round(now.getTime() - toUser.getDate("pangsUpdatedAt").getTime()) > SLEEPTIMER;
         boolean alreadyNudged = false;
 
+
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Nudge");
         query.whereEqualTo("toUser", toUser);
         query.addDescendingOrder("createdAt");
@@ -83,5 +82,9 @@ public class Nudge{
         }
 
         return (isAway && !alreadyNudged);
+    }
+
+    public boolean isUniqueNudge(){
+        return !toUser.getUsername().equals(fromUser.getUsername());
     }
 }

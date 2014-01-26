@@ -125,9 +125,15 @@ public class PangsListFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 String msg = String.format("You've been nudged by %s", user.getUsername());
                 final Nudge nudge = new Nudge(user, users.get(position), msg);
-                if(!nudge.canNudge()){
+                if(!nudge.canNudge() || !nudge.isUniqueNudge()){
+                    String message;
+                    if(nudge.isUniqueNudge()){
+                        message = String.format("%s doesn't need a nudge", users.get(position).getUsername());
+                    } else {
+                        message = "You can't nudge yourself, pervert!";
+                    }
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setMessage(String.format("%s doesn't need a nudge", users.get(position).getUsername()))
+                    builder.setMessage(message)
                             .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
