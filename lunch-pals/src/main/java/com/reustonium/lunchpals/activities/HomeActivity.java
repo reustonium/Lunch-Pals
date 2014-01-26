@@ -1,4 +1,4 @@
-package com.reustonium.lunchpals;
+package com.reustonium.lunchpals.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,13 +9,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.parse.Parse;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 import com.parse.PushService;
 import com.parse.SaveCallback;
+import com.reustonium.lunchpals.fragments.PangsListFragment;
+import com.reustonium.lunchpals.R;
 
 public class HomeActivity extends Activity {
 

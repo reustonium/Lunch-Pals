@@ -1,4 +1,4 @@
-package com.reustonium.lunchpals;
+package com.reustonium.lunchpals.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -23,6 +23,9 @@ import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+import com.reustonium.lunchpals.AppConsts;
+import com.reustonium.lunchpals.R;
+import com.reustonium.lunchpals.activities.HomeActivity;
 
 /**
  * Activity which displays a login screen to the user, offering registration as

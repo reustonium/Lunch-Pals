@@ -1,22 +1,16 @@
-package com.reustonium.lunchpals;
+package com.reustonium.lunchpals.activities;
 
 import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 
 import com.parse.Parse;
-import com.parse.ParseAnalytics;
 import com.parse.ParseUser;
-import com.parse.PushService;
+import com.reustonium.lunchpals.AppConsts;
+import com.reustonium.lunchpals.R;
+import com.reustonium.lunchpals.activities.HomeActivity;
+import com.reustonium.lunchpals.activities.LoginActivity;
 
 public class SplashActivity extends Activity {
 

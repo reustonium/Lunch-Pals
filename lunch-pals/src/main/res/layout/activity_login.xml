@@ -1,6 +1,6 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.reustonium.lunchpals.LoginActivity">
+    tools:context="com.reustonium.lunchpals.activities.LoginActivity">
 
     <!-- Login progress -->
     <LinearLayout android:id="@+id/login_status"

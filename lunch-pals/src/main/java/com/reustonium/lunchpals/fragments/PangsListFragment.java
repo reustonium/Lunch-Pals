@@ -1,4 +1,4 @@
-package com.reustonium.lunchpals;
+package com.reustonium.lunchpals.fragments;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -22,6 +22,9 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.reustonium.lunchpals.LPUtil;
+import com.reustonium.lunchpals.Nudge;
+import com.reustonium.lunchpals.R;
 
 import java.util.ArrayList;
 import java.util.Date;
