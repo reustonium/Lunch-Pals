@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    android:background="@color/card_bg"
+   >
 
     <ImageView
         android:id="@+id/frag_home_indicator"
@@ -14,20 +16,20 @@
         android:src="@android:drawable/presence_online"
         android:adjustViewBounds="true"/>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginLeft="10dp"
         android:padding="5dp">
         <TextView
             android:id="@+id/frag_home_username"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textSize="24sp"
             android:text="Andy"/>
         <TextView
             android:id="@+id/frag_home_updatedAt"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Updated at: Jan 11th 4:00pm"
             android:textSize="14sp"/>

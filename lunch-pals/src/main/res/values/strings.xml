@@ -6,9 +6,9 @@
     <string name="frag_home_greeting">Greetings</string>
     <string name="splash_message">Alpha Release v0.2.5</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_section1">Pals List</string>
+    <string name="title_section2">Locations</string>
+    <string name="title_section3">Stats</string>
     <string name="action_settings">Settings</string>
 
 </resources>

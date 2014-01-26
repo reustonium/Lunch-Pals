@@ -2,4 +2,6 @@
     <color name="black_overlay">#66000000</color>
     <color name="splash">#ff202020</color>
     <color name="splash_text">#FFFFFF</color>
+    <color name="card_bg">#ffebebeb</color>
+    <color name="pals_bg">#ffc3c3c3</color>
 </resources>
