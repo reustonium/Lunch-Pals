@@ -7,6 +7,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by Andrew on 1/19/14.
@@ -86,5 +88,37 @@ public class Nudge{
 
     public boolean isUniqueNudge(){
         return !toUser.getUsername().equals(fromUser.getUsername());
+    }
+
+    public List<ParseObject> getNudgesTo(ParseUser user){
+        List<ParseObject> list = new ArrayList<ParseObject>();
+
+        ParseQuery<ParseUser> innerQ = ParseUser.getQuery();
+        innerQ.whereEqualTo("objectId", user.getObjectId());
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Nudge");
+        query.whereMatchesQuery("toUser", innerQ);
+        try {
+            list = query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<ParseObject> getNudgesFrom(ParseUser user){
+        List<ParseObject> list = new ArrayList<ParseObject>();
+
+        ParseQuery<ParseUser> innerQ = ParseUser.getQuery();
+        innerQ.whereEqualTo("objectId", user.getObjectId());
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Nudge");
+        query.whereMatchesQuery("fromUser", innerQ);
+        try {
+            list = query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

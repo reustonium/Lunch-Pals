@@ -1,14 +1,73 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context="com.reustonium.lunchpals.fragments.StatsFragment">
+    android:layout_width="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.reustonium.lunchpals.fragments.StatsFragment"
+    android:background="@color/pals_bg">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/stats_username"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="STATS!" />
+        android:layout_height="wrap_content"
+        android:textSize="32sp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="reustonium"
+        android:textStyle="bold"
+        />
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:paddingRight="10dp"
+        android:background="@color/card_bg"
+        android:padding="15dp">
 
-</FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="32dp"
+            android:text="Nudges Sent"/>
+        <TextView
+            android:id="@+id/stats_sent"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="32dp"
+            android:textStyle="bold"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:text="32"/>
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="15dp"
+        android:background="@color/card_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="32dp"
+            android:text="Times Nudged"/>
+        <TextView
+            android:id="@+id/stats_nudged"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="32dp"
+            android:textStyle="bold"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:text="32"/>
+    </LinearLayout>
+
+</LinearLayout>
