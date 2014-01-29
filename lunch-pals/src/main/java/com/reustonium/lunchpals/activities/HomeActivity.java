@@ -2,9 +2,11 @@ package com.reustonium.lunchpals.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -99,11 +101,26 @@ public class HomeActivity extends Activity implements ActionBar.TabListener{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.home_ab_logout:
-                ParseUser.logOut();
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Log Out?")
+                        .setMessage("You will be logged out of LunchPals!")
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        })
+                        .setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ParseUser.logOut();
+                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
+                builder.show();
                 return true;
 
             case R.id.home_ab_featReq:
