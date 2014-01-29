@@ -106,12 +106,6 @@ public class HomeActivity extends Activity implements ActionBar.TabListener{
                 finish();
                 return true;
 
-            case R.id.home_ab_refresh:
-                //TODO Update users
-                PangsListFragment pFrag = (PangsListFragment) getFragmentManager().findFragmentByTag("mFragment");
-                pFrag.UpdateStatus();
-                return true;
-
             case R.id.home_ab_featReq:
                 Intent github = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/reustonium/Lunch-Pals/issues/new"));
                 startActivity(github);

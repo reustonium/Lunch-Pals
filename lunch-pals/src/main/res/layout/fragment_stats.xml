@@ -34,13 +34,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="32dp"
+            android:textSize="28dp"
             android:text="Nudges Sent"/>
         <TextView
             android:id="@+id/stats_sent"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textSize="32dp"
+            android:textSize="28dp"
             android:textStyle="bold"
             android:layout_gravity="right"
             android:gravity="right"
@@ -57,13 +57,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="32dp"
+            android:textSize="28dp"
             android:text="Times Nudged"/>
         <TextView
             android:id="@+id/stats_nudged"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textSize="32dp"
+            android:textSize="28dp"
             android:textStyle="bold"
             android:layout_gravity="right"
             android:gravity="right"

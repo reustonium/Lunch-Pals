@@ -2,11 +2,6 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/home_ab_refresh"
-        android:icon="@android:drawable/ic_popup_sync"
-        android:title="Refresh Data"
-        android:showAsAction="ifRoom"/>
-    <item
         android:id="@+id/home_ab_logout"
         android:icon="@drawable/ic_action_loginout"
         android:title="Logout"
