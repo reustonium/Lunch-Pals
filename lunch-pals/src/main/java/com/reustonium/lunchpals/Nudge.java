@@ -1,5 +1,6 @@
 package com.reustonium.lunchpals;
 
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
@@ -103,6 +104,7 @@ public class Nudge{
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
         return list;
     }
 

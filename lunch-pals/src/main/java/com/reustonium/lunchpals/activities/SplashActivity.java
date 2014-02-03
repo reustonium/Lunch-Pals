@@ -24,8 +24,6 @@ public class SplashActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        Parse.initialize(this, AppConsts.APPID, AppConsts.CLIENTKEY);
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
