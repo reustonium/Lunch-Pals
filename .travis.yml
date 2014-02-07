@@ -19,6 +19,10 @@ before_install:
   - export GRADLE_HOME=$PWD/gradle-1.10
   - export PATH=$GRADLE_HOME/bin:$PATH
 
+  # Parse
+  - wget https://parse.com/downloads/android/Parse/1.4.0/
+  - unzip Parse-1.4.0.zip
+
   # install android build tools
   - wget https://dl-ssl.google.com/android/repository/build-tools_r19.0.1-linux.zip
   - unzip build-tools_r19.0.1-linux.zip -d $ANDROID_HOME
