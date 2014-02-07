@@ -27,7 +27,7 @@ before_install:
 
   # Install required components.
   # For a full list, run `android list sdk -a --extended`
-   - android list sdk -a --extended
+  - android list sdk -a --extended
   # Note that sysimg-18 downloads the ARM, x86 and MIPS images (we should optimize this).
   # Other relevant API's
 #  - echo yes | android update sdk --filter platform-tools --no-ui --force > /dev/null
