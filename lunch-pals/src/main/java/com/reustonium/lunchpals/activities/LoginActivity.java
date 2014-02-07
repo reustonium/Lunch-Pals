@@ -25,7 +25,6 @@ import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 import com.reustonium.lunchpals.AppConsts;
 import com.reustonium.lunchpals.R;
-import com.reustonium.lunchpals.activities.HomeActivity;
 
 /**
  * Activity which displays a login screen to the user, offering registration as

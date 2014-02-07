@@ -5,12 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.parse.Parse;
 import com.parse.ParseUser;
-import com.reustonium.lunchpals.AppConsts;
 import com.reustonium.lunchpals.R;
-import com.reustonium.lunchpals.activities.HomeActivity;
-import com.reustonium.lunchpals.activities.LoginActivity;
 
 public class SplashActivity extends Activity {
 

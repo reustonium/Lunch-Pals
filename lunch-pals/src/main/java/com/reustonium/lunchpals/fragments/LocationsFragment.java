@@ -1,7 +1,5 @@
 package com.reustonium.lunchpals.fragments;
 
-
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.reustonium.lunchpals.R;
-
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.

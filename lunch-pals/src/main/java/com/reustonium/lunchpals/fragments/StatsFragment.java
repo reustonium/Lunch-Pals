@@ -11,8 +11,6 @@ import com.parse.ParseUser;
 import com.reustonium.lunchpals.Nudge;
 import com.reustonium.lunchpals.R;
 
-
-
 public class StatsFragment extends Fragment {
 
     View rootView;
