@@ -16,6 +16,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -23,8 +24,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.reustonium.lunchpals.LPUtil;
-import com.reustonium.lunchpals.Nudge;
 import com.reustonium.lunchpals.R;
+import com.reustonium.lunchpals.models.Nudge;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -84,15 +85,15 @@ public class PangsListFragment extends Fragment {
         public void UpdateStatus(){
             final ParseQuery<ParseUser> query = ParseUser.getQuery();
             query.orderByDescending("pangsUpdatedAt");
-            try{
-                mAdapter.clear();
-                List<ParseUser> usersList = query.find();
-                mAdapter.addAll(usersList);
-                mAdapter.notifyDataSetChanged();
 
-            }catch(Exception ex){
-                ex.printStackTrace();
-            }
+            mAdapter.clear();
+            query.findInBackground(new FindCallback<ParseUser>() {
+                @Override
+                public void done(List<ParseUser> parseUsers, ParseException e) {
+                    mAdapter.addAll(parseUsers);
+                    mAdapter.notifyDataSetChanged();
+                }
+            });
         }
 
         class StatusSwitchOnClickListener implements View.OnClickListener{
@@ -124,10 +125,13 @@ public class PangsListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 String msg = String.format("You've been nudged by %s", user.getUsername());
-                final Nudge nudge = new Nudge(user, users.get(position), msg);
-                if(!nudge.canNudge() || !nudge.isUniqueNudge()){
+                final Nudge nudge = new Nudge();
+                nudge.setMessage(msg);
+                nudge.setToUser(users.get(position));
+
+                if(!nudge.canNudge() || !nudge.isUnique()){
                     String message;
-                    if(nudge.isUniqueNudge()){
+                    if(nudge.isUnique()){
                         message = String.format("%s doesn't need a nudge", users.get(position).getUsername());
                     } else {
                         message = "You can't nudge yourself, pervert!";
@@ -147,7 +151,7 @@ public class PangsListFragment extends Fragment {
                             .setPositiveButton("Yep!", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    nudge.sendNudge();
+                                    nudge.send();
                                 }
                             })
                             .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -157,7 +161,6 @@ public class PangsListFragment extends Fragment {
                             });
                     builder.show();
                 }
-
             }
         }
 

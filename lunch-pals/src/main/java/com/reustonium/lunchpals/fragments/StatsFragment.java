@@ -7,9 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.reustonium.lunchpals.Nudge;
 import com.reustonium.lunchpals.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class StatsFragment extends Fragment {
 
@@ -37,13 +43,31 @@ public class StatsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Nudge nudge = new Nudge();
-        ParseUser user = ParseUser.getCurrentUser();
-        int sent = nudge.getNudgesFrom(user).size();
-        int received = nudge.getNudgesTo(user).size();
 
+        ParseUser user = ParseUser.getCurrentUser();
         nameTV.setText(user.getUsername());
-        fromTV.setText(String.valueOf(sent));
-        receivedTV.setText(String.valueOf(received));
+
+        // From
+        ParseQuery<ParseUser> innerQ = ParseUser.getQuery();
+        innerQ.whereEqualTo("objectId", user.getObjectId());
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Nudge");
+        query.whereMatchesQuery("fromUser", innerQ);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                fromTV.setText(String.valueOf(parseObjects.size()));
+            }
+        });
+
+        // To
+        ParseQuery<ParseObject> queryTo = ParseQuery.getQuery("Nudge");
+        queryTo.whereMatchesQuery("toUser", innerQ);
+        queryTo.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                receivedTV.setText(String.valueOf(parseObjects.size()));
+            }
+        });
     }
 }
