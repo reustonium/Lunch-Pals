@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
@@ -23,6 +25,9 @@ public class StatsFragment extends Fragment {
     TextView nameTV;
     TextView fromTV;
     TextView receivedTV;
+    ProgressBar progress;
+    LinearLayout from;
+    LinearLayout to;
 
     public StatsFragment(){
 
@@ -36,6 +41,9 @@ public class StatsFragment extends Fragment {
         nameTV = (TextView)rootView.findViewById(R.id.stats_username);
         fromTV = (TextView)rootView.findViewById(R.id.stats_sent);
         receivedTV = (TextView)rootView.findViewById(R.id.stats_nudged);
+        progress = (ProgressBar)rootView.findViewById(R.id.stats_progressbar);
+        from = (LinearLayout)rootView.findViewById(R.id.stats_from);
+        to = (LinearLayout)rootView.findViewById(R.id.stats_to);
 
         return rootView;
     }
@@ -43,6 +51,9 @@ public class StatsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        //Set Loading UI
+        toggleLoadingUI(true);
 
         ParseUser user = ParseUser.getCurrentUser();
         nameTV.setText(user.getUsername());
@@ -67,7 +78,21 @@ public class StatsFragment extends Fragment {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
                 receivedTV.setText(String.valueOf(parseObjects.size()));
+                toggleLoadingUI(false);
             }
         });
+    }
+
+    private void toggleLoadingUI(boolean on){
+        if(on){
+            from.setVisibility(View.GONE);
+            to.setVisibility(View.GONE);
+            progress.setVisibility(View.VISIBLE);
+        }
+        else{
+            from.setVisibility(View.VISIBLE);
+            to.setVisibility(View.VISIBLE);
+            progress.setVisibility(View.GONE);
+        }
     }
 }

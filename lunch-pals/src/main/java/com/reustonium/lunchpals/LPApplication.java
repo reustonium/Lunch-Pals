@@ -1,4 +1,4 @@
-package com.reustonium.lunchpals.activities;
+package com.reustonium.lunchpals;
 
 import android.app.Application;
 

@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_height="match_parent"
@@ -10,6 +10,12 @@
     tools:context="com.reustonium.lunchpals.fragments.StatsFragment"
     android:background="@color/pals_bg">
 
+    <ProgressBar
+        android:id="@+id/stats_progressbar"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:padding="100dp"
+        android:indeterminate="true"/>
     <TextView
         android:id="@+id/stats_username"
         android:layout_width="match_parent"
@@ -22,6 +28,8 @@
         />
 
     <LinearLayout
+        android:id="@+id/stats_from"
+        android:layout_below="@id/stats_username"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -48,6 +56,8 @@
         </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/stats_to"
+        android:layout_below="@id/stats_from"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -69,5 +79,4 @@
             android:gravity="right"
             android:text="32"/>
     </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>
