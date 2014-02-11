@@ -47,3 +47,4 @@ before_script:
 
 script:
   #- gradle connectedInstrumentTest
+  - gradle check
