@@ -16,7 +16,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.reustonium.lunchpals.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class StatsFragment extends Fragment {
@@ -53,7 +52,7 @@ public class StatsFragment extends Fragment {
         super.onResume();
 
         //Set Loading UI
-        toggleLoadingUI(true);
+        showLoadingUI(true);
 
         ParseUser user = ParseUser.getCurrentUser();
         nameTV.setText(user.getUsername());
@@ -78,12 +77,12 @@ public class StatsFragment extends Fragment {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
                 receivedTV.setText(String.valueOf(parseObjects.size()));
-                toggleLoadingUI(false);
+                showLoadingUI(false);
             }
         });
     }
 
-    private void toggleLoadingUI(boolean on){
+    private void showLoadingUI(boolean on){
         if(on){
             from.setVisibility(View.GONE);
             to.setVisibility(View.GONE);
