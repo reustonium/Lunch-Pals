@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +44,8 @@ public class PangsListFragment extends Fragment {
         ListView listView;
         Switch mSwitch;
         TextView userText;
+        ProgressBar progress;
+        LinearLayout switchLayout;
 
         public PangsListFragment() {
 
@@ -57,6 +61,8 @@ public class PangsListFragment extends Fragment {
             listView = (ListView) rootView.findViewById(R.id.listView_palsList);
             mSwitch = (Switch) rootView.findViewById(R.id.switch_hazPangs);
             userText = (TextView) rootView.findViewById(R.id.home_username);
+            progress = (ProgressBar) rootView.findViewById(R.id.home_progressbar);
+            switchLayout = (LinearLayout) rootView.findViewById(R.id.home_switch);
 
             return rootView;
         }
@@ -64,6 +70,8 @@ public class PangsListFragment extends Fragment {
         @Override
         public void onResume() {
             super.onResume();
+
+            showLoadingUI(true);
 
             UpdateStatus();
 
@@ -92,8 +100,22 @@ public class PangsListFragment extends Fragment {
                 public void done(List<ParseUser> parseUsers, ParseException e) {
                     mAdapter.addAll(parseUsers);
                     mAdapter.notifyDataSetChanged();
+                    showLoadingUI(false);
                 }
             });
+        }
+
+        private void showLoadingUI(boolean on){
+            if(on){
+                switchLayout.setVisibility(View.GONE);
+                listView.setVisibility(View.GONE);
+                progress.setVisibility(View.VISIBLE);
+            }
+            else{
+                switchLayout.setVisibility(View.VISIBLE);
+                listView.setVisibility(View.VISIBLE);
+                progress.setVisibility(View.GONE);
+            }
         }
 
         class StatusSwitchOnClickListener implements View.OnClickListener{
