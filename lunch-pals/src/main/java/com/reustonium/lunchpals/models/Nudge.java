@@ -15,9 +15,6 @@ import java.util.Date;
 @ParseClassName("Nudge")
 public class Nudge extends ParseObject{
 
-    ParseUser toUser;
-    ParseUser fromUser;
-
     final int TIMEOUT = 1000 * 60* 30;
     final int SLEEPTIMER = 1000 * 60* 60 * 12;
 
@@ -33,18 +30,23 @@ public class Nudge extends ParseObject{
         return getString("message");
     }
 
-    public void setToUser(ParseUser _toUser){
-        toUser = _toUser;
+    public void setToUser(ParseUser toUser){
         put("toUser", toUser);
+        put("fromUser", ParseUser.getCurrentUser());
+    }
 
-        fromUser = ParseUser.getCurrentUser();
-        put("fromUser", fromUser);
+    public ParseUser getToUser(){
+        return (ParseUser)getParseObject("toUser");
+    }
+
+    public ParseUser getFromUser(){
+        return (ParseUser)getParseObject("fromUser");
     }
 
     public void send(){
         if(canNudge()){
             ParsePush push = new ParsePush();
-            push.setChannel(String.format("user_%s", toUser.getObjectId()));
+            push.setChannel(String.format("user_%s", getToUser().getObjectId()));
             push.setMessage(getMessage());
             push.sendInBackground();
             this.saveInBackground();
@@ -53,11 +55,11 @@ public class Nudge extends ParseObject{
 
     public boolean canNudge(){
         final Date now = new Date();
-        boolean isAway = Math.round(now.getTime() - toUser.getDate("pangsUpdatedAt").getTime()) > SLEEPTIMER;
+        boolean isAway = Math.round(now.getTime() - getToUser().getDate("pangsUpdatedAt").getTime()) > SLEEPTIMER;
         boolean alreadyNudged = false;
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Nudge");
-        query.whereEqualTo("toUser", toUser);
+        query.whereEqualTo("toUser", getToUser());
         query.addDescendingOrder("createdAt");
         try {
             ParseObject firstNudge = query.getFirst();
@@ -71,7 +73,7 @@ public class Nudge extends ParseObject{
     }
 
     public boolean isUnique(){
-        return !toUser.getUsername().equals(fromUser.getUsername());
+        return !getToUser().getUsername().equals(getFromUser().getUsername());
     }
 
 }
