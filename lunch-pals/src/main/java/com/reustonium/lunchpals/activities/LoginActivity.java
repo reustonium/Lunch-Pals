@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -21,7 +22,10 @@ import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
+import com.parse.PushService;
+import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 import com.reustonium.lunchpals.AppConsts;
 import com.reustonium.lunchpals.R;
@@ -148,6 +152,19 @@ public class LoginActivity extends Activity {
                 @Override
                 public void done(ParseUser parseUser, ParseException e) {
                     if(parseUser !=null){
+
+                        //TODO refactor this to a ParseHelper Class
+                        PushService.setDefaultPushCallback(getApplicationContext(), SplashActivity.class);
+                        PushService.subscribe(getApplicationContext(), "updates", SplashActivity.class);
+                        PushService.subscribe(getApplicationContext(),
+                                String.format("user_%s", parseUser.getObjectId()),
+                                SplashActivity.class);
+                        ParseInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                Log.v("!!!", "boobs");
+                            }
+                        });
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                         startActivity(intent);
                         finish();

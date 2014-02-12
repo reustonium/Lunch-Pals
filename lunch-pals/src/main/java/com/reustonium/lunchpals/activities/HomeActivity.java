@@ -42,19 +42,6 @@ public class HomeActivity extends Activity implements ActionBar.TabListener{
 
         ParseAnalytics.trackAppOpened(getIntent());
 
-        //TODO refactor this to a ParseHelper Class
-        PushService.setDefaultPushCallback(getApplicationContext(), SplashActivity.class);
-        PushService.subscribe(getApplicationContext(), "updates", SplashActivity.class);
-        PushService.subscribe(getApplicationContext(),
-                String.format("user_%s", ParseUser.getCurrentUser().getObjectId()),
-                SplashActivity.class);
-        ParseInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                Log.v("!!!", "hi!");
-            }
-        });
-
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -113,7 +100,13 @@ public class HomeActivity extends Activity implements ActionBar.TabListener{
                         .setPositiveButton("Logout", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+                                //TODO clear ParseInstallation
+                                PushService.unsubscribe(getApplicationContext(),
+                                        String.format("user_%s", ParseUser.getCurrentUser().getObjectId()));
+                                ParseInstallation.getCurrentInstallation().saveInBackground();
+
                                 ParseUser.logOut();
+
                                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
