@@ -28,4 +28,16 @@ public class Status extends ParseObject {
         put("date", date);
     }
 
+    public Date getDate(){
+        return getDate("date");
+    }
+
+    public void setHaz(boolean haz){
+        put("haz", haz);
+    }
+
+    public boolean getHaz(){
+        return getBoolean("haz");
+    }
+
 }

@@ -100,7 +100,7 @@ public class HomeActivity extends Activity implements ActionBar.TabListener{
                         .setPositiveButton("Logout", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                //TODO clear ParseInstallation
+
                                 PushService.unsubscribe(getApplicationContext(),
                                         String.format("user_%s", ParseUser.getCurrentUser().getObjectId()));
                                 ParseInstallation.getCurrentInstallation().saveInBackground();

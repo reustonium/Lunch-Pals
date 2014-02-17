@@ -73,9 +73,14 @@ public class PangsListFragment extends Fragment {
 
             showLoadingUI(true);
 
-            UpdateStatus();
-
             final ParseUser user = ParseUser.getCurrentUser();
+            user.put("pangsUpdatedAt", new Date());
+            user.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    UpdateStatus();
+                }
+            });
 
             user.fetchInBackground(new GetCallback<ParseObject>() {
                 @Override
