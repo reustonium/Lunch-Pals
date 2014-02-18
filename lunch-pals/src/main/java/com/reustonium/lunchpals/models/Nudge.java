@@ -45,6 +45,7 @@ public class Nudge extends ParseObject{
 
     public void send(){
         if(canNudge()){
+            //TODO update push to send JSON payload including "from" and the proper "action" i.e. "com.reustonium.lunchpals.NUDGE"
             ParsePush push = new ParsePush();
             push.setChannel(String.format("user_%s", getToUser().getObjectId()));
             push.setMessage(getMessage());

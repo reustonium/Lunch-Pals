@@ -12,17 +12,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.parse.ParseAnalytics;
-import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 import com.parse.PushService;
-import com.parse.SaveCallback;
 import com.reustonium.lunchpals.fragments.LocationsFragment;
 import com.reustonium.lunchpals.fragments.PangsListFragment;
 import com.reustonium.lunchpals.R;
@@ -129,6 +126,7 @@ public class HomeActivity extends Activity implements ActionBar.TabListener{
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         mViewPager.setCurrentItem(tab.getPosition());
+
     }
 
     @Override
