@@ -50,9 +50,15 @@
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.reustonium.lunchpals.NudgeBroadcastReceiver" android:exported="false">
+        <receiver android:name=".broadcastReceivers.NudgeBroadcastReceiver" android:exported="false">
             <intent-filter>
                 <action android:name="com.reustonium.lunchpals.NUDGE" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".broadcastReceivers.StatusBroadcastReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="com.reustonium.lunchpals.HAZPANGS"/>
+                <action android:name="com.reustonium.lunchpals.NOHAZPANGS"/>
             </intent-filter>
         </receiver>
         <receiver
