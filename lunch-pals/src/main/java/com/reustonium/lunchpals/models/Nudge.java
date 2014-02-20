@@ -7,6 +7,9 @@ import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Date;
 
 /**
@@ -45,10 +48,18 @@ public class Nudge extends ParseObject{
 
     public void send(){
         if(canNudge()){
-            //TODO update push to send JSON payload including "from" and the proper "action" i.e. "com.reustonium.lunchpals.NUDGE"
+
             ParsePush push = new ParsePush();
             push.setChannel(String.format("user_%s", getToUser().getObjectId()));
-            push.setMessage(getMessage());
+            try {
+                JSONObject data = new JSONObject("{\"action\": \"com.reustonium.lunchpals.NUDGE\", " +
+                        "\"from\": \"You've been nudged by " + getFromUser().getUsername() +
+                        "\" }");
+                push.setData(data);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                push.setMessage(getMessage());
+            }
             push.sendInBackground();
             this.saveInBackground();
         }
