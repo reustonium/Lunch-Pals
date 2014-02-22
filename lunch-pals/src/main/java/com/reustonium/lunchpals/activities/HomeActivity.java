@@ -8,10 +8,14 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,7 +32,8 @@ import com.reustonium.lunchpals.fragments.StatsFragment;
 import java.util.Locale;
 
 public class HomeActivity extends Activity implements ActionBar.TabListener{
-
+    private static final String LP_PREF = "lunchpals";
+    private static final String VERSION_KEY = "version_number";
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
 
@@ -72,8 +77,33 @@ public class HomeActivity extends Activity implements ActionBar.TabListener{
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
+        checkForWhatsNew();
     }
 
+    private void checkForWhatsNew() {
+        SharedPreferences pref = getSharedPreferences(LP_PREF, MODE_PRIVATE);
+        int currentVersionNum = 0;
+        int savedVersionNum = pref.getInt(VERSION_KEY, 0);
+
+        try {
+            PackageInfo pi = getPackageManager().getPackageInfo(getPackageName(), 0);
+            currentVersionNum = pi.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        if(currentVersionNum > savedVersionNum){
+            showWhatsNew();
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putInt(VERSION_KEY, currentVersionNum);
+            editor.commit();
+        }
+
+    }
+
+    private void showWhatsNew() {
+        Log.v("!!!", "SHIT IS NEW!");
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
