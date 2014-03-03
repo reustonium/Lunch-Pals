@@ -61,6 +61,11 @@
                 <action android:name="com.reustonium.lunchpals.NOHAZPANGS"/>
             </intent-filter>
         </receiver>
+        <receiver android:name=".broadcastReceivers.UpdateBroadcastReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="com.reustonium.lunchpals.UPDATE"/>
+            </intent-filter>
+        </receiver>
         <receiver
             android:name="com.parse.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
