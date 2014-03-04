@@ -1,5 +1,6 @@
 package com.reustonium.lunchpals.broadcastReceivers;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -28,14 +29,12 @@ public class UpdateBroadcastReceiver extends BroadcastReceiver {
                 updateIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + appPackageName));
             }
 
-            PendingIntent updateApplicationIntent = PendingIntent.getBroadcast(context, 9, updateIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
+                    .setContentTitle("Update LunchPals!");
+            NotificationManager nManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            nManager.notify(2, mBuilder.build());
 
-            NotificationCompat.Builder mBuilder =
-                    new NotificationCompat.Builder(context)
-                            .addAction(R.drawable.ic_launcher, "Update LunchPals!", updateApplicationIntent);
-
-            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(1, mBuilder.build());
+            //context.startActivity(updateIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }
     }
 }

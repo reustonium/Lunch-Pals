@@ -155,10 +155,10 @@ public class LoginActivity extends Activity {
 
                         //TODO refactor this to a ParseHelper Class
                         PushService.setDefaultPushCallback(getApplicationContext(), SplashActivity.class);
-                        PushService.subscribe(getApplicationContext(), "andy", UpdateActivity.class);
                         PushService.subscribe(getApplicationContext(),
                                 String.format("user_%s", parseUser.getObjectId()),
                                 SplashActivity.class);
+                        PushService.subscribe(getApplicationContext(), "updates", SplashActivity.class);
                         ParseInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
