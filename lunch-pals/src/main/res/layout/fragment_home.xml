@@ -24,12 +24,29 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="horizontal">
-        <Switch
-            android:id="@+id/switch_hazPangs"
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textOn="Haz!"
-            android:textOff="NoHaz"/>
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/btn_haz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Haz"
+                android:onClick="onStatusClicked"/>
+            <RadioButton
+                android:id="@+id/btn_mayhaz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="mayhaz"
+                android:onClick="onStatusClicked"/>
+            <RadioButton
+                android:id="@+id/btn_nohaz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="nohaz"
+                android:onClick="onStatusClicked"/>
+            </RadioGroup>
         <TextView
             android:id="@+id/home_username"
             android:layout_width="wrap_content"

@@ -59,7 +59,6 @@ public class PangsListFragment extends Fragment {
             mAdapter = new HazPangsAdapter(getActivity(), users);
             rootView = inflater.inflate(R.layout.fragment_home, container, false);
             listView = (ListView) rootView.findViewById(R.id.listView_palsList);
-            mSwitch = (Switch) rootView.findViewById(R.id.switch_hazPangs);
             userText = (TextView) rootView.findViewById(R.id.home_username);
             progress = (ProgressBar) rootView.findViewById(R.id.home_progressbar);
             switchLayout = (LinearLayout) rootView.findViewById(R.id.home_switch);
@@ -121,6 +120,10 @@ public class PangsListFragment extends Fragment {
                 listView.setVisibility(View.VISIBLE);
                 progress.setVisibility(View.GONE);
             }
+        }
+
+        public void onStatusClicked(View view){
+
         }
 
         class StatusSwitchOnClickListener implements View.OnClickListener{
