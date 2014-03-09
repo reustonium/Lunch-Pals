@@ -19,12 +19,13 @@
 
     <LinearLayout
         android:id="@+id/home_switch"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="horizontal">
         <RadioGroup
+            android:id="@+id/hazRadioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -32,28 +33,18 @@
                 android:id="@+id/btn_haz"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Haz"
-                android:onClick="onStatusClicked"/>
+                android:text="haz"/>
             <RadioButton
                 android:id="@+id/btn_mayhaz"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="mayhaz"
-                android:onClick="onStatusClicked"/>
+                android:text="mayhaz"/>
             <RadioButton
                 android:id="@+id/btn_nohaz"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="nohaz"
-                android:onClick="onStatusClicked"/>
+                android:text="nohaz"/>
             </RadioGroup>
-        <TextView
-            android:id="@+id/home_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="32sp"
-            android:paddingLeft="20dp"
-            android:text="Andy"/>
         </LinearLayout>
 
     <ListView

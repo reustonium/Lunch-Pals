@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,10 +43,9 @@ public class PangsListFragment extends Fragment {
         HazPangsAdapter mAdapter;
         View rootView;
         ListView listView;
-        Switch mSwitch;
-        TextView userText;
         ProgressBar progress;
         LinearLayout switchLayout;
+        RadioGroup radioGroup;
 
         public PangsListFragment() {
 
@@ -59,9 +59,11 @@ public class PangsListFragment extends Fragment {
             mAdapter = new HazPangsAdapter(getActivity(), users);
             rootView = inflater.inflate(R.layout.fragment_home, container, false);
             listView = (ListView) rootView.findViewById(R.id.listView_palsList);
-            userText = (TextView) rootView.findViewById(R.id.home_username);
             progress = (ProgressBar) rootView.findViewById(R.id.home_progressbar);
             switchLayout = (LinearLayout) rootView.findViewById(R.id.home_switch);
+            radioGroup = (RadioGroup) rootView.findViewById(R.id.hazRadioGroup);
+
+            radioGroup.setOnCheckedChangeListener(new OnStatusChanged());
 
             return rootView;
         }
@@ -84,14 +86,24 @@ public class PangsListFragment extends Fragment {
             user.fetchInBackground(new GetCallback<ParseObject>() {
                 @Override
                 public void done(ParseObject parseObject, ParseException e) {
-                    mSwitch.setChecked(user.getBoolean("hazPangs"));
+                    switch (parseObject.getInt("status")){
+                        case 0:
+                            radioGroup.check(R.id.btn_nohaz);
+                            break;
+                        case 1:
+                            radioGroup.check(R.id.btn_mayhaz);
+                            break;
+                        case 2:
+                            radioGroup.check(R.id.btn_haz);
+                            break;
+                        default:
+                            radioGroup.check(R.id.btn_nohaz);
+                    }
                 }
             });
 
-            userText.setText(user.getUsername());
             listView.setAdapter(this.mAdapter);
             listView.setOnItemClickListener(new PalsListOnClickListener());
-            mSwitch.setOnClickListener(new StatusSwitchOnClickListener());
         }
 
         public void UpdateStatus(){
@@ -122,17 +134,27 @@ public class PangsListFragment extends Fragment {
             }
         }
 
-        public void onStatusClicked(View view){
-
-        }
-
-        class StatusSwitchOnClickListener implements View.OnClickListener{
-
+        class OnStatusChanged implements RadioGroup.OnCheckedChangeListener{
             ParseUser user = ParseUser.getCurrentUser();
 
             @Override
-            public void onClick(View view) {
-                user.put("hazPangs", mSwitch.isChecked());
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                int status;
+                switch(i){
+                    case R.id.btn_nohaz:
+                        status = 0;
+                        break;
+                    case R.id.btn_mayhaz:
+                        status = 1;
+                        break;
+                    case R.id.btn_haz:
+                        status = 2;
+                        break;
+                    default:
+                        status = 0;
+                }
+
+                user.put("status", status);
                 user.put("pangsUpdatedAt", new Date());
                 user.saveInBackground(new SaveCallback() {
                     @Override
@@ -146,8 +168,8 @@ public class PangsListFragment extends Fragment {
                 Toast mToast = Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT);
                 mToast.show();
             }
-        }
 
+        }
         class PalsListOnClickListener implements AdapterView.OnItemClickListener{
 
             ParseUser user = ParseUser.getCurrentUser();
@@ -217,10 +239,18 @@ public class PangsListFragment extends Fragment {
 
                 updatedAt.setText(String.format("%s since last updated", timeString));
 
-                if(users.get(position).getBoolean("hazPangs")){
-                    indicator.setImageResource(android.R.drawable.presence_online);
-                } else {
-                    indicator.setImageResource(android.R.drawable.presence_busy);
+                switch(users.get(position).getInt("status")){
+                    case 0:
+                        indicator.setImageResource(android.R.drawable.presence_busy);
+                        break;
+                    case 1:
+                        indicator.setImageResource(android.R.drawable.presence_away);
+                        break;
+                    case 2:
+                        indicator.setImageResource(android.R.drawable.presence_online);
+                        break;
+                    default:
+                        indicator.setImageResource(android.R.drawable.presence_busy);
                 }
 
                 Date now = new Date();
