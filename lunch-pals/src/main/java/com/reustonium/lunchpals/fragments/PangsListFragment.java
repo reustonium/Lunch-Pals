@@ -219,7 +219,7 @@ public class PangsListFragment extends Fragment {
             final int TIMEOUT = 1000 * 60* 60 * 12;
 
             public HazPangsAdapter(Context context, ArrayList<ParseUser> users){
-                super(context, R.layout.fragment_home_row,R.id.frag_home_username ,users);
+                super(context, R.layout.fragment_home_row, R.id.frag_home_username ,users);
                 this.users = users;
             }
 
