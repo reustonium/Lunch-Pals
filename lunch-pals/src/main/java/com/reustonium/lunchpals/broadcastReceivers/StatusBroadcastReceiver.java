@@ -24,15 +24,21 @@ public class StatusBroadcastReceiver extends BroadcastReceiver {
         user.put("pangsUpdatedAt", new Date());
 
         if(action.equals("com.reustonium.lunchpals.HAZPANGS")){
-            user.put("hazPangs", true);
+            user.put("status", 2);
             Toast toast = Toast.makeText(context, "HAZ Pangs!", Toast.LENGTH_LONG);
             toast.show();
         }
         else if (action.equals("com.reustonium.lunchpals.NOHAZPANGS")){
-            user.put("hazPangs", false);
+            user.put("status", 0);
             Toast toast = Toast.makeText(context, "NO Pangs!!", Toast.LENGTH_LONG);
             toast.show();
-        } else {
+        }
+        else if (action.equals("com.reustonium.lunchpals.MAYHAZPANGS")){
+            user.put("status", 1);
+            Toast toast = Toast.makeText(context, "MAY HAZ Pangs!!", Toast.LENGTH_LONG);
+            toast.show();
+        }
+        else {
             Toast toast = Toast.makeText(context, "You Borked it!", Toast.LENGTH_LONG);
             toast.show();
         }

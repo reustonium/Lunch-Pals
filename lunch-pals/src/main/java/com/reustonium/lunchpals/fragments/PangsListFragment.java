@@ -165,8 +165,6 @@ public class PangsListFragment extends Fragment {
                         UpdateStatus();
                     }
                 });
-                Toast mToast = Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT);
-                mToast.show();
             }
 
         }

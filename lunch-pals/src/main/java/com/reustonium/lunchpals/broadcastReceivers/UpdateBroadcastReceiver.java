@@ -29,12 +29,19 @@ public class UpdateBroadcastReceiver extends BroadcastReceiver {
                 updateIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + appPackageName));
             }
 
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-                    .setContentTitle("Update LunchPals!");
-            NotificationManager nManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            nManager.notify(2, mBuilder.build());
+            PendingIntent pIntent = PendingIntent.getBroadcast(context, 9, updateIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            //context.startActivity(updateIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(context)
+                            .setSmallIcon(R.drawable.ic_launcher)
+                            .setContentTitle("Haz Pangs?")
+                            .setContentText(String.format("Nudged by %s", "andy").toString())
+                            .addAction(android.R.drawable.btn_star_big_off, "no-haz", pIntent)
+                            .addAction(android.R.drawable.btn_star_big_on, "haz", pIntent);
+
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(1, mBuilder.build());
+
         }
     }
 }

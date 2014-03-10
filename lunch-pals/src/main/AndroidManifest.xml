@@ -59,6 +59,7 @@
             <intent-filter>
                 <action android:name="com.reustonium.lunchpals.HAZPANGS"/>
                 <action android:name="com.reustonium.lunchpals.NOHAZPANGS"/>
+                <action android:name="com.reustonium.lunchpals.MAYHAZPANGS"/>
             </intent-filter>
         </receiver>
         <receiver android:name=".broadcastReceivers.UpdateBroadcastReceiver" android:exported="false">

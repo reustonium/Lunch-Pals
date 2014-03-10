@@ -31,6 +31,11 @@ public class NudgeBroadcastReceiver extends BroadcastReceiver {
         noHazIntent.setAction("com.reustonium.lunchpals.NOHAZPANGS");
         PendingIntent noHazPendingIntent = PendingIntent.getBroadcast(context, 007, noHazIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        //MayHaz Pangs Intent
+        Intent mayHazIntent = new Intent();
+        mayHazIntent.setAction("com.reustonium.lunchpals.MAYHAZPANGS");
+        PendingIntent mayHazPendingIntent = PendingIntent.getBroadcast(context, 007, mayHazIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         try {
             JSONObject json = new JSONObject(intent.getExtras().getString("com.parse.Data"));
             String from = json.getString("from");
@@ -41,6 +46,7 @@ public class NudgeBroadcastReceiver extends BroadcastReceiver {
                             .setContentTitle("Haz Pangs?")
                             .setContentText(String.format("Nudged by %s", from).toString())
                             .addAction(android.R.drawable.btn_star_big_off, "no-haz", noHazPendingIntent)
+                            .addAction(android.R.drawable.ic_menu_help, "may-haz", mayHazPendingIntent)
                             .addAction(android.R.drawable.btn_star_big_on, "haz", hazPendingIntent);
 
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
