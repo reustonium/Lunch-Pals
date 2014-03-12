@@ -47,7 +47,7 @@ public class LocationsFragment extends Fragment {
         autoCompleteTextView = (AutoCompleteTextView) rootView.findViewById(R.id.location_autoComplete);
         listView = (ListView) rootView.findViewById(R.id.location_listView);
         locations = new ArrayList<Location>();
-        locationAdapter = new LocationAdapter(getActivity(), locations, android.R.layout.simple_expandable_list_item_1);
+        locationAdapter = new LocationAdapter(getActivity(), android.R.layout.simple_expandable_list_item_1,  locations);
 
         return rootView;
     }
@@ -91,7 +91,7 @@ public class LocationsFragment extends Fragment {
 
     class LocationAdapter extends ArrayAdapter<Location>{
 
-        public LocationAdapter(Context context, ArrayList<Location> locations, int layout) {
+        public LocationAdapter(Context context, int layout, ArrayList<Location> locations) {
             super(context, layout , locations);
         }
 
