@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dp"
+    android:layout_margin="10dp"
+    android:background="@color/card_bg">
+    <TextView
+        android:id="@+id/frag_location_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:text="Wegmans"/>
+    <TextView
+        android:id="@+id/frag_location_cuisine"
+        android:layout_below="@id/frag_location_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Market"
+        android:textSize="14sp"/>
+
+    <ImageView
+        android:id="@+id/frag_location_thumbDown"
+        android:layout_alignParentRight="true"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:src="@android:drawable/presence_online"
+        android:adjustViewBounds="true"/>
+    <ImageView
+        android:id="@+id/frag_location_thumbUp"
+        android:layout_toLeftOf="@id/frag_location_thumbDown"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:src="@android:drawable/presence_online"
+        android:adjustViewBounds="true"/>
+    <TextView
+        android:id="@+id/frag_location_score"
+        android:layout_toLeftOf="@id/frag_location_thumbUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5"
+        android:padding="5dp"
+        android:textSize="24sp"/>
+
+</RelativeLayout>
