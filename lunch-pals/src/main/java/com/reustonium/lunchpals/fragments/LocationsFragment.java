@@ -57,10 +57,10 @@ public class LocationsFragment extends Fragment {
         super.onResume();
         showLoadingUI(true);
 
-        updateLocations();
         //TODO Preload AutoComplete
         autoCompleteTextView.setAdapter(locationAdapter);
-
+        listView.setAdapter(locationAdapter);
+        updateLocations();
     }
 
     private void updateLocations(){

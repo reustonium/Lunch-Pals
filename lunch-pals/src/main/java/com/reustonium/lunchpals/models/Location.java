@@ -16,4 +16,9 @@ public class Location extends ParseObject{
     public void setName(String name){
         put("name", name);
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

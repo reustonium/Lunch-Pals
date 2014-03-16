@@ -18,6 +18,8 @@
 
     <AutoCompleteTextView
         android:id="@+id/location_autoComplete"
+        android:completionThreshold="1"
+        android:hint="enter a location..."
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
