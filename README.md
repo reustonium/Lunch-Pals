@@ -2,4 +2,5 @@ Lunch-Pals [![Build Status](https://travis-ci.org/reustonium/Lunch-Pals.png?bran
 ==========
 
 Android App which allows pals to coordinate lunchtime, currently in closed alpha.
-<img align="center" src="screenshots/LP_ScreenShot_v0.3.0.png" width="100" height="auto"/>
+<br>
+<img align="center" src="screenshots/LP_ScreenShot_v0.3.0.png" width="350" height="auto"/>
