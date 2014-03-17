@@ -9,6 +9,16 @@ import com.parse.ParseObject;
 @ParseClassName("Location")
 public class Location extends ParseObject{
 
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    int score;
+
     public String getName(){
         return(getString("name"));
     }
@@ -20,5 +30,9 @@ public class Location extends ParseObject{
     @Override
     public String toString() {
         return getName();
+    }
+
+    public String getTown(){
+        return (getString("town"));
     }
 }

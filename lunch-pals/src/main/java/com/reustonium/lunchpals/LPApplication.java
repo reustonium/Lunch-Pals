@@ -7,6 +7,7 @@ import com.parse.ParseObject;
 import com.reustonium.lunchpals.models.Location;
 import com.reustonium.lunchpals.models.LocationVote;
 import com.reustonium.lunchpals.models.Nudge;
+import com.reustonium.lunchpals.models.Vote;
 
 /**
  * Created by Andrew on 2/2/14.
@@ -19,6 +20,7 @@ public class LPApplication extends Application {
         ParseObject.registerSubclass(Nudge.class);
         ParseObject.registerSubclass(Location.class);
         ParseObject.registerSubclass(LocationVote.class);
+        ParseObject.registerSubclass(Vote.class);
         Parse.initialize(this, AppConsts.APPID, AppConsts.CLIENTKEY);
     }
 }

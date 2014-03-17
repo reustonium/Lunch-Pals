@@ -14,7 +14,7 @@
         android:textSize="24sp"
         android:text="Wegmans"/>
     <TextView
-        android:id="@+id/frag_location_cuisine"
+        android:id="@+id/frag_location_town"
         android:layout_below="@id/frag_location_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
