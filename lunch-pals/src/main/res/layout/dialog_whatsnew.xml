@@ -10,6 +10,17 @@
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:textStyle="bold"
+        android:text="Version 0.3.0"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="- New AutoComplete Editbox for picking a Location\n- New ~900 Restaurants Thx TD!\n- New Selecting a Location cast's a Vote"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:textStyle="bold"
         android:text="Version 0.2.12"/>
 
     <TextView
