@@ -25,4 +25,5 @@ public class Status extends ParseObject {
     public void setHaz(int haz) {
         put("haz", haz);
     }
+
 }

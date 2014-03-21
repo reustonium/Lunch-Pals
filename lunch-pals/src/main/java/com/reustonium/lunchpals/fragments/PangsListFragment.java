@@ -15,22 +15,21 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.reustonium.lunchpals.LPUtil;
 import com.reustonium.lunchpals.R;
-import com.reustonium.lunchpals.StatusManager;
 import com.reustonium.lunchpals.models.Nudge;
 import com.reustonium.lunchpals.models.Status;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,6 +47,8 @@ public class PangsListFragment extends Fragment {
         ProgressBar progress;
         LinearLayout switchLayout;
         RadioGroup radioGroup;
+        Status mStatus;
+        Date today;
 
         public PangsListFragment() {
 
@@ -64,7 +65,6 @@ public class PangsListFragment extends Fragment {
             progress = (ProgressBar) rootView.findViewById(R.id.home_progressbar);
             switchLayout = (LinearLayout) rootView.findViewById(R.id.home_switch);
             radioGroup = (RadioGroup) rootView.findViewById(R.id.hazRadioGroup);
-
             radioGroup.setOnCheckedChangeListener(new OnStatusChanged());
 
             return rootView;
@@ -76,33 +76,29 @@ public class PangsListFragment extends Fragment {
 
             showLoadingUI(true);
 
+            today = new DateTime(DateTimeZone.getDefault()).withTimeAtStartOfDay().toDate();
             final ParseUser user = ParseUser.getCurrentUser();
-            user.put("pangsUpdatedAt", new Date());
-            user.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    UpdateStatus();
-                }
-            });
+            try {
+                mStatus = LPUtil.getStatus(user, today);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
-            user.fetchInBackground(new GetCallback<ParseObject>() {
-                @Override
-                public void done(ParseObject parseObject, ParseException e) {
-                    switch (parseObject.getInt("status")){
-                        case 0:
-                            radioGroup.check(R.id.btn_nohaz);
-                            break;
-                        case 1:
-                            radioGroup.check(R.id.btn_mayhaz);
-                            break;
-                        case 2:
-                            radioGroup.check(R.id.btn_haz);
-                            break;
-                        default:
-                            radioGroup.check(R.id.btn_nohaz);
-                    }
+            if (mStatus != null) {
+                switch(mStatus.getHaz()){
+                    case 0:
+                        radioGroup.check(R.id.btn_nohaz);
+                        break;
+                    case 1:
+                        radioGroup.check(R.id.btn_mayhaz);
+                        break;
+                    case 2:
+                        radioGroup.check(R.id.btn_haz);
+                        break;
+                    default:
+                        radioGroup.check(R.id.btn_nohaz);
                 }
-            });
+            }
 
             listView.setAdapter(this.mAdapter);
             listView.setOnItemClickListener(new PalsListOnClickListener());
@@ -156,12 +152,10 @@ public class PangsListFragment extends Fragment {
                     default:
                         status = 0;
                 }
-
-                //TODO Set Status Code
-                StatusManager statusManager = new StatusManager();
-                statusManager.SetStatus(user, status);
-
-                user.put("status", status);
+                if (mStatus != null) {
+                    mStatus.setHaz(status);
+                }
+                mStatus.saveInBackground();
                 user.put("pangsUpdatedAt", new Date());
                 user.saveInBackground(new SaveCallback() {
                     @Override

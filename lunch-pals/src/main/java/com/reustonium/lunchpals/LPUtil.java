@@ -1,5 +1,12 @@
 package com.reustonium.lunchpals;
 
+import com.parse.GetCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.reustonium.lunchpals.models.Status;
+
 import java.util.Date;
 
 /**
@@ -29,6 +36,17 @@ public class LPUtil {
 
         //Throw an exception instead?
         return null;
+    }
+
+    public static Status getStatus(ParseUser user, Date today) throws ParseException {
+        ParseQuery<Status> query = ParseQuery.getQuery("Status");
+        query.whereEqualTo("user", user);
+        query.whereGreaterThan("createdAt", today);
+        if (query.getFirst() != null) {
+            return query.getFirst();
+        } else{
+            return new Status();
+        }
     }
 
 }
