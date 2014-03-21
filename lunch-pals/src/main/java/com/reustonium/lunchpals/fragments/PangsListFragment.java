@@ -28,7 +28,9 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.reustonium.lunchpals.LPUtil;
 import com.reustonium.lunchpals.R;
+import com.reustonium.lunchpals.StatusManager;
 import com.reustonium.lunchpals.models.Nudge;
+import com.reustonium.lunchpals.models.Status;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -139,6 +141,7 @@ public class PangsListFragment extends Fragment {
 
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
+
                 int status;
                 switch(i){
                     case R.id.btn_nohaz:
@@ -153,6 +156,10 @@ public class PangsListFragment extends Fragment {
                     default:
                         status = 0;
                 }
+
+                //TODO Set Status Code
+                StatusManager statusManager = new StatusManager();
+                statusManager.SetStatus(user, status);
 
                 user.put("status", status);
                 user.put("pangsUpdatedAt", new Date());

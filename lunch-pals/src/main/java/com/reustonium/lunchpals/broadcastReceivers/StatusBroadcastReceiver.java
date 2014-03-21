@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.reustonium.lunchpals.models.Status;
 
 import java.util.Date;
 
@@ -21,6 +23,10 @@ public class StatusBroadcastReceiver extends BroadcastReceiver {
         String action = intent.getAction();
 
         ParseUser user = ParseUser.getCurrentUser();
+
+        Status status;
+        ParseQuery<Status> query = ParseQuery.getQuery("Status");
+
         user.put("pangsUpdatedAt", new Date());
 
         if(action.equals("com.reustonium.lunchpals.HAZPANGS")){
