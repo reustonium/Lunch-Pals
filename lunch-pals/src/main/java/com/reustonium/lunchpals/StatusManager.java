@@ -1,5 +1,7 @@
 package com.reustonium.lunchpals;
 
+import android.util.Log;
+
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -38,6 +40,8 @@ public class StatusManager {
                 if (e == null && status != null) {
                     Date created = status.getCreatedAt();
                     Date today = new Date();
+                    Date other = new Date();
+                    Log.v("!!!", String.format("compare: %d",today.compareTo(other)));
                     if (created.compareTo(today) == 0) {
                         //update existing status
                         status.setHaz(haz);
