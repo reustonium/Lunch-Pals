@@ -1,14 +1,17 @@
 package com.reustonium.lunchpals.broadcastReceivers;
 
-import android.app.NotificationManager;
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.preview.support.v4.app.NotificationManagerCompat;
+import android.preview.support.wearable.notifications.WearableNotifications;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.reustonium.lunchpals.R;
+import com.reustonium.lunchpals.activities.SplashActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,7 +22,9 @@ import org.json.JSONObject;
 public class NudgeBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.v("!!!", "notification started");
+        //ContentIntent
+        Intent lpIntent = new Intent(context, SplashActivity.class);
+        PendingIntent lpPendingIntent = PendingIntent.getBroadcast(context, 005, lpIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         //Haz Pangs Intent
         Intent hazIntent = new Intent();
@@ -43,15 +48,19 @@ public class NudgeBroadcastReceiver extends BroadcastReceiver {
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(context)
                             .setSmallIcon(R.drawable.ic_launcher)
+                            .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher))
                             .setContentTitle("Haz Pangs?")
                             .setContentText(String.format("Nudged by %s", from).toString())
-                            .addAction(android.R.drawable.btn_star_big_off, "no-haz", noHazPendingIntent)
+                            .setContentIntent(lpPendingIntent)
+                            .addAction(android.R.drawable.btn_star_big_on, "haz", hazPendingIntent)
                             .addAction(android.R.drawable.ic_menu_help, "may-haz", mayHazPendingIntent)
-                            .addAction(android.R.drawable.btn_star_big_on, "haz", hazPendingIntent);
+                            .addAction(android.R.drawable.btn_star_big_off, "no-haz", noHazPendingIntent);
 
-            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(1, mBuilder.build());
+            Notification notification = new WearableNotifications.Builder(mBuilder)
+                    .setHintHideIcon(true).build();
 
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+            notificationManager.notify(1, notification);
 
         } catch (JSONException e) {
             e.printStackTrace();
