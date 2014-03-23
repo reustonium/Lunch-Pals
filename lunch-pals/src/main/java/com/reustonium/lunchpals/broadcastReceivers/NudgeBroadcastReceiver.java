@@ -48,16 +48,18 @@ public class NudgeBroadcastReceiver extends BroadcastReceiver {
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(context)
                             .setSmallIcon(R.drawable.ic_launcher)
-                            .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher))
                             .setContentTitle("Haz Pangs?")
                             .setContentText(String.format("Nudged by %s", from).toString())
                             .setContentIntent(lpPendingIntent)
                             .addAction(android.R.drawable.btn_star_big_on, "haz", hazPendingIntent)
                             .addAction(android.R.drawable.ic_menu_help, "may-haz", mayHazPendingIntent)
-                            .addAction(android.R.drawable.btn_star_big_off, "no-haz", noHazPendingIntent);
+                            .addAction(android.R.drawable.btn_star_big_off, "no-haz", noHazPendingIntent)
+                            .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(BitmapFactory.decodeResource(context.getResources(), R.drawable.lunchpal)));
+
 
             Notification notification = new WearableNotifications.Builder(mBuilder)
-                    .setHintHideIcon(true).build();
+                    .setHintHideIcon(true)
+                    .build();
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
             notificationManager.notify(1, notification);
