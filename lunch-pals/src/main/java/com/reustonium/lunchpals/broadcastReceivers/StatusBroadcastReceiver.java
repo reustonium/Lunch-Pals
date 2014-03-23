@@ -41,15 +41,7 @@ public class StatusBroadcastReceiver extends BroadcastReceiver {
         }
 
         status.saveInBackground();
-        user.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                Intent update = new Intent();
-                update.setAction("com.reustonium.lunchpals.UPDATELIST");
-                update.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.sendBroadcast(update);
-            }
-        });
+        user.saveInBackground();
 
         NotificationManager nManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         nManager.cancel(1);

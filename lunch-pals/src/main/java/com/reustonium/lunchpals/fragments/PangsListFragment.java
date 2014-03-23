@@ -18,9 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -49,7 +47,7 @@ public class PangsListFragment extends Fragment {
         ProgressBar progress;
         LinearLayout switchLayout;
         RadioGroup radioGroup;
-        UpdateListReceiver updateListReceiver;
+        int status;
 
         public PangsListFragment() {
 
@@ -68,7 +66,6 @@ public class PangsListFragment extends Fragment {
             radioGroup = (RadioGroup) rootView.findViewById(R.id.hazRadioGroup);
 
             radioGroup.setOnCheckedChangeListener(new OnStatusChanged());
-            updateListReceiver = new UpdateListReceiver();
 
             return rootView;
         }
@@ -76,8 +73,6 @@ public class PangsListFragment extends Fragment {
         @Override
         public void onResume() {
             super.onResume();
-            getActivity().registerReceiver(updateListReceiver, new IntentFilter("com.reustonium.lunchpals.UPDATELIST"));
-
 
             showLoadingUI(true);
 
@@ -96,12 +91,15 @@ public class PangsListFragment extends Fragment {
                     switch (parseObject.getInt("status")){
                         case 0:
                             radioGroup.check(R.id.btn_nohaz);
+                            status=0;
                             break;
                         case 1:
                             radioGroup.check(R.id.btn_mayhaz);
+                            status=1;
                             break;
                         case 2:
                             radioGroup.check(R.id.btn_haz);
+                            status=2;
                             break;
                         default:
                             radioGroup.check(R.id.btn_nohaz);
@@ -113,15 +111,10 @@ public class PangsListFragment extends Fragment {
             listView.setOnItemClickListener(new PalsListOnClickListener());
         }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        getActivity().unregisterReceiver(updateListReceiver);
-    }
-
     public void UpdateStatus(){
             final ParseQuery<ParseUser> query = ParseUser.getQuery();
             query.orderByDescending("pangsUpdatedAt");
+            query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ONLY);
 
             mAdapter.clear();
             query.findInBackground(new FindCallback<ParseUser>() {
@@ -155,12 +148,15 @@ public class PangsListFragment extends Fragment {
                 switch(i){
                     case R.id.btn_nohaz:
                         statusIntent.setAction("com.reustonium.lunchpals.NOHAZPANGS");
+                        status=0;
                         break;
                     case R.id.btn_mayhaz:
                         statusIntent.setAction("com.reustonium.lunchpals.MAYHAZPANGS");
+                        status=1;
                         break;
                     case R.id.btn_haz:
                         statusIntent.setAction("com.reustonium.lunchpals.HAZPANGS");
+                        status=2;
                         break;
                 }
 
@@ -238,18 +234,35 @@ public class PangsListFragment extends Fragment {
 
                 updatedAt.setText(String.format("%s since last updated", timeString));
 
-                switch(users.get(position).getInt("status")){
-                    case 0:
-                        indicator.setImageResource(android.R.drawable.presence_busy);
-                        break;
-                    case 1:
-                        indicator.setImageResource(android.R.drawable.presence_away);
-                        break;
-                    case 2:
-                        indicator.setImageResource(android.R.drawable.presence_online);
-                        break;
-                    default:
-                        indicator.setImageResource(android.R.drawable.presence_busy);
+                if (users.get(position).getUsername().equals(ParseUser.getCurrentUser().getUsername())) {
+                    switch (status) {
+                        case 0:
+                            indicator.setImageResource(android.R.drawable.presence_busy);
+                            break;
+                        case 1:
+                            indicator.setImageResource(android.R.drawable.presence_away);
+                            break;
+                        case 2:
+                            indicator.setImageResource(android.R.drawable.presence_online);
+                            break;
+                        default:
+                            indicator.setImageResource(android.R.drawable.presence_offline);
+                    }
+                } else {
+
+                    switch (users.get(position).getInt("status")) {
+                        case 0:
+                            indicator.setImageResource(android.R.drawable.presence_busy);
+                            break;
+                        case 1:
+                            indicator.setImageResource(android.R.drawable.presence_away);
+                            break;
+                        case 2:
+                            indicator.setImageResource(android.R.drawable.presence_online);
+                            break;
+                        default:
+                            indicator.setImageResource(android.R.drawable.presence_offline);
+                    }
                 }
 
                 Date now = new Date();
@@ -260,11 +273,5 @@ public class PangsListFragment extends Fragment {
             }
         }
 
-    private class UpdateListReceiver  extends BroadcastReceiver{
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            UpdateStatus();
-        }
-    }
 }
 
