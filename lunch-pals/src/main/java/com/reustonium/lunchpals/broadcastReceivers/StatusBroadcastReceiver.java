@@ -24,9 +24,6 @@ public class StatusBroadcastReceiver extends BroadcastReceiver {
 
         ParseUser user = ParseUser.getCurrentUser();
 
-        Status status;
-        ParseQuery<Status> query = ParseQuery.getQuery("Status");
-
         user.put("pangsUpdatedAt", new Date());
 
         if(action.equals("com.reustonium.lunchpals.HAZPANGS")){

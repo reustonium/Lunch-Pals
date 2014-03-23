@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,21 +16,20 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.reustonium.lunchpals.LPUtil;
 import com.reustonium.lunchpals.R;
 import com.reustonium.lunchpals.models.Nudge;
-import com.reustonium.lunchpals.models.Status;
-
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,8 +47,6 @@ public class PangsListFragment extends Fragment {
         ProgressBar progress;
         LinearLayout switchLayout;
         RadioGroup radioGroup;
-        Status mStatus;
-        Date today;
 
         public PangsListFragment() {
 
@@ -65,6 +63,7 @@ public class PangsListFragment extends Fragment {
             progress = (ProgressBar) rootView.findViewById(R.id.home_progressbar);
             switchLayout = (LinearLayout) rootView.findViewById(R.id.home_switch);
             radioGroup = (RadioGroup) rootView.findViewById(R.id.hazRadioGroup);
+
             radioGroup.setOnCheckedChangeListener(new OnStatusChanged());
 
             return rootView;
@@ -76,29 +75,33 @@ public class PangsListFragment extends Fragment {
 
             showLoadingUI(true);
 
-            today = new DateTime(DateTimeZone.getDefault()).withTimeAtStartOfDay().toDate();
             final ParseUser user = ParseUser.getCurrentUser();
-            try {
-                mStatus = LPUtil.getStatus(user, today);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-            if (mStatus != null) {
-                switch(mStatus.getHaz()){
-                    case 0:
-                        radioGroup.check(R.id.btn_nohaz);
-                        break;
-                    case 1:
-                        radioGroup.check(R.id.btn_mayhaz);
-                        break;
-                    case 2:
-                        radioGroup.check(R.id.btn_haz);
-                        break;
-                    default:
-                        radioGroup.check(R.id.btn_nohaz);
+            user.put("pangsUpdatedAt", new Date());
+            user.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    UpdateStatus();
                 }
-            }
+            });
+
+            user.fetchInBackground(new GetCallback<ParseObject>() {
+                @Override
+                public void done(ParseObject parseObject, ParseException e) {
+                    switch (parseObject.getInt("status")){
+                        case 0:
+                            radioGroup.check(R.id.btn_nohaz);
+                            break;
+                        case 1:
+                            radioGroup.check(R.id.btn_mayhaz);
+                            break;
+                        case 2:
+                            radioGroup.check(R.id.btn_haz);
+                            break;
+                        default:
+                            radioGroup.check(R.id.btn_nohaz);
+                    }
+                }
+            });
 
             listView.setAdapter(this.mAdapter);
             listView.setOnItemClickListener(new PalsListOnClickListener());
@@ -133,39 +136,24 @@ public class PangsListFragment extends Fragment {
         }
 
         class OnStatusChanged implements RadioGroup.OnCheckedChangeListener{
-            ParseUser user = ParseUser.getCurrentUser();
 
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-
-                int status;
+                Intent statusIntent = new Intent();
                 switch(i){
                     case R.id.btn_nohaz:
-                        status = 0;
+                        statusIntent.setAction("com.reustonium.lunchpals.NOHAZPANGS");
                         break;
                     case R.id.btn_mayhaz:
-                        status = 1;
+                        statusIntent.setAction("com.reustonium.lunchpals.MAYHAZPANGS");
                         break;
                     case R.id.btn_haz:
-                        status = 2;
+                        statusIntent.setAction("com.reustonium.lunchpals.HAZPANGS");
                         break;
-                    default:
-                        status = 0;
                 }
-                if (mStatus != null) {
-                    mStatus.setHaz(status);
-                }
-                mStatus.saveInBackground();
-                user.put("pangsUpdatedAt", new Date());
-                user.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e != null) {
-                            e.printStackTrace();
-                        }
-                        UpdateStatus();
-                    }
-                });
+
+                getActivity().sendBroadcast(statusIntent);
+                UpdateStatus();
             }
 
         }
