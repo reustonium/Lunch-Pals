@@ -19,39 +19,35 @@ import java.util.Date;
  */
 public class StatusBroadcastReceiver extends BroadcastReceiver {
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, final Intent intent) {
         String action = intent.getAction();
 
         ParseUser user = ParseUser.getCurrentUser();
-
+        Status status = new Status();
+        status.setUser(user);
         user.put("pangsUpdatedAt", new Date());
 
         if(action.equals("com.reustonium.lunchpals.HAZPANGS")){
             user.put("status", 2);
-            Toast toast = Toast.makeText(context, "HAZ Pangs!", Toast.LENGTH_LONG);
-            toast.show();
+            status.setHaz(2);
         }
         else if (action.equals("com.reustonium.lunchpals.NOHAZPANGS")){
             user.put("status", 0);
-            Toast toast = Toast.makeText(context, "NO Pangs!!", Toast.LENGTH_LONG);
-            toast.show();
+            status.setHaz(0);
         }
         else if (action.equals("com.reustonium.lunchpals.MAYHAZPANGS")){
             user.put("status", 1);
-            Toast toast = Toast.makeText(context, "MAY HAZ Pangs!!", Toast.LENGTH_LONG);
-            toast.show();
-        }
-        else {
-            Toast toast = Toast.makeText(context, "You Borked it!", Toast.LENGTH_LONG);
-            toast.show();
+            status.setHaz(1);
         }
 
+        status.saveInBackground();
         user.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                if (e != null) {
-                    e.printStackTrace();
-                }
+                Intent update = new Intent();
+                update.setAction("com.reustonium.lunchpals.UPDATELIST");
+                update.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.sendBroadcast(update);
             }
         });
 

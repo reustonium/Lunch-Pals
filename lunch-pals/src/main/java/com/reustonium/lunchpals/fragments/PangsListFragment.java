@@ -2,9 +2,11 @@ package com.reustonium.lunchpals.fragments;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +49,7 @@ public class PangsListFragment extends Fragment {
         ProgressBar progress;
         LinearLayout switchLayout;
         RadioGroup radioGroup;
+        UpdateListReceiver updateListReceiver;
 
         public PangsListFragment() {
 
@@ -65,6 +68,7 @@ public class PangsListFragment extends Fragment {
             radioGroup = (RadioGroup) rootView.findViewById(R.id.hazRadioGroup);
 
             radioGroup.setOnCheckedChangeListener(new OnStatusChanged());
+            updateListReceiver = new UpdateListReceiver();
 
             return rootView;
         }
@@ -72,6 +76,8 @@ public class PangsListFragment extends Fragment {
         @Override
         public void onResume() {
             super.onResume();
+            getActivity().registerReceiver(updateListReceiver, new IntentFilter("com.reustonium.lunchpals.UPDATELIST"));
+
 
             showLoadingUI(true);
 
@@ -107,7 +113,13 @@ public class PangsListFragment extends Fragment {
             listView.setOnItemClickListener(new PalsListOnClickListener());
         }
 
-        public void UpdateStatus(){
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(updateListReceiver);
+    }
+
+    public void UpdateStatus(){
             final ParseQuery<ParseUser> query = ParseUser.getQuery();
             query.orderByDescending("pangsUpdatedAt");
 
@@ -247,5 +259,12 @@ public class PangsListFragment extends Fragment {
                 return row;
             }
         }
+
+    private class UpdateListReceiver  extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            UpdateStatus();
+        }
     }
+}
 
