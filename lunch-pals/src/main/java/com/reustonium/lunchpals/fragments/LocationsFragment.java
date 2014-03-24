@@ -39,14 +39,13 @@ public class LocationsFragment extends Fragment {
     AutoCompleteTextView autoCompleteTextView;
     ListView listView;
     AutoLocationAdapter autoLocationAdapter;
-    VoteListAdapter voteAdapter;
+    //VoteListAdapter voteAdapter;
     ArrayList<Location> locations;
-    ArrayList<Location> votedLocations;
+    ArrayList<Vote> votes;
 
     public LocationsFragment() {
 
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,9 +56,9 @@ public class LocationsFragment extends Fragment {
         autoCompleteTextView = (AutoCompleteTextView) rootView.findViewById(R.id.location_autoComplete);
         listView = (ListView) rootView.findViewById(R.id.location_listView);
         locations = new ArrayList<Location>();
-        votedLocations = new ArrayList<Location>();
+        votes = new ArrayList<Vote>();
         autoLocationAdapter = new AutoLocationAdapter(getActivity(), R.layout.fragment_locations_auto_row,  locations);
-        voteAdapter = new VoteListAdapter(getActivity(), R.layout.fragment_locations_row, votedLocations);
+        //voteAdapter = new VoteListAdapter(getActivity(), R.layout.fragment_locations_row, votes);
 
         return rootView;
     }
@@ -83,7 +82,7 @@ public class LocationsFragment extends Fragment {
                 //TODO update listview
             }
         });
-        listView.setAdapter(voteAdapter);
+        //listView.setAdapter(voteAdapter);
         getLocations();
         getVotes();
         }
@@ -92,23 +91,14 @@ public class LocationsFragment extends Fragment {
         ParseQuery<Vote> query = ParseQuery.getQuery(Vote.class);
         query.setLimit(1000);
 
-        voteAdapter.clear();
+/*        voteAdapter.clear();
         query.findInBackground(new FindCallback<Vote>() {
             @Override
             public void done(List<Vote> votes, ParseException e) {
-                ParseQuery<Location> q = ParseQuery.getQuery(Location.class);
-                for(Vote v:votes){
-                    q.whereEqualTo("location", v.getLocation());
-                }
-                q.findInBackground(new FindCallback<Location>() {
-                    @Override
-                    public void done(List<Location> locations, ParseException e) {
-                        voteAdapter.addAll(locations);
-                        voteAdapter.notifyDataSetChanged();
-                    }
-                });
+                voteAdapter.addAll(votes);
+                voteAdapter.notifyDataSetChanged();
             }
-        });
+        });*/
     }
 
     private void getLocations(){
@@ -230,12 +220,12 @@ public class LocationsFragment extends Fragment {
         }
     }
 
-    class VoteListAdapter extends ArrayAdapter<Location>{
-        ArrayList<Location> locations;
+    class VoteListAdapter extends ArrayAdapter<Vote>{
+        ArrayList<Vote> votes;
 
-        public VoteListAdapter(Context context, int layout, ArrayList<Location> locations) {
-            super(context, layout, locations);
-            this.locations = locations;
+        public VoteListAdapter(Context context, int layout, ArrayList<Vote> votes) {
+            super(context, layout, votes);
+            this.votes = votes;
         }
 
         @Override
@@ -247,19 +237,19 @@ public class LocationsFragment extends Fragment {
                 v = inflater.inflate(R.layout.fragment_locations_row, null);
             }
 
-            Location l = locations.get(position);
+            Vote vote = votes.get(position);
 
-            if (l != null) {
+            if (vote != null) {
 
                 TextView name = (TextView) v.findViewById(R.id.frag_location_name);
                 TextView town = (TextView) v.findViewById(R.id.frag_location_town);
                 ImageView thumbUp = (ImageView)v.findViewById(R.id.frag_location_thumbUp);
 
                 if (name != null){
-                    name.setText(l.getName());
+                    name.setText(vote.getLocation().getName());
                 }
                 if (town != null){
-                    town.setText(l.getTown());
+                    town.setText(vote.getLocation().getTown());
                 }
                 if(thumbUp != null){
                     thumbUp.setImageResource(R.drawable.ic_thumbupon);

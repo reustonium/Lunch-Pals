@@ -1,13 +1,14 @@
 package com.reustonium.lunchpals.broadcastReceivers;
 
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.preview.support.v4.app.NotificationManagerCompat;
-import android.preview.support.wearable.notifications.WearableNotifications;
+/*import android.preview.support.v4.app.NotificationManagerCompat;
+import android.preview.support.wearable.notifications.WearableNotifications;*/
 import android.support.v4.app.NotificationCompat;
 
 import com.reustonium.lunchpals.R;
@@ -56,13 +57,16 @@ public class NudgeBroadcastReceiver extends BroadcastReceiver {
                             .addAction(android.R.drawable.btn_star_big_off, "no-haz", noHazPendingIntent)
                             .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(BitmapFactory.decodeResource(context.getResources(), R.drawable.lunchpal)));
 
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(1, mBuilder.build());
 
-            Notification notification = new WearableNotifications.Builder(mBuilder)
+            //AndroidWear Support, waiting for library to exit preview
+/*            Notification notification = new WearableNotifications.Builder(mBuilder)
                     .setHintHideIcon(true)
                     .build();
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-            notificationManager.notify(1, notification);
+            notificationManager.notify(1, notification);*/
 
         } catch (JSONException e) {
             e.printStackTrace();
