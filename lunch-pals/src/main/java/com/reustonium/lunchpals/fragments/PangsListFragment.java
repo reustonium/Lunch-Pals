@@ -2,11 +2,9 @@ package com.reustonium.lunchpals.fragments;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,7 +62,6 @@ public class PangsListFragment extends Fragment {
             progress = (ProgressBar) rootView.findViewById(R.id.home_progressbar);
             switchLayout = (LinearLayout) rootView.findViewById(R.id.home_switch);
             radioGroup = (RadioGroup) rootView.findViewById(R.id.hazRadioGroup);
-
             radioGroup.setOnCheckedChangeListener(new OnStatusChanged());
 
             return rootView;
@@ -159,8 +156,9 @@ public class PangsListFragment extends Fragment {
                         status=2;
                         break;
                 }
-
-                getActivity().sendBroadcast(statusIntent);
+                if (ParseUser.getCurrentUser().getInt("status") != status) {
+                    getActivity().sendBroadcast(statusIntent);
+                }
                 UpdateStatus();
             }
 
