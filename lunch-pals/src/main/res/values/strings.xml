@@ -10,5 +10,6 @@
     <string name="title_section2">Locations</string>
     <string name="title_section3">Stats</string>
     <string name="action_settings">Settings</string>
+    <string name="v0p3p0_feat">- New AutoComplete Editbox for picking a Location\n- New ~900 Restaurants Thx TD!\n- New Selecting a Location cast\'s a Vote</string>
 
 </resources>

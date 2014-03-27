@@ -11,44 +11,44 @@
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:textStyle="bold"
-        android:text="Version 0.3.1"/>
+        android:text="@string/v0p3p1"/>
 
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:text="- Status is saved to the cloud, DATA!"/>
-
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:textStyle="bold"
-        android:text="Version 0.3.0"/>
-
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:text="- New AutoComplete Editbox for picking a Location\n- New ~900 Restaurants Thx TD!\n- New Selecting a Location cast's a Vote"/>
+        android:text="@string/v0p3p1_feat"/>
 
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:textStyle="bold"
-        android:text="Version 0.2.12"/>
+        android:text="@string/v0p3p0"/>
 
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:text="- New Status 'MAYHAZ'\n- New Notification to allow for 'MAYHAZ'"/>
+        android:text="@string/v0p3p0_feat"/>
 
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:textStyle="bold"
-        android:text="Version 0.2.11"/>
+        android:text="@string/v0p2p12"/>
 
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:text="- This very changelog!\n- Brought back the 'about' button"/>
+        android:text="@string/v0p2p12_feat"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:textStyle="bold"
+        android:text="@string/v0p2p11"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="@string/v0p2p11_feat"/>
 
 </LinearLayout>

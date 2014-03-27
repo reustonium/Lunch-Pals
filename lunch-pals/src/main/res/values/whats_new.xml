@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="v0p3p1">Version 0.3.1</string>
+    <string name="v0p3p1_feat">- Status is saved to the cloud, DATA!</string>
+    <string name="v0p3p0">Version 0.3.0</string>
+    <string name="v0p2p12">Version 0.2.12</string>
+    <string name="v0p2p12_feat">- New Status \'MAYHAZ\'\n- New Notification to allow for \'MAYHAZ\'</string>
+    <string name="v0p2p11">Version 0.2.11</string>
+    <string name="v0p2p11_feat">- This very changelog!\n- Brought back the \'about\' button</string>
+</resources>
