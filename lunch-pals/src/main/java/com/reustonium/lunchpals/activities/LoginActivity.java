@@ -147,24 +147,19 @@ public class LoginActivity extends Activity {
             mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
             showProgress(true);
 
-            //TODO Login
+            //TODO Refactor to LunchPalUser
+            //TODO Handle Installation stuff in Register not LOGIN
             ParseUser.logInInBackground(mUsername, mPassword, new LogInCallback() {
                 @Override
                 public void done(ParseUser parseUser, ParseException e) {
                     if(parseUser !=null){
 
-                        //TODO refactor this to a ParseHelper Class
                         PushService.setDefaultPushCallback(getApplicationContext(), SplashActivity.class);
                         PushService.subscribe(getApplicationContext(),
                                 String.format("user_%s", parseUser.getObjectId()),
                                 SplashActivity.class);
                         PushService.subscribe(getApplicationContext(), "updates", SplashActivity.class);
-                        ParseInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                                Log.v("!!!", "boobs");
-                            }
-                        });
+                        ParseInstallation.getCurrentInstallation().saveInBackground();
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                         startActivity(intent);
                         finish();
@@ -182,6 +177,7 @@ public class LoginActivity extends Activity {
         }
     }
 
+    //TODO refactor to LunchPalsUser
     public void attemptRegister() {
 
         // Reset errors.

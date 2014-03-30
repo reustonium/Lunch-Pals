@@ -116,7 +116,6 @@ public class HomeActivity extends Activity implements ActionBar.TabListener{
                     }
                 });
         builder.create().show();
-
     }
 
     @Override
@@ -131,6 +130,7 @@ public class HomeActivity extends Activity implements ActionBar.TabListener{
         switch (item.getItemId()){
             case R.id.home_ab_logout:
 
+                //TODO move this to logoutfragment
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Log Out?")
                         .setMessage("You will be logged out of LunchPals!")
@@ -164,6 +164,7 @@ public class HomeActivity extends Activity implements ActionBar.TabListener{
                 return true;
 
             case R.id.home_ab_whatsnew:
+                //TODO move to whatsnewfragment
                 showWhatsNew();
                 return true;
 
