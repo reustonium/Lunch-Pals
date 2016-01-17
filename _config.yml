@@ -10,7 +10,8 @@ relative_permalinks: true
 title:            Lunch Pals
 tagline:          'Have lunch with your pals!'
 description:      'An android app that makes planning lunch with your friends easy and fun.'
-url:              http://lunchpals.reustonium.com
+url:              https://lunchpals.reustonium.com
+enforce_ssl:      lunchpals.reustonium.com
 baseurl:          /
 
 author:
