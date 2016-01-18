@@ -1,0 +1,12 @@
+language: android
+
+android:
+  components:
+    - platform-tools
+    - tools
+
+    # Build Tools
+    - build-tools-23.0.2
+
+    # Android SDK version
+    - android-23
