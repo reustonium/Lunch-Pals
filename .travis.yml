@@ -30,7 +30,7 @@ cache:
 
 before_install:
   - chmod +x gradlew
-  - pip install codecov
+  - pip install --user codecov
 
 before_script:
   - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
