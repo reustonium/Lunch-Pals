@@ -4,7 +4,7 @@ jdk: oraclejdk7
 
 env:
   matrix:
-    - ANDROID_TARGET=android-23 ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-18 ANDROID_ABI=armeabi-v7a
   global:
     - ADB_INSTALL_TIMEOUT=10
 
@@ -23,7 +23,7 @@ android:
     - extra-android-support
 
     # Emulator
-    - sys-img-armeabi-v7a-android-22
+    - sys-img-armeabi-v7a-android-18
 
 cache:
   directories:
