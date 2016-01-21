@@ -32,6 +32,7 @@ cache:
     - $HOME/.gradle/wrapper
 
 before_install:
+  - chmod +x gradlew
   - pip install --user codecov
 
 before_script:
