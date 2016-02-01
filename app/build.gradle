@@ -1,4 +1,9 @@
 apply plugin: 'com.android.application'
+//apply from: rootProject.file('gradle/checkstyle.gradle')
+
+def STRING = "String"
+def BOOLEAN = "boolean"
+def INT = "int"
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -10,7 +15,6 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 17
         versionName "0.4.0"
-
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
 
@@ -26,17 +30,12 @@ android {
         mock {
             applicationIdSuffix = ".mock"
         }
-        prod {
-
-        }
     }
 
-    // Remove mockRelease as it's not needed.
-    android.variantFilter { variant ->
-        if(variant.buildType.name.equals('release')
-                && variant.getFlavors().get(0).name.equals('mock')) {
-            variant.setIgnore(true);
-        }
+    //you can use the diamond operator, multi-catch, strings in switches
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 
     // Always show the result of every unit test, even if it passes.
@@ -44,6 +43,10 @@ android {
         testLogging {
             events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
         }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
 }
 
