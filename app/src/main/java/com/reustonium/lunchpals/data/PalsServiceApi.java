@@ -6,7 +6,6 @@ import java.util.List;
  * Created by andrew on 2/4/16.
  */
 public interface PalsServiceApi {
-
     interface PalsServiceCallback<T> {
 
         void onLoaded(T pals);
