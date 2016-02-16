@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply from: '../config/quality/quality.gradle'
 
 android {
     compileSdkVersion 23
@@ -8,6 +9,7 @@ android {
         applicationId "com.reustonium.lunchpals"
         minSdkVersion 16
         targetSdkVersion 23
+        testInstrumentationRunner "${applicationId}.runner.RxAndroidJUnitRunner"
         versionCode 17
         versionName "0.4.0"
     }
