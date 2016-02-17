@@ -63,6 +63,10 @@ android {
     //Needed because of this https://github.com/square/okio/issues/58
     lintOptions {
         warning 'InvalidPackage'
+        // The new gradle plugin com.android.tools.build:gradle:2.0.0-beta5
+        // fails to pick up the debug/AndroidManifest.xml that grants DISABLE_KEYGUARD for testing
+        //TODO Remove this when the gradle plugin reaches 2.0.0-rcX
+        disable 'MissingPermission'
     }
 }
 
