@@ -12,7 +12,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 23
         testInstrumentationRunner "${applicationId}.runner.RxAndroidJUnitRunner"
-        versionCode 17
+        versionCode 4000
         // Major -> Millions, Minor -> Thousands, Bugfix -> Hundreds. E.g 1.3.72 == 1,003,072
         versionName '0.4.0'
     }
@@ -23,7 +23,7 @@ android {
         // TODO Add your release keystore in /keystore folder
         release {
             storeFile file('keystore/release.keystore')
-            keyAlias 'alias'
+            keyAlias 'playstore'
             storePassword "$System.env.APP_KEY"
             keyPassword "$System.env.APP_KEY"
         }
@@ -40,8 +40,8 @@ android {
         release {
             signingConfig signingConfigs.release
 
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled false
+            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         debug {
