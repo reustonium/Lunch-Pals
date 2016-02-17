@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import java.util.Collections;
@@ -52,6 +53,12 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mMainPresenter.attachView(this);
         mMainPresenter.loadRibots();
+
+        // Adding Toolbar to Main screen
+        Toolbar mToolbar = (Toolbar)findViewById(R.id.toolbar);
+        mToolbar.setTitle("Lunch Pals");
+        mToolbar.setTitleTextColor(0xffffffff);
+        setSupportActionBar(mToolbar);
 
         if (getIntent().getBooleanExtra(EXTRA_TRIGGER_SYNC_FLAG, true)) {
             startService(SyncService.getStartIntent(this));
