@@ -1,5 +1,4 @@
 /build
- *iml
- *.iml
- .idea
- keystore/
+*iml
+*.iml
+.idea
