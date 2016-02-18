@@ -55,7 +55,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         mMainPresenter.loadRibots();
 
         // Adding Toolbar to Main screen
-        Toolbar mToolbar = (Toolbar)findViewById(R.id.toolbar);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("Lunch Pals");
         mToolbar.setTitleTextColor(0xffffffff);
         setSupportActionBar(mToolbar);
