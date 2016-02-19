@@ -12,7 +12,6 @@ import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
@@ -23,11 +22,9 @@ import com.reustonium.lunchpals.ui.main.MainActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.core.IsNot.not;
 import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
@@ -75,26 +72,49 @@ public class MainActivityTest {
     }
 
     @Test
-    public void toolbarShow() {
-        List<Ribot> testDataRibots = new ArrayList<>();
-        when(component.getMockDataManager().getRibots())
-                .thenReturn(Observable.just(testDataRibots));
-
-        main.launchActivity(null);
-        onView(withId(R.id.toolbar))
-                .check(matches(withText("INCORRECT TEXT")));
-    }
-
-    @Test
-    public void emptyRibotList() {
-        List<Ribot> testDataRibots = new ArrayList<>();
+    public void listOfRibotsShowsDUP() {
+        List<Ribot> testDataRibots = TestDataFactory.makeListRibots(20);
         when(component.getMockDataManager().getRibots())
                 .thenReturn(Observable.just(testDataRibots));
 
         main.launchActivity(null);
 
-        onView(withText(R.string.empty_ribots)).inRoot(withDecorView(not(main.getActivity()
-                .getWindow().getDecorView()))).check(matches(isDisplayed()));
+        int position = 0;
+        for (Ribot ribot : testDataRibots) {
+            onView(withId(R.id.recycler_view))
+                    .perform(RecyclerViewActions.scrollToPosition(position));
+            String name = String.format("%s %s", ribot.profile.name.first,
+                    ribot.profile.name.last);
+            onView(withText(name))
+                    .check(matches(isDisplayed()));
+            onView(withText(ribot.profile.email))
+                    .check(matches(isDisplayed()));
+            position++;
+        }
     }
+
+
+//    @Test
+//    public void toolbarShow() {
+//        List<Ribot> testDataRibots = new ArrayList<>();
+//        when(component.getMockDataManager().getRibots())
+//                .thenReturn(Observable.just(testDataRibots));
+//
+//        main.launchActivity(null);
+//        onView(withId(R.id.toolbar))
+//                .check(matches(withText("Lunch Pals")));
+//    }
+//
+//    @Test
+//    public void emptyRibotList() {
+//        List<Ribot> testDataRibots = new ArrayList<>();
+//        when(component.getMockDataManager().getRibots())
+//                .thenReturn(Observable.just(testDataRibots));
+//
+//        main.launchActivity(null);
+//
+//        onView(withText(R.string.empty_ribots)).inRoot(withDecorView(not(main.getActivity()
+//                .getWindow().getDecorView()))).check(matches(isDisplayed()));
+//    }
 
 }
