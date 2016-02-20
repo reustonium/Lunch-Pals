@@ -1,4 +1,4 @@
-# Lunch Pals
+# Lunch Pals [![Build Status](https://travis-ci.org/reustonium/Lunch-Pals.svg?branch=develop)](https://travis-ci.org/reustonium/Lunch-Pals)
 
 ## Architecture
 
