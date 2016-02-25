@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.main.MainActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -15,14 +15,13 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <android.support.v7.widget.RecyclerView
-        xmlns:app="http://schemas.android.com/apk/lib/com.reustonium.MainActivity"
         android:id="@+id/recycler_pal_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/md_keylines"
         android:paddingTop="@dimen/md_keylines"
-        android:scrollbars="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:scrollbars="vertical" />
 
 </RelativeLayout>

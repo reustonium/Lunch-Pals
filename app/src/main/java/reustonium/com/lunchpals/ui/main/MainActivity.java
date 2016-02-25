@@ -1,4 +1,4 @@
-package reustonium.com.lunchpals.ui;
+package reustonium.com.lunchpals.ui.main;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
