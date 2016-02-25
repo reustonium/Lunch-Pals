@@ -7,18 +7,20 @@ import com.crashlytics.android.Crashlytics;
 
 import io.fabric.sdk.android.Fabric;
 
-public class LunchpalsApplication extends Application{
+public class LunchpalsApplication extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        if(BuildConfig.DEBUG){
-            Fabric.with(this, new Crashlytics());
-        }
+        final Fabric fabric = new Fabric.Builder(this)
+                .kits(new Crashlytics())
+                .debuggable(BuildConfig.DEBUG)
+                .build();
+        Fabric.with(fabric);
     }
 
-    public static LunchpalsApplication get(Context context){
+    public static LunchpalsApplication get(Context context) {
         return (LunchpalsApplication) context.getApplicationContext();
     }
 }
