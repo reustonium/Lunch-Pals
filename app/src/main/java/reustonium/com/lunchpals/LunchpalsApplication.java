@@ -18,11 +18,12 @@ public class LunchpalsApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        final Fabric fabric = new Fabric.Builder(this)
-                .kits(new Crashlytics())
-                .debuggable(BuildConfig.DEBUG)
-                .build();
-        Fabric.with(fabric);
+        if(BuildConfig.USE_FABRIC) {
+            final Fabric fabric = new Fabric.Builder(this)
+                    .kits(new Crashlytics())
+                    .build();
+            Fabric.with(fabric);
+        }
     }
 
     public static LunchpalsApplication get(Context context) {
