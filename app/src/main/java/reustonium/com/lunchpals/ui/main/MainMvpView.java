@@ -2,7 +2,9 @@ package reustonium.com.lunchpals.ui.main;
 
 import java.util.List;
 
-public interface MainMvpView {
+import reustonium.com.lunchpals.ui.base.MvpView;
+
+public interface MainMvpView extends MvpView {
 
     void showPals(List<String> pals);
 

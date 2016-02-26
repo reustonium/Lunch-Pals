@@ -37,4 +37,8 @@ public class LunchpalsApplication extends Application {
         }
         return mApplicationComponent;
     }
+
+    public void setComponent(ApplicationComponent applicationComponent) {
+        mApplicationComponent = applicationComponent;
+    }
 }

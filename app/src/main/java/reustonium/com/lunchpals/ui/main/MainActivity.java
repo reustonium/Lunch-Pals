@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,11 +17,13 @@ import reustonium.com.lunchpals.ui.base.BaseActivity;
 
 public class MainActivity extends BaseActivity implements MainMvpView {
 
+    @Inject MainPresenter mMainPresenter;
     @Inject PalsAdapter mPalsAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActivityComponent().inject(this);
         setContentView(R.layout.activity_main);
 
         //Add Toolbar
@@ -35,11 +36,8 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         mRecyclerView.setAdapter(mPalsAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //Dummy some data
-        List<String> mPals = new ArrayList<>();
-        mPals.add("Andy");
-        mPals.add("Jimmy Jamm");
-        showPals(mPals);
+        mMainPresenter.attachView(this);
+        mMainPresenter.loadPals();
     }
 
     @Override
