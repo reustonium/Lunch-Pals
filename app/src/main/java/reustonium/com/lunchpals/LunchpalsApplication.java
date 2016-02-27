@@ -18,7 +18,7 @@ public class LunchpalsApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        if(BuildConfig.USE_FABRIC) {
+        if (BuildConfig.USE_FABRIC) {
             final Fabric fabric = new Fabric.Builder(this)
                     .kits(new Crashlytics())
                     .build();
