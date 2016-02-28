@@ -30,6 +30,7 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
         List<String> mPals = new ArrayList<>();
         mPals.add("Andy");
         mPals.add("Jimmy Jamm");
+        mPals.add("Shaq Fu");
         getmMvpView().showPals(mPals);
     }
 }
