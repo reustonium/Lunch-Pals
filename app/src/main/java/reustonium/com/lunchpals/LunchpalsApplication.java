@@ -3,22 +3,33 @@ package reustonium.com.lunchpals;
 import android.app.Application;
 import android.content.Context;
 
-import com.crashlytics.android.Crashlytics;
+import reustonium.com.lunchpals.injection.component.ApplicationComponent;
+import reustonium.com.lunchpals.injection.component.DaggerApplicationComponent;
+import reustonium.com.lunchpals.injection.module.ApplicationModule;
 
-import io.fabric.sdk.android.Fabric;
+public class LunchpalsApplication extends Application {
 
-public class LunchpalsApplication extends Application{
+    ApplicationComponent mApplicationComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
-
-        if(BuildConfig.DEBUG){
-            Fabric.with(this, new Crashlytics());
-        }
     }
 
-    public static LunchpalsApplication get(Context context){
+    public static LunchpalsApplication get(Context context) {
         return (LunchpalsApplication) context.getApplicationContext();
+    }
+
+    public ApplicationComponent getComponent() {
+        if (mApplicationComponent == null) {
+            mApplicationComponent = DaggerApplicationComponent.builder()
+                    .applicationModule(new ApplicationModule(this))
+                    .build();
+        }
+        return mApplicationComponent;
+    }
+
+    public void setComponent(ApplicationComponent applicationComponent) {
+        mApplicationComponent = applicationComponent;
     }
 }
