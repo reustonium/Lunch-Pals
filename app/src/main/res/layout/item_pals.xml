@@ -13,16 +13,16 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_centerVertical="true"
-        app:srcCompat="@drawable/pal_profile"
+        app:srcCompat="@drawable/pal_face"
         android:src="@drawable/pal_profile"
         />
     <TextView
         android:id="@+id/pal_name"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="?listPreferredItemHeight"
         android:layout_marginLeft="72dp"
         android:layout_marginStart="72dp"
         android:gravity="center_vertical"
-        android:text="THISTHISTAD"/>
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
 </RelativeLayout>
