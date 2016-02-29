@@ -12,7 +12,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.reustonium.lunchpals.ui.base.BaseActivity;
-
 import com.reustonium.lunchpals.R;
 
 

@@ -4,6 +4,7 @@ import dagger.Component;
 import com.reustonium.lunchpals.injection.PerActivity;
 import com.reustonium.lunchpals.injection.module.ActivityModule;
 import com.reustonium.lunchpals.ui.main.MainActivity;
+import com.reustonium.lunchpals.ui.profile.ProfileActivity;
 
 /**
  * This component inject dependencies to all Activities across the application
@@ -13,5 +14,5 @@ import com.reustonium.lunchpals.ui.main.MainActivity;
 public interface ActivityComponent {
 
     void inject(MainActivity mainActivity);
-
+    void inject(ProfileActivity profileActivity);
 }
