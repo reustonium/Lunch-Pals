@@ -30,5 +30,5 @@ env:
 
 #Build, and run tests
 script:
-    - "./gradlew check"
-    - "./gradlew connectedCheck"
+    - "./gradlew check -Dreceipt"
+    - "./gradlew connectedCheck -Dreceipt"
