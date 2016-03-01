@@ -14,7 +14,6 @@
         android:layout_marginStart="16dp"
         android:layout_centerVertical="true"
         app:srcCompat="@drawable/pal_face"
-        android:src="@drawable/pal_profile"
         />
     <TextView
         android:id="@+id/pal_name"
