@@ -33,4 +33,5 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
         mPals.add("Shaq Fu");
         getmMvpView().showPals(mPals);
     }
+
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.reustonium.lunchpals.ui.profile.ProfileActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/profile_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/navheader_height"
+        android:transitionName="@string/transition_toolbar"
+        android:background="@color/colorPrimary">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                tools:ignore="MissingPrefix"
+                android:id="@+id/profile_big"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerInParent="true"
+                android:tint="@color/colorAccent"
+                app:srcCompat="@drawable/pal_face"
+                android:transitionName="@string/transition_image_pal_profile"/>
+            <TextView
+                android:id="@+id/profile_pal_name_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profile_big"
+                android:layout_centerHorizontal="true"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:transitionName="@string/transition_text_pal_name"/>
+
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_toolbar">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Moar Stuff"/>
+    </LinearLayout>
+
+</RelativeLayout>
