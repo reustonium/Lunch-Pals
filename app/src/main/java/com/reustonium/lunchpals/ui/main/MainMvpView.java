@@ -11,4 +11,5 @@ public interface MainMvpView extends MvpView {
     void showPalsEmpty();
 
     void showError();
+
 }

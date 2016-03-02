@@ -21,14 +21,15 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_centerInParent="true"
-                android:tint="@color/colorPrimaryDark"
+                android:tint="@color/colorAccent"
                 app:srcCompat="@drawable/pal_face"/>
             <TextView
+                android:id="@+id/profile_pal_name_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/profile_big"
                 android:layout_centerHorizontal="true"
-                android:text="Mr Jimmy Jamm"/>
+                android:textAppearance="?android:textAppearanceMedium"/>
 
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>

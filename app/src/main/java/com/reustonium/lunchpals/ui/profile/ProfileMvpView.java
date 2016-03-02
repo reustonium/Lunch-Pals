@@ -7,4 +7,5 @@ public interface ProfileMvpView extends MvpView {
     void showProfile(String pal);
 
     void showError();
+
 }

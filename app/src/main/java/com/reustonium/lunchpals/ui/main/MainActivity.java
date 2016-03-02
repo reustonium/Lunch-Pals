@@ -1,5 +1,6 @@
 package com.reustonium.lunchpals.ui.main;
 
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,26 +14,34 @@ import javax.inject.Inject;
 
 import com.reustonium.lunchpals.ui.base.BaseActivity;
 import com.reustonium.lunchpals.R;
+import com.reustonium.lunchpals.ui.profile.ProfileActivity;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 
-public class MainActivity extends BaseActivity implements MainMvpView {
+public class MainActivity extends BaseActivity implements MainMvpView, PalsAdapter.Callback {
 
     @Inject MainPresenter mMainPresenter;
     @Inject PalsAdapter mPalsAdapter;
 
+    @Bind(R.id.toolbar) Toolbar mToolbar;
+    @Bind(R.id.recycler_pal_list) RecyclerView mRecyclerView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivityComponent().inject(this);
         setContentView(R.layout.activity_main);
+        getActivityComponent().inject(this);
+        ButterKnife.bind(this);
 
         //Add Toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorText));
-        setSupportActionBar(toolbar);
+        mToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorText));
+        setSupportActionBar(mToolbar);
 
         //Add RecyclerView
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_pal_list);
+        mPalsAdapter = new PalsAdapter();
+        mPalsAdapter.setCallback(this);
         mRecyclerView.setAdapter(mPalsAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -55,5 +64,12 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     @Override
     public void showError() {
 
+    }
+
+    @Override
+    public void onPalClicked(String palName) {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra(ProfileActivity.EXTRA_PALNAME, palName);
+        startActivity(intent);
     }
 }

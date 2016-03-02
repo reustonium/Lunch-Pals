@@ -2,12 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_pal"
+    android:background="?attr/selectableItemBackground"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <ImageView
         tools:ignore="MissingPrefix"
-        android:id="@+id/pal_profile_image_view"
+        android:id="@+id/image_pal_profile"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginLeft="16dp"
@@ -16,7 +18,7 @@
         app:srcCompat="@drawable/pal_face"
         />
     <TextView
-        android:id="@+id/pal_name"
+        android:id="@+id/text_pal_name"
         android:layout_width="match_parent"
         android:layout_height="?listPreferredItemHeight"
         android:layout_marginLeft="72dp"
