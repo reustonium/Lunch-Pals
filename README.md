@@ -59,3 +59,5 @@ To ensure that your code is valid and stable use check:
 This will run all the code analysis tools and unit tests in the following order:
 
 ![Check Diagram](images/check-task-diagram.png)
+
+> Credit to Ribot's awesome [Android-Boilerplate](https://github.com/ribot/android-boilerplate)
