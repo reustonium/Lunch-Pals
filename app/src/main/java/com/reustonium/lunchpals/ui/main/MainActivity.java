@@ -1,11 +1,14 @@
 package com.reustonium.lunchpals.ui.main;
 
 import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import java.util.Collections;
 import java.util.List;
@@ -67,9 +70,21 @@ public class MainActivity extends BaseActivity implements MainMvpView, PalsAdapt
     }
 
     @Override
-    public void onPalClicked(String palName) {
+    public void onPalClicked(String palName, View profileImage, View textPalName) {
         Intent intent = new Intent(this, ProfileActivity.class);
         intent.putExtra(ProfileActivity.EXTRA_PALNAME, palName);
-        startActivity(intent);
+
+        String transitionNameImage = getString(R.string.transition_image_pal_profile);
+        String transitionNameText = getString(R.string.transition_text_pal_name);
+        String transitionToolbar = getString(R.string.transition_toolbar);
+
+        Pair<View, String> p1 = Pair.create(profileImage, transitionNameImage);
+        Pair<View, String> p2 = Pair.create(textPalName, transitionNameText);
+        Pair<View, String> p3 = Pair.create((View) mToolbar, transitionToolbar);
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(this, p1, p2, p3);
+
+        startActivity(intent, options.toBundle());
     }
 }

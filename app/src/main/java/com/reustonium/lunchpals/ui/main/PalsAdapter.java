@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -73,6 +74,8 @@ public class PalsAdapter extends RecyclerView.Adapter<PalsAdapter.PalsViewHolder
         public TextView textPalName;
         @Bind(R.id.layout_pal)
         public View layoutPal;
+        @Bind(R.id.image_pal_profile)
+        public ImageView imagePalProfile;
         public String palName;
 
         public PalsViewHolder(View itemView) {
@@ -82,7 +85,7 @@ public class PalsAdapter extends RecyclerView.Adapter<PalsAdapter.PalsViewHolder
 
         @OnClick(R.id.layout_pal)
         void onItemClicked() {
-            if (mCallback != null) mCallback.onPalClicked(palName);
+            if (mCallback != null) mCallback.onPalClicked(palName, imagePalProfile, textPalName);
         }
 
         public void setPalName(String palName) {
@@ -91,6 +94,6 @@ public class PalsAdapter extends RecyclerView.Adapter<PalsAdapter.PalsViewHolder
     }
 
     interface Callback {
-        void onPalClicked(String palName);
+        void onPalClicked(String palName, View imagePalProfile, View textPalName);
     }
 }

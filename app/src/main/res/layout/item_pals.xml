@@ -16,6 +16,7 @@
         android:layout_marginStart="16dp"
         android:layout_centerVertical="true"
         app:srcCompat="@drawable/pal_face"
+        android:transitionName="@string/transition_image_pal_profile"
         />
     <TextView
         android:id="@+id/text_pal_name"
@@ -24,6 +25,7 @@
         android:layout_marginLeft="72dp"
         android:layout_marginStart="72dp"
         android:gravity="center_vertical"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:transitionName="@string/transition_text_pal_name"/>
 
 </RelativeLayout>
