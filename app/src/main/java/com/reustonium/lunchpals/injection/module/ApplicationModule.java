@@ -5,7 +5,12 @@ import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
+
+import com.reustonium.lunchpals.data.remote.PalsService;
+import com.reustonium.lunchpals.data.remote.ParsePalsService;
 import com.reustonium.lunchpals.injection.ApplicationContext;
+
+import javax.inject.Singleton;
 
 /**
  * Provide application-level dependencies.
@@ -28,5 +33,11 @@ public class ApplicationModule {
     @ApplicationContext
     Context provideContext() {
         return mApplication;
+    }
+
+    @Provides
+    @Singleton
+    PalsService providePalsService() {
+        return new ParsePalsService();
     }
 }

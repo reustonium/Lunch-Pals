@@ -6,6 +6,9 @@ import android.content.Context;
 import javax.inject.Singleton;
 
 import dagger.Component;
+
+import com.reustonium.lunchpals.data.DataManager;
+import com.reustonium.lunchpals.data.remote.PalsService;
 import com.reustonium.lunchpals.injection.ApplicationContext;
 import com.reustonium.lunchpals.injection.module.ApplicationModule;
 
@@ -18,4 +21,6 @@ public interface ApplicationComponent {
 
     @ApplicationContext Context context();
     Application application();
+    PalsService palsService();
+    DataManager dataManager();
 }
