@@ -14,7 +14,7 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
 
     private final DataManager mDataManager;
 
-    @Inject public MainPresenter(DataManager dataManager){
+    @Inject public MainPresenter(DataManager dataManager) {
         mDataManager = dataManager;
     }
 
