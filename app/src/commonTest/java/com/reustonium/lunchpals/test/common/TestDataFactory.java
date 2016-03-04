@@ -7,7 +7,7 @@ public class TestDataFactory {
 
     public static List<String> makePalsList(int numPals) {
         List<String> pals = new ArrayList<>();
-        for (int i=0; i< numPals; i++) {
+        for (int i = 0; i < numPals; i++) {
             pals.add(makePal(String.valueOf(i)));
         }
         return pals;
