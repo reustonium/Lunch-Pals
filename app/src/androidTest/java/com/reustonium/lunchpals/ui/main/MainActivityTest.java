@@ -9,14 +9,17 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.Toolbar;
 
 import com.reustonium.lunchpals.R;
+import com.reustonium.lunchpals.test.common.TestDataFactory;
+import com.reustonium.lunchpals.test.common.rules.TestComponentRule;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.RuleChain;
+import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -27,13 +30,21 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.Is.is;
+import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
 
-    @Rule
-    public ActivityTestRule<MainActivity> mMainActivityTestRule =
+    public final TestComponentRule component =
+            new TestComponentRule(InstrumentationRegistry.getTargetContext());
+
+    public ActivityTestRule<MainActivity> main =
             new ActivityTestRule<>(MainActivity.class);
+
+    // TestComponentRule needs to go first to make sure the Dagger ApplicationTestComponent is set
+    // in the Application before any Activity is launched.
+    @Rule
+    public final TestRule chain = RuleChain.outerRule(component).around(main);
 
     @Test
     public void testOnCreate() throws Exception {
@@ -55,11 +66,11 @@ public class MainActivityTest {
     public void testShowPals() throws Exception {
         //Pals are added to the Adapter
         //RecyclerView updates
-        List<String> testPals = new ArrayList();
-        testPals.add("Andy");
-        testPals.add("Jimmy Jamm");
-        testPals.add("Frankzilla");
-        testPals.add("Mr. Ballooon Hands");
+        List<String> testPals = TestDataFactory.makePalsList(5);
+        when(component.getMockDataManager().getPals())
+                .thenReturn(testPals);
+
+        main.launchActivity(null);
 
         int position = 0;
         for (String s : testPals) {

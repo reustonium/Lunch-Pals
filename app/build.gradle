@@ -46,6 +46,17 @@ android {
             debuggable true
         }
     }
+
+    sourceSets {
+        def commonTestDir = 'src/commonTest/java'
+        test {
+            java.srcDir commonTestDir
+        }
+        androidTest {
+            java.srcDir commonTestDir
+        }
+    }
+
     //Needed because of this https://github.com/square/okio/issues/58
     lintOptions {
         warning 'InvalidPackage'
@@ -55,6 +66,7 @@ android {
 dependencies {
     final SUPPORT_LIBRARY_VERSION = '23.2.0'
     final DAGGER_VERSION = '2.0.2'
+    final DEXMAKER_VERSION = '1.4'
     final ESPRESSO_VERSION = '2.2.1'
     final RUNNER_VERSION = '0.4'
     final HAMCREST_VERSION = '1.3'
@@ -84,6 +96,9 @@ dependencies {
     androidTestCompile "com.android.support.test.espresso:espresso-core:$ESPRESSO_VERSION"
     androidTestCompile "com.android.support.test:runner:$RUNNER_VERSION"
     androidTestCompile "com.android.support.test:rules:$RUNNER_VERSION"
+    androidTestCompile "com.crittercism.dexmaker:dexmaker:$DEXMAKER_VERSION"
+    androidTestCompile "com.crittercism.dexmaker:dexmaker-dx:$DEXMAKER_VERSION"
+    androidTestCompile "com.crittercism.dexmaker:dexmaker-mockito:$DEXMAKER_VERSION"
 
     // Unit tests dependencies
     testCompile jUnit
