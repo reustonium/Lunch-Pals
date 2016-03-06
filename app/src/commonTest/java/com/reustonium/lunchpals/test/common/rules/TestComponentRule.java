@@ -20,6 +20,7 @@ import org.junit.runners.model.Statement;
  * stub mocks etc.
  */
 public class TestComponentRule implements TestRule {
+
     private final TestComponent mTestComponent;
     private final Context mContext;
 

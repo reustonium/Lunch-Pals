@@ -1,5 +1,6 @@
 package com.reustonium.lunchpals.ui.main;
 
+import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.contrib.RecyclerViewActions;
@@ -38,8 +39,17 @@ public class MainActivityTest {
     public final TestComponentRule component =
             new TestComponentRule(InstrumentationRegistry.getTargetContext());
 
-    public ActivityTestRule<MainActivity> main =
-            new ActivityTestRule<>(MainActivity.class);
+    public final ActivityTestRule<MainActivity> main =
+            new ActivityTestRule<MainActivity>(MainActivity.class, false, false) {
+                @Override
+                protected Intent getActivityIntent() {
+                    // Override the default intent so we pass a false flag for syncing so it doesn't
+                    // start a sync service in the background that would affect  the behaviour of
+                    // this test.
+                    return MainActivity.getStartIntent(
+                            InstrumentationRegistry.getTargetContext());
+                }
+            };
 
     // TestComponentRule needs to go first to make sure the Dagger ApplicationTestComponent is set
     // in the Application before any Activity is launched.
@@ -48,7 +58,7 @@ public class MainActivityTest {
 
     @Test
     public void testOnCreate() throws Exception {
-
+        main.launchActivity(null);
 
         //Toolbar get's setup and displayed
         CharSequence title = InstrumentationRegistry.getTargetContext()
@@ -87,17 +97,20 @@ public class MainActivityTest {
     public void testShowPalsEmpty() throws Exception {
         //TODO
         //Show an empty List warning
+        main.launchActivity(null);
     }
 
     @Test
     public void testShowError() throws Exception {
         //TODO
         //Show an error
+        main.launchActivity(null);
     }
 
     @Test
     public void testOnPalClicked() throws Exception {
         //ProfileActivity Intent get's launched
+        main.launchActivity(null);
         onView(withId(R.id.toolbar)).perform(click());
     }
 

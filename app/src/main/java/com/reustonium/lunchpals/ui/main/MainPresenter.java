@@ -32,9 +32,9 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
         checkViewAttached();
         List<String> mPals = mDataManager.getPals();
         if (mPals.isEmpty()) {
-            getmMvpView().showPalsEmpty();
+            getMvpView().showPalsEmpty();
         }
-        getmMvpView().showPals(mPals);
+        getMvpView().showPals(mPals);
     }
 
 }

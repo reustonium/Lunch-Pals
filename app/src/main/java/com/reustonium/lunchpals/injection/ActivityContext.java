@@ -6,7 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import javax.inject.Qualifier;
 
 /**
- * Created by andrew on 2/25/16.
+ * A scoping annotation to permit objects whose lifetime should
+ * conform to the life of the Activity to be memorised in the
+ * correct component.
  */
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
