@@ -6,8 +6,10 @@ import android.content.Context;
 import dagger.Module;
 import dagger.Provides;
 
+import com.firebase.client.Firebase;
+import com.reustonium.lunchpals.data.remote.FirebasePalService;
 import com.reustonium.lunchpals.data.remote.PalsService;
-import com.reustonium.lunchpals.data.remote.ParsePalsService;
+import com.reustonium.lunchpals.data.remote.Util;
 import com.reustonium.lunchpals.injection.ApplicationContext;
 
 import javax.inject.Singleton;
@@ -38,6 +40,13 @@ public class ApplicationModule {
     @Provides
     @Singleton
     PalsService providePalsService() {
-        return new ParsePalsService();
+        return new FirebasePalService();
+    }
+
+    @Provides
+    @Singleton
+    Firebase provideFirebase(@ApplicationContext Context context){
+        Firebase.setAndroidContext(context);
+        return new Firebase(Util.FIREBASE_URL);
     }
 }
