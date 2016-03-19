@@ -1,10 +1,10 @@
 package com.reustonium.lunchpals.ui.main;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import com.reustonium.lunchpals.data.DataManager;
 import com.reustonium.lunchpals.ui.base.BasePresenter;
 
 /**
@@ -12,7 +12,11 @@ import com.reustonium.lunchpals.ui.base.BasePresenter;
  */
 public class MainPresenter extends BasePresenter<MainMvpView> {
 
-    @Inject public MainPresenter(){}
+    private final DataManager mDataManager;
+
+    @Inject public MainPresenter(DataManager dataManager) {
+        mDataManager = dataManager;
+    }
 
     @Override
     public void attachView(MainMvpView mvpView) {
@@ -26,12 +30,11 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
 
     public void loadPals() {
         checkViewAttached();
-        //Dummy some data
-        List<String> mPals = new ArrayList<>();
-        mPals.add("Andy");
-        mPals.add("Jimmy Jamm");
-        mPals.add("Shaq Fu");
-        getmMvpView().showPals(mPals);
+        List<String> mPals = mDataManager.getPals();
+        if (mPals.isEmpty()) {
+            getMvpView().showPalsEmpty();
+        }
+        getMvpView().showPals(mPals);
     }
 
 }

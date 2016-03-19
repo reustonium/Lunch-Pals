@@ -1,5 +1,6 @@
 package com.reustonium.lunchpals.ui.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
@@ -31,11 +32,21 @@ public class MainActivity extends BaseActivity implements MainMvpView, PalsAdapt
     @Bind(R.id.toolbar) Toolbar mToolbar;
     @Bind(R.id.recycler_pal_list) RecyclerView mRecyclerView;
 
+    /**
+     * Return an Intent to start this Activity.
+     * triggerDataSyncOnCreate allows disabling the background sync service onCreate. Should
+     * only be set to false during testing.
+     */
+    public static Intent getStartIntent(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        return intent;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         getActivityComponent().inject(this);
+        setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
         //Add Toolbar
@@ -51,6 +62,15 @@ public class MainActivity extends BaseActivity implements MainMvpView, PalsAdapt
         mMainPresenter.attachView(this);
         mMainPresenter.loadPals();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mMainPresenter.detachView();
+    }
+
+    /***** MVP View methods implementation *****/
 
     @Override
     public void showPals(List<String> pals) {
