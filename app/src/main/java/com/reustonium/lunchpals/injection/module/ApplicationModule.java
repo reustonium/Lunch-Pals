@@ -45,7 +45,7 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    Firebase provideFirebase(@ApplicationContext Context context){
+    Firebase provideFirebase(@ApplicationContext Context context) {
         Firebase.setAndroidContext(context);
         return new Firebase(Util.FIREBASE_URL);
     }

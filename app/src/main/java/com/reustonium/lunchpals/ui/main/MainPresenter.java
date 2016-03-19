@@ -31,7 +31,7 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
     public void loadPals() {
         checkViewAttached();
         List<String> mPals = mDataManager.getPals();
-        if (mPals.isEmpty()) {
+        if (mPals == null || mPals.isEmpty()) {
             getMvpView().showPalsEmpty();
         }
         getMvpView().showPals(mPals);

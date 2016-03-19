@@ -54,7 +54,7 @@ public class PalsAdapter extends RecyclerView.Adapter<PalsAdapter.PalsViewHolder
 
     @Override
     public int getItemCount() {
-        return mPals.size();
+        return mPals == null ? 0 : mPals.size();
     }
 
     @Nullable
