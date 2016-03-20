@@ -17,4 +17,14 @@
     <dimen name="card_image_height">200dp</dimen>
     <dimen name="list_body">14sp</dimen>
     <dimen name="navheader_height">222dp</dimen>
+
+    <!--Login Activity-->
+    <dimen name="logo_image_size">100dp</dimen>
+    <dimen name="lists_title_bottom_margin">13dp</dimen>
+    <dimen name="input_field_height">50dp</dimen>
+    <dimen name="lv_header_text_size">10sp</dimen>
+    <dimen name="margin_small">16dp</dimen>
+    <dimen name="login_buttons_text_size">15.3sp</dimen>
+    <dimen name="edit_text_padding">14dp</dimen>
+    <dimen name="margin_normal">37dp</dimen>
 </resources>

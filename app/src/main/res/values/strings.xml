@@ -3,4 +3,13 @@
     <string name="transition_image_pal_profile">transition_image_pal_profile</string>
     <string name="transition_text_pal_name">transition_text_pal_name</string>
     <string name="transition_toolbar">transition_toolbar</string>
+
+    <!--Login Activity-->
+    <string name="image_view_logo_image">Logo Image</string>
+    <string name="button_signin_with_password">SIGN IN</string>
+    <string name="text_dont_have_account">Don\'t have an account?</string>
+    <string name="button_create_account">Sign Up</string>
+    <string name="hint_enter_email">Enter your email</string>
+    <string name="hint_enter_username">Enter your name</string>
+    <string name="hint_enter_password">Enter password</string>
 </resources>
