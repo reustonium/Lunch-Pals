@@ -5,11 +5,9 @@ import android.view.View;
 import com.reustonium.lunchpals.ui.base.MvpView;
 
 /**
- * Created by andrew on 3/19/16.
+ * Created by Andrew on 3/21/2016.
  */
 public interface LoginMvpView extends MvpView {
-
-    public void onSignUpPressed(View view);
-
-    public void onSignInPressed(View view);
+    void onSignInPressed(View view);
+    void onSignUpPressed(View view);
 }
