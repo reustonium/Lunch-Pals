@@ -8,7 +8,8 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 import com.reustonium.lunchpals.data.DataManager;
-import com.reustonium.lunchpals.data.remote.PalsService;
+import com.reustonium.lunchpals.data.remote.login.LoginService;
+import com.reustonium.lunchpals.data.remote.main.PalsService;
 import com.reustonium.lunchpals.injection.ApplicationContext;
 import com.reustonium.lunchpals.injection.module.ApplicationModule;
 
@@ -22,5 +23,6 @@ public interface ApplicationComponent {
     @ApplicationContext Context context();
     Application application();
     PalsService palsService();
+    LoginService loginService();
     DataManager dataManager();
 }

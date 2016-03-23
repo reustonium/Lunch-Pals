@@ -12,4 +12,12 @@
     <string name="hint_enter_email">Enter your email</string>
     <string name="hint_enter_username">Enter your name</string>
     <string name="hint_enter_password">Enter password</string>
+    <string name="error_cannot_be_empty">Can\'t be empty.</string>
+    <!-- Instructions and Loading Text -->
+    <string name="progress_dialog_loading">Loading…</string>
+    <string name="progress_dialog_authenticating_with_firebase">Authenticating with Firebase…</string>
+    <string name="progress_dialog_creating_user_with_firebase">Attempting to create account…</string>
+    <string name="progress_dialog_check_inbox">Please check your inbox for your password</string>
+    <string name="log_message_auth_successful">auth successful.</string>
+    <string name="error_message_email_issue">There was an error with your email; please check that you entered it correctly.</string>
 </resources>

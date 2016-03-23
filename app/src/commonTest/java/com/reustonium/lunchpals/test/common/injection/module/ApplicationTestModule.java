@@ -4,7 +4,8 @@ import android.app.Application;
 import android.content.Context;
 
 import com.reustonium.lunchpals.data.DataManager;
-import com.reustonium.lunchpals.data.remote.PalsService;
+import com.reustonium.lunchpals.data.remote.login.LoginService;
+import com.reustonium.lunchpals.data.remote.main.PalsService;
 import com.reustonium.lunchpals.injection.ApplicationContext;
 
 import javax.inject.Singleton;
@@ -49,5 +50,11 @@ public class ApplicationTestModule {
     @Singleton
     PalsService providePalsService() {
         return mock(PalsService.class);
+    }
+
+    @Provides
+    @Singleton
+    LoginService provideLoginService() {
+        return mock(LoginService.class);
     }
 }

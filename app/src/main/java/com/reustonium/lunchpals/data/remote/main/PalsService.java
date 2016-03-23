@@ -1,4 +1,4 @@
-package com.reustonium.lunchpals.data.remote;
+package com.reustonium.lunchpals.data.remote.main;
 
 import java.util.List;
 

@@ -5,4 +5,7 @@ package com.reustonium.lunchpals.data.remote;
  */
 public class Util {
     public static final String FIREBASE_URL = "https://lunchpals.firebaseio.com/";
+
+    public static final String KEY_PROVIDER = "PROVIDER";
+    public static final String KEY_ENCODED_EMAIL = "ENCODED_EMAIL";
 }

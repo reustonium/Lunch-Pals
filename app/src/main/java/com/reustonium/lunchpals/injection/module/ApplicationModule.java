@@ -7,8 +7,10 @@ import dagger.Module;
 import dagger.Provides;
 
 import com.firebase.client.Firebase;
-import com.reustonium.lunchpals.data.remote.FirebasePalService;
-import com.reustonium.lunchpals.data.remote.PalsService;
+import com.reustonium.lunchpals.data.remote.login.FirebaseLoginService;
+import com.reustonium.lunchpals.data.remote.login.LoginService;
+import com.reustonium.lunchpals.data.remote.main.FirebasePalService;
+import com.reustonium.lunchpals.data.remote.main.PalsService;
 import com.reustonium.lunchpals.data.remote.Util;
 import com.reustonium.lunchpals.injection.ApplicationContext;
 
@@ -41,6 +43,12 @@ public class ApplicationModule {
     @Singleton
     PalsService providePalsService() {
         return new FirebasePalService();
+    }
+
+    @Provides
+    @Singleton
+    LoginService provideLoginService() {
+        return new FirebaseLoginService();
     }
 
     @Provides
