@@ -13,8 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.client.AuthData;
 import com.reustonium.lunchpals.R;
+import com.reustonium.lunchpals.data.model.LoginResult;
 import com.reustonium.lunchpals.data.remote.Util;
 import com.reustonium.lunchpals.ui.base.BaseActivity;
 import com.reustonium.lunchpals.ui.main.MainActivity;
@@ -89,27 +89,29 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
     }
 
     @Override
-    public void showLoginError(String error) {
+    public void showEmailError() {
         mAuthProgressDialog.dismiss();
-
-        switch (error) {
-            case "error":
-                mEditTextEmailInput.setError(getString(R.string.error_message_email_issue));
-                break;
-            default:
-                showErrorToast(error);
-        }
+        mEditTextEmailInput.setError(getString(R.string.error_message_email_issue));
     }
 
     @Override
-    public void onLoginSuccess(AuthData authData, String mEncodedEmail) {
+    public void showPasswordError() {
+        mEditTextPasswordInput.setError(Util.error_message_wrong_password);
+    }
+
+    @Override
+    public void showGeneralError(String error) {
+        showErrorToast(error);
+    }
+
+    @Override
+    public void onLoginSuccess(LoginResult result) {
         mAuthProgressDialog.dismiss();
         Log.i(TAG, "email" + " " + getString(R.string.log_message_auth_successful));
-        if (authData != null) {
+        if (result != null) {
 
                 /* Save provider name and encodedEmail for later use and start MainActivity */
-            mSharedPrefEditor.putString(Util.KEY_PROVIDER, authData.getProvider()).apply();
-            mSharedPrefEditor.putString(Util.KEY_ENCODED_EMAIL, mEncodedEmail).apply();
+            mSharedPrefEditor.putString(Util.KEY_ENCODED_EMAIL, result.encodedEmail).apply();
 
                 /* Go to main activity */
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);

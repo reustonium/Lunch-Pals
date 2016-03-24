@@ -47,6 +47,10 @@ android {
         }
     }
 
+    buildTypes.each {
+        it.buildConfigField 'String', 'FIREBASE_ROOT_URL', FirebaseRootUrl
+    }
+
     sourceSets {
         def commonTestDir = 'src/commonTest/java'
         test {

@@ -1,5 +1,6 @@
 package com.reustonium.lunchpals.data;
 
+import com.reustonium.lunchpals.data.model.LoginResult;
 import com.reustonium.lunchpals.data.remote.main.PalsService;
 import com.reustonium.lunchpals.data.remote.login.LoginService;
 
@@ -24,7 +25,7 @@ public class DataManager {
         return mPalService.getPals();
     }
 
-    public String signinWithEmail(String email, String password) {
+    public LoginResult signinWithEmail(String email, String password) {
         return mLoginService.signinWithEmail(email, password);
     }
 }

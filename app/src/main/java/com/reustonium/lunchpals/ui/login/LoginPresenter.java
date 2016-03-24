@@ -1,6 +1,8 @@
 package com.reustonium.lunchpals.ui.login;
 
 import com.reustonium.lunchpals.data.DataManager;
+import com.reustonium.lunchpals.data.model.LoginResult;
+import com.reustonium.lunchpals.data.remote.Util;
 import com.reustonium.lunchpals.ui.base.BasePresenter;
 
 import javax.inject.Inject;
@@ -28,15 +30,29 @@ public class LoginPresenter extends BasePresenter<LoginMvpView> {
     }
 
     public void signinWithEmail(String email, String password) {
-        String result = mDataManager.signinWithEmail(email, password);
+        LoginResult result = mDataManager.signinWithEmail(email, password);
         checkViewAttached();
-        //On failure do stuff
-        switch (result.toLowerCase()) {
-            case "success":
-                getMvpView().onLoginSuccess(null, email);
-                break;
-            case "error":
-                getMvpView().showLoginError("EVERYTHING SUX");
+
+        if (result.error == null) {
+            getMvpView().onLoginSuccess(result);
+        } else {
+            switch (result.error) {
+                case Util.error_message_email_issue:
+                    getMvpView().showEmailError();
+                    break;
+                case Util.error_message_wrong_password:
+                    getMvpView().showPasswordError();
+                    break;
+                case Util.error_message_failed_sign_in_no_network:
+                    getMvpView().showGeneralError(result.error);
+                    break;
+                case Util.error_message_default:
+                    getMvpView().showGeneralError(result.error);
+                    break;
+                default:
+                    getMvpView().showGeneralError(result.error);
+
+            }
         }
     }
 }
