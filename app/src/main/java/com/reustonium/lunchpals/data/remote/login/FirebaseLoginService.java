@@ -14,7 +14,11 @@ import javax.inject.Inject;
 
 public class FirebaseLoginService implements LoginService {
 
-    @Inject Firebase mFirebaseRef;
+    Firebase mFirebaseRef;
+
+    public FirebaseLoginService(Firebase firebase) {
+        this.mFirebaseRef = firebase;
+    }
 
     @Override
     public LoginResult signinWithEmail(final String email, final String password) {

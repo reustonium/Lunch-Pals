@@ -47,8 +47,8 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    LoginService provideLoginService() {
-        return new FirebaseLoginService();
+    LoginService provideLoginService(Firebase firebase) {
+        return new FirebaseLoginService(firebase);
     }
 
     @Provides
