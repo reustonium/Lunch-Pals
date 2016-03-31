@@ -10,14 +10,12 @@ import com.reustonium.lunchpals.data.model.User;
 import com.reustonium.lunchpals.data.remote.Util;
 import com.reustonium.lunchpals.data.remote.Utils;
 
-import javax.inject.Inject;
-
 public class FirebaseLoginService implements LoginService {
 
     Firebase mFirebaseRef;
-
+    
     public FirebaseLoginService(Firebase firebase) {
-        this.mFirebaseRef = firebase;
+        mFirebaseRef = firebase;
     }
 
     @Override
