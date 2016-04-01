@@ -1,35 +1,43 @@
 package com.reustonium.lunchpals;
 
+import com.firebase.client.AuthData;
+import com.firebase.client.FirebaseException;
 import com.reustonium.lunchpals.data.DataManager;
-import com.reustonium.lunchpals.data.model.LoginResult;
 import com.reustonium.lunchpals.data.remote.Util;
 import com.reustonium.lunchpals.ui.login.LoginMvpView;
 import com.reustonium.lunchpals.ui.login.LoginPresenter;
+import com.reustonium.lunchpals.util.RxSchedulersOverrideRule;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import rx.Observable;
+
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LoginPresenterTest {
 
     @Mock LoginMvpView mMockLoginMvpView;
     @Mock DataManager mMockDataManager;
+    @Mock AuthData mAuthData;
     private LoginPresenter mLoginPresenter;
-    LoginResult result;
+    String result;
+
+    @Rule
+    public final RxSchedulersOverrideRule mOverrideSchedulersRule = new RxSchedulersOverrideRule();
 
     @Before
     public void setup() {
         mLoginPresenter = new LoginPresenter(mMockDataManager);
         mLoginPresenter.attachView(mMockLoginMvpView);
-        result = new LoginResult();
     }
 
     @After
@@ -39,16 +47,20 @@ public class LoginPresenterTest {
 
     @Test
     public void signInWithEmailSuccess() {
-        result.encodedEmail = "a@b.com";
-        when(mMockDataManager.signinWithEmail("a@b.com", "password")).thenReturn(result);
+        doReturn(Observable.just(mAuthData))
+                .when(mMockDataManager)
+                .authWithPassword("a@b.com", "password");
+
         mLoginPresenter.signinWithEmail("a@b.com", "password");
-        verify(mMockLoginMvpView).onLoginSuccess(result);
+        verify(mMockLoginMvpView).onLoginSuccess(mAuthData.toString());
     }
 
     @Test
     public void signInWithEmailInvalidEmailAddress() {
-        result.error = Util.error_message_email_issue;
-        when(mMockDataManager.signinWithEmail("a@b.com", "password")).thenReturn(result);
+        result = Util.error_message_email_issue;
+        doReturn(Observable.error(new FirebaseException(result)))
+                .when(mMockDataManager)
+                .authWithPassword("a@b.com", "password");
         mLoginPresenter.signinWithEmail("a@b.com", "password");
         verify(mMockLoginMvpView).showEmailError();
         verify(mMockLoginMvpView, never()).onLoginSuccess(result);
@@ -56,8 +68,10 @@ public class LoginPresenterTest {
 
     @Test
     public void signInWithEmailInvalidPassword() {
-        result.error = Util.error_message_wrong_password;
-        when(mMockDataManager.signinWithEmail("a@b.com", "password")).thenReturn(result);
+        result = Util.error_message_wrong_password;
+        doReturn(Observable.error(new FirebaseException(result)))
+                .when(mMockDataManager)
+                .authWithPassword("a@b.com", "password");
         mLoginPresenter.signinWithEmail("a@b.com", "password");
         verify(mMockLoginMvpView).showPasswordError();
         verify(mMockLoginMvpView, never()).onLoginSuccess(result);
@@ -65,10 +79,12 @@ public class LoginPresenterTest {
 
     @Test
     public void signInWithEmailGeneralError() {
-        result.error = Util.error_message_default;
-        when(mMockDataManager.signinWithEmail("a@b.com", "password")).thenReturn(result);
+        result = Util.error_message_default;
+        doReturn(Observable.error(new FirebaseException(result)))
+                .when(mMockDataManager)
+                .authWithPassword("a@b.com", "password");
         mLoginPresenter.signinWithEmail("a@b.com", "password");
-        verify(mMockLoginMvpView).showGeneralError(result.error);
+        verify(mMockLoginMvpView).showGeneralError(result);
         verify(mMockLoginMvpView, never()).onLoginSuccess(result);
     }
 }

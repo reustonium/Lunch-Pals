@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.reustonium.lunchpals.R;
-import com.reustonium.lunchpals.data.model.LoginResult;
 import com.reustonium.lunchpals.data.remote.Util;
 import com.reustonium.lunchpals.ui.base.BaseActivity;
 import com.reustonium.lunchpals.ui.main.MainActivity;
@@ -102,16 +101,17 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
     @Override
     public void showGeneralError(String error) {
         showErrorToast(error);
+        mAuthProgressDialog.hide();
     }
 
     @Override
-    public void onLoginSuccess(LoginResult result) {
+    public void onLoginSuccess(String result) {
         mAuthProgressDialog.dismiss();
         Log.i(TAG, "email" + " " + getString(R.string.log_message_auth_successful));
         if (result != null) {
 
                 /* Save provider name and encodedEmail for later use and start MainActivity */
-            mSharedPrefEditor.putString(Util.KEY_ENCODED_EMAIL, result.encodedEmail).apply();
+            mSharedPrefEditor.putString(Util.KEY_ENCODED_EMAIL, result).apply();
 
                 /* Go to main activity */
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);

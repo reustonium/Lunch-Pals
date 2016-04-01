@@ -1,6 +1,6 @@
 package com.reustonium.lunchpals.data;
 
-import com.reustonium.lunchpals.data.model.LoginResult;
+import com.firebase.client.AuthData;
 import com.reustonium.lunchpals.data.remote.main.PalsService;
 import com.reustonium.lunchpals.data.remote.login.LoginService;
 
@@ -8,6 +8,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import rx.Observable;
 
 @Singleton
 public class DataManager {
@@ -25,7 +27,8 @@ public class DataManager {
         return mPalService.getPals();
     }
 
-    public LoginResult signinWithEmail(String email, String password) {
-        return mLoginService.signinWithEmail(email, password);
+    public Observable<AuthData> authWithPassword(String email, String password) {
+        return mLoginService.authWithPassword(email, password);
     }
+
 }

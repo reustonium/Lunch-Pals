@@ -1,7 +1,9 @@
 package com.reustonium.lunchpals.data.remote.login;
 
-import com.reustonium.lunchpals.data.model.LoginResult;
+import com.firebase.client.AuthData;
+
+import rx.Observable;
 
 public interface LoginService {
-    LoginResult signinWithEmail(String email, String password);
+    Observable<AuthData> authWithPassword(String email, String password);
 }

@@ -95,8 +95,11 @@ dependencies {
     compile "com.google.android.gms:play-services-auth:$GMS_VERSION"
     compile  "com.google.dagger:dagger:$DAGGER_VERSION"
     provided 'org.glassfish:javax.annotation:10.0-b28' //Required by Dagger2
-    compile "com.firebase:firebase-client-android:$FIREBASE_VERSION"
     compile 'com.jakewharton:butterknife:7.0.1'
+    compile "com.firebase:firebase-client-android:$FIREBASE_VERSION"
+    compile 'com.github.dariusl:rxfirebaseandroid:0.5.0'
+    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'io.reactivex:rxjava:1.1.0'
 
     // Instrumentation test dependencies
     androidTestCompile jUnit

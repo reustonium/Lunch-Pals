@@ -1,11 +1,16 @@
 package com.reustonium.lunchpals.ui.login;
 
+import com.firebase.client.AuthData;
 import com.reustonium.lunchpals.data.DataManager;
-import com.reustonium.lunchpals.data.model.LoginResult;
 import com.reustonium.lunchpals.data.remote.Util;
 import com.reustonium.lunchpals.ui.base.BasePresenter;
 
 import javax.inject.Inject;
+
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Andrew on 3/21/2016.
@@ -13,6 +18,7 @@ import javax.inject.Inject;
 public class LoginPresenter extends BasePresenter<LoginMvpView> {
 
     private final DataManager mDataManager;
+    private Subscription mSubscription;
 
     @Inject
     public LoginPresenter(DataManager dataManager) {
@@ -30,29 +36,31 @@ public class LoginPresenter extends BasePresenter<LoginMvpView> {
     }
 
     public void signinWithEmail(String email, String password) {
-        LoginResult result = mDataManager.signinWithEmail(email, password);
         checkViewAttached();
+        mSubscription = mDataManager.authWithPassword(email, password)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<AuthData>() {
+                    @Override
+                    public void onCompleted() {
+                    }
 
-        if (result.error == null) {
-            getMvpView().onLoginSuccess(result);
-        } else {
-            switch (result.error) {
-                case Util.error_message_email_issue:
-                    getMvpView().showEmailError();
-                    break;
-                case Util.error_message_wrong_password:
-                    getMvpView().showPasswordError();
-                    break;
-                case Util.error_message_failed_sign_in_no_network:
-                    getMvpView().showGeneralError(result.error);
-                    break;
-                case Util.error_message_default:
-                    getMvpView().showGeneralError(result.error);
-                    break;
-                default:
-                    getMvpView().showGeneralError(result.error);
+                    @Override
+                    public void onError(Throwable e) {
+                        switch (e.getMessage()) {
+                            case Util.error_message_email_issue:
+                                getMvpView().showEmailError();
+                            case Util.error_message_wrong_password:
+                                getMvpView().showPasswordError();
+                            default:
+                                getMvpView().showGeneralError(e.getMessage());
+                        }
+                    }
 
-            }
-        }
+                    @Override
+                    public void onNext(AuthData authData) {
+                        getMvpView().onLoginSuccess(authData.toString());
+                    }
+                });
     }
 }
