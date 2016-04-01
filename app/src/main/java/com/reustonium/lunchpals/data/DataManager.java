@@ -31,4 +31,7 @@ public class DataManager {
         return mLoginService.authWithPassword(email, password);
     }
 
+    public Observable<AuthData> checkAuthState() {
+        return mLoginService.checkAuthState();
+    }
 }

@@ -14,4 +14,5 @@ public interface LoginMvpView extends MvpView {
     void showEmailError();
     void showGeneralError(String error);
     void onLoginSuccess(String result);
+    void launchMainActivity();
 }

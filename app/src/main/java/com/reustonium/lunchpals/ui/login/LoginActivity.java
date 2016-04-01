@@ -71,6 +71,12 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mLoginPresenter.checkAuthState();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         mLoginPresenter.detachView();
@@ -85,6 +91,8 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
     }
 
     public void onSignUpPressed(View view) {
+        Intent intent = new Intent(LoginActivity.this, CreateAccountActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -109,16 +117,20 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
         mAuthProgressDialog.dismiss();
         Log.i(TAG, "email" + " " + getString(R.string.log_message_auth_successful));
         if (result != null) {
-
                 /* Save provider name and encodedEmail for later use and start MainActivity */
             mSharedPrefEditor.putString(Util.KEY_ENCODED_EMAIL, result).apply();
 
                 /* Go to main activity */
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
+            launchMainActivity();
         }
+    }
+
+    @Override
+    public void launchMainActivity() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     private void signInPassword() {

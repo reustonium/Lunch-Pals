@@ -63,4 +63,29 @@ public class LoginPresenter extends BasePresenter<LoginMvpView> {
                     }
                 });
     }
+
+    public void checkAuthState() {
+        mDataManager.checkAuthState();
+        mSubscription = mDataManager.checkAuthState()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<AuthData>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(AuthData authData) {
+                        if (authData != null) {
+                            getMvpView().launchMainActivity();
+                        }
+                    }
+                });
+    }
 }

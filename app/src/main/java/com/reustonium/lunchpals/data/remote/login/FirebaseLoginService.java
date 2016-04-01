@@ -7,7 +7,10 @@ import com.firebase.client.FirebaseException;
 
 import rx.Observable;
 import rx.Observer;
+import rx.Subscriber;
+import rx.functions.Action0;
 import rx.subjects.BehaviorSubject;
+import rx.subscriptions.Subscriptions;
 
 public class FirebaseLoginService implements LoginService {
 
@@ -22,6 +25,30 @@ public class FirebaseLoginService implements LoginService {
         final BehaviorSubject<AuthData> subject = BehaviorSubject.create();
         mFirebase.authWithPassword(email, password, new ObservableAuthResultHandler(subject));
         return subject;
+    }
+
+    @Override
+    public Observable<AuthData> checkAuthState() {
+        return Observable.create(new Observable.OnSubscribe<AuthData>() {
+            @Override
+            public void call(final Subscriber<? super AuthData> subscriber) {
+                final Firebase.AuthStateListener listener = mFirebase
+                        .addAuthStateListener(new Firebase.AuthStateListener() {
+                            @Override
+                            public void onAuthStateChanged(AuthData authData) {
+                                subscriber.onNext(authData);
+                            }
+                        });
+
+                subscriber.add(Subscriptions.create(new Action0() {
+                    @Override
+                    public void call() {
+                        mFirebase.removeAuthStateListener(listener);
+                    }
+                }));
+            }
+        }).startWith(mFirebase.getAuth()).distinctUntilChanged();
+
     }
 
     private class ObservableAuthResultHandler implements Firebase.AuthResultHandler {

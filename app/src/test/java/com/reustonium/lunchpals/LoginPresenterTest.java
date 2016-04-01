@@ -87,4 +87,13 @@ public class LoginPresenterTest {
         verify(mMockLoginMvpView).showGeneralError(result);
         verify(mMockLoginMvpView, never()).onLoginSuccess(result);
     }
+
+    @Test
+    public void alreadyAuthenticated() {
+        doReturn(Observable.just(mAuthData))
+                .when(mMockDataManager)
+                .checkAuthState();
+        mLoginPresenter.checkAuthState();
+        verify(mMockLoginMvpView).launchMainActivity();
+    }
 }
