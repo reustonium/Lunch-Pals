@@ -3,6 +3,7 @@ package com.reustonium.lunchpals.ui.login;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -10,12 +11,14 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.reustonium.lunchpals.R;
 import com.reustonium.lunchpals.data.remote.Util;
 import com.reustonium.lunchpals.ui.base.BaseActivity;
+import com.reustonium.lunchpals.ui.createAccount.CreateAccountActivity;
 import com.reustonium.lunchpals.ui.main.MainActivity;
 
 import javax.inject.Inject;
@@ -31,6 +34,7 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
 
     @Bind(R.id.edit_text_password) EditText mEditTextPasswordInput;
     @Bind(R.id.edit_text_email) EditText mEditTextEmailInput;
+    @Bind(R.id.linear_layout_login_activity) LinearLayout linearLayoutLoginActivity;
 
     private ProgressDialog mAuthProgressDialog;
     private SharedPreferences mSharedPref;
@@ -43,6 +47,8 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
         setContentView(R.layout.activity_login);
         mLoginPresenter.attachView(this);
         ButterKnife.bind(this);
+
+        initializeBackground(linearLayoutLoginActivity);
 
         /* Setup the progress dialog that is displayed later when authenticating with Firebase */
         mAuthProgressDialog = new ProgressDialog(this);
@@ -68,6 +74,14 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
                 return true;
             }
         });
+    }
+
+    private void initializeBackground(LinearLayout linearLayout) {
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            linearLayout.setBackgroundResource(R.drawable.background_loginscreen_land);
+        } else {
+            linearLayout.setBackgroundResource(R.drawable.background_loginscreen);
+        }
     }
 
     @Override

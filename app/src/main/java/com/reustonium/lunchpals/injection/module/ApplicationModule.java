@@ -7,7 +7,7 @@ import dagger.Module;
 import dagger.Provides;
 
 import com.firebase.client.Firebase;
-import com.reustonium.lunchpals.data.remote.login.FirebaseLoginService;
+import com.reustonium.lunchpals.data.remote.login.FirebaseLoginHelper;
 import com.reustonium.lunchpals.data.remote.login.LoginService;
 import com.reustonium.lunchpals.data.remote.main.FirebasePalService;
 import com.reustonium.lunchpals.data.remote.main.PalsService;
@@ -48,7 +48,7 @@ public class ApplicationModule {
     @Provides
     @Singleton
     LoginService provideLoginService(Firebase firebase) {
-        return new FirebaseLoginService(firebase);
+        return new FirebaseLoginHelper(firebase);
     }
 
     @Provides

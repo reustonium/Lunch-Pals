@@ -18,6 +18,7 @@ public class Util {
      */
     public static final String KEY_PROVIDER = "PROVIDER";
     public static final String KEY_ENCODED_EMAIL = "ENCODED_EMAIL";
+    public static final String KEY_SIGNUP_EMAIL = "SIGNUP_EMAIL";
 
     /**
      * Constants for Firebase object properties

@@ -20,4 +20,8 @@
     <string name="progress_dialog_check_inbox">Please check your inbox for your password</string>
     <string name="log_message_auth_successful">auth successful.</string>
     <string name="error_message_email_issue">There was an error with your email; please check that you entered it correctly.</string>
+    <string name="title_activity_create_account">Create Account</string>
+    <string name="text_already_have_account">Already have an account?</string>
+    <string name="button_sign_in">Sign In</string>
+    <string name="error_invalid_email_not_valid">%s is not a valid email</string>
 </resources>

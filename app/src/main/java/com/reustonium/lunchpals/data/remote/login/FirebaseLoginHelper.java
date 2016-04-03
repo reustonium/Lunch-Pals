@@ -5,6 +5,8 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.FirebaseException;
 
+import java.util.Map;
+
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -12,11 +14,11 @@ import rx.functions.Action0;
 import rx.subjects.BehaviorSubject;
 import rx.subscriptions.Subscriptions;
 
-public class FirebaseLoginService implements LoginService {
+public class FirebaseLoginHelper implements LoginService {
 
     Firebase mFirebase;
 
-    public FirebaseLoginService(Firebase firebase) {
+    public FirebaseLoginHelper(Firebase firebase) {
         mFirebase = firebase;
     }
 
@@ -49,6 +51,11 @@ public class FirebaseLoginService implements LoginService {
             }
         }).startWith(mFirebase.getAuth()).distinctUntilChanged();
 
+    }
+
+    @Override
+    public Observable<Map<String, Object>> createUser(String email, String password) {
+        return null;
     }
 
     private class ObservableAuthResultHandler implements Firebase.AuthResultHandler {

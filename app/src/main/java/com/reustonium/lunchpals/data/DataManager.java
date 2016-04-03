@@ -5,6 +5,7 @@ import com.reustonium.lunchpals.data.remote.main.PalsService;
 import com.reustonium.lunchpals.data.remote.login.LoginService;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -33,5 +34,9 @@ public class DataManager {
 
     public Observable<AuthData> checkAuthState() {
         return mLoginService.checkAuthState();
+    }
+
+    public Observable<Map<String, Object>> createUser(String email, String password) {
+        return mLoginService.createUser(email, password);
     }
 }
