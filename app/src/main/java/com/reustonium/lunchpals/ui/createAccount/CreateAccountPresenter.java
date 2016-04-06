@@ -1,8 +1,6 @@
 package com.reustonium.lunchpals.ui.createAccount;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
 import com.firebase.client.ServerValue;
 import com.reustonium.lunchpals.data.DataManager;
 import com.reustonium.lunchpals.data.model.User;
@@ -23,7 +21,7 @@ import rx.schedulers.Schedulers;
 public class CreateAccountPresenter extends BasePresenter<CreateAccountMvpView> {
 
     private final DataManager mDataManager;
-    private Subscription mSubscription;
+    private Subscription mCreateAccountSubscription, mSaveAccountSubscription;
 
     @Inject
     public CreateAccountPresenter(DataManager dataManager) {
@@ -40,10 +38,10 @@ public class CreateAccountPresenter extends BasePresenter<CreateAccountMvpView> 
         super.detachView();
     }
 
-    public void createAccount(final String email, String password) {
+    public void createAccount(final String email, String password, final String userName) {
         checkViewAttached();
 
-        mSubscription = mDataManager.createUser(email, password)
+        mCreateAccountSubscription = mDataManager.createUser(email, password)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<Map<String, Object>>() {
@@ -61,13 +59,13 @@ public class CreateAccountPresenter extends BasePresenter<CreateAccountMvpView> 
                     public void onNext(Map<String, Object> result) {
                         //TODO Reset Password
                         //TODO Auth with Password
-                        createUserInFirebaseHelper((String) result.get("uid"), email);
+                        createUserInFirebaseHelper((String) result.get("uid"), email, userName);
                         getMvpView().onPasswordReset();
                     }
                 });
     }
 
-    private void createUserInFirebaseHelper(final String authUserId, String email) {
+    private void createUserInFirebaseHelper(final String authUserId, String email, String userName) {
         final String encodedEmail = Utils.encodeEmail(email);
 
         /**
@@ -80,7 +78,7 @@ public class CreateAccountPresenter extends BasePresenter<CreateAccountMvpView> 
         timestampJoined.put(Util.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);
 
         /* Create a HashMap version of the user to add */
-        User newUser = new User(mUserName, encodedEmail, timestampJoined);
+        User newUser = new User(userName, encodedEmail, timestampJoined);
         HashMap<String, Object> newUserMap = (HashMap<String, Object>)
                 new ObjectMapper().convertValue(newUser, Map.class);
 
@@ -90,21 +88,27 @@ public class CreateAccountPresenter extends BasePresenter<CreateAccountMvpView> 
         userAndUidMapping.put("/" + Util.FIREBASE_LOCATION_UID_MAPPINGS + "/"
                 + authUserId, encodedEmail);
 
-        /* Try to update the database; if there is already a user, this will fail */
-        mFirebaseRef.updateChildren(userAndUidMapping, new Firebase.CompletionListener() {
-            @Override
-            public void onComplete(FirebaseError firebaseError, Firebase firebase) {
-                if (firebaseError != null) {
-                    /* Try just making a uid mapping */
-                    mFirebaseRef.child(Util.FIREBASE_LOCATION_UID_MAPPINGS)
-                            .child(authUserId).setValue(encodedEmail);
-                }
-                /**
-                 *  The value has been set or it failed; either way, log out the user since
-                 *  they were only logged in with a temp password
-                 **/
-                mFirebaseRef.unauth();
-            }
-        });
+        mSaveAccountSubscription = mDataManager.saveUser(userAndUidMapping)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e != null) {
+                            mDataManager.signOut();
+                        }
+                    }
+
+                    @Override
+                    public void onNext(Object o) {
+
+                    }
+                });
+
     }
 }

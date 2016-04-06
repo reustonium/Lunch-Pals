@@ -55,7 +55,8 @@ public class FirebaseLoginHelper implements LoginService {
 
     @Override
     public Observable<Map<String, Object>> createUser(String email, String password) {
-        return null;
+
+
     }
 
     private class ObservableAuthResultHandler implements Firebase.AuthResultHandler {

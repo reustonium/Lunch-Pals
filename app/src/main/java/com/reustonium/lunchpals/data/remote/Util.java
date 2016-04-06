@@ -12,6 +12,7 @@ public class Util {
      * where user lists are stored (ie "userLists")
      */
     public static final String FIREBASE_LOCATION_USERS = "users";
+    public static final String FIREBASE_LOCATION_UID_MAPPINGS = "uidMappings";
 
     /**
      * Constants for bundles, extras and shared preferences keys
@@ -26,6 +27,7 @@ public class Util {
     public static final String FIREBASE_PROPERTY_EMAIL = "email";
     public static final String FIREBASE_PROPERTY_USER_HAS_LOGGED_IN_WITH_PASSWORD =
             "hasLoggedInWithPassword";
+    public static final String FIREBASE_PROPERTY_TIMESTAMP = "timestamp";
 
     /**
      * Constants for Firebase URL

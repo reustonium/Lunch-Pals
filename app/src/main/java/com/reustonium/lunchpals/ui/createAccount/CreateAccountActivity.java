@@ -2,7 +2,6 @@ package com.reustonium.lunchpals.ui.createAccount;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -86,7 +85,7 @@ public class CreateAccountActivity extends BaseActivity implements CreateAccount
          * account creation has started
          */
         mAuthProgressDialog.show();
-        mCreateAccountPresenter.createAccount(mUserEmail, mPassword);
+        mCreateAccountPresenter.createAccount(mUserEmail, mPassword, mUserName);
     }
 
     @Override
