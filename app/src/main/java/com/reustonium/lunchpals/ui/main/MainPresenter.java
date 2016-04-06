@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.reustonium.lunchpals.data.DataManager;
+import com.reustonium.lunchpals.data.model.User;
 import com.reustonium.lunchpals.ui.base.BasePresenter;
 
 /**
@@ -30,7 +31,7 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
 
     public void loadPals() {
         checkViewAttached();
-        List<String> mPals = mDataManager.getPals();
+        List<User> mPals = mDataManager.getPals();
         if (mPals == null || mPals.isEmpty()) {
             getMvpView().showPalsEmpty();
         }

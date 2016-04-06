@@ -16,6 +16,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import com.reustonium.lunchpals.data.model.User;
 import com.reustonium.lunchpals.ui.base.BaseActivity;
 import com.reustonium.lunchpals.R;
 import com.reustonium.lunchpals.ui.profile.ProfileActivity;
@@ -29,8 +30,8 @@ public class MainActivity extends BaseActivity implements MainMvpView, PalsAdapt
     @Inject MainPresenter mMainPresenter;
     @Inject PalsAdapter mPalsAdapter;
 
-    @Bind(R.id.toolbar) Toolbar mToolbar;
-    @Bind(R.id.recycler_pal_list) RecyclerView mRecyclerView;
+    @Bind(R.id.activity_main_toolbar) Toolbar mToolbar;
+    @Bind(R.id.activity_main_recycler_pal_list) RecyclerView mRecyclerView;
 
     /**
      * Return an Intent to start this Activity.
@@ -50,7 +51,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, PalsAdapt
         ButterKnife.bind(this);
 
         //Add Toolbar
-        mToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorText));
+        mToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorGreyLight));
         setSupportActionBar(mToolbar);
 
         //Add RecyclerView
@@ -73,14 +74,14 @@ public class MainActivity extends BaseActivity implements MainMvpView, PalsAdapt
     /***** MVP View methods implementation *****/
 
     @Override
-    public void showPals(List<String> pals) {
+    public void showPals(List<User> pals) {
         mPalsAdapter.setPals(pals);
         mPalsAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void showPalsEmpty() {
-        mPalsAdapter.setPals(Collections.<String>emptyList());
+        mPalsAdapter.setPals(Collections.<User>emptyList());
         mPalsAdapter.notifyDataSetChanged();
     }
 

@@ -9,7 +9,6 @@ import dagger.Component;
 
 import com.reustonium.lunchpals.data.DataManager;
 import com.reustonium.lunchpals.data.local.PreferencesHelper;
-import com.reustonium.lunchpals.data.remote.login.LoginService;
 import com.reustonium.lunchpals.data.remote.main.PalsService;
 import com.reustonium.lunchpals.injection.ApplicationContext;
 import com.reustonium.lunchpals.injection.module.ApplicationModule;
@@ -24,7 +23,6 @@ public interface ApplicationComponent {
     @ApplicationContext Context context();
     Application application();
     PalsService palsService();
-    LoginService loginService();
     PreferencesHelper preferencesHelper();
     DataManager dataManager();
 }

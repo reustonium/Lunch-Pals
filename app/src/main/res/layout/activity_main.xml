@@ -7,7 +7,7 @@
     tools:context=".ui.main.MainActivity">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/activity_main_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
@@ -16,10 +16,10 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_pal_list"
+        android:id="@+id/activity_main_recycler_pal_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@id/activity_main_toolbar"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/md_keylines"
         android:paddingTop="@dimen/md_keylines"

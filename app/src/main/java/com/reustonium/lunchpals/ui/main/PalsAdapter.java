@@ -14,6 +14,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.reustonium.lunchpals.R;
+import com.reustonium.lunchpals.data.model.User;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,7 +22,7 @@ import butterknife.OnClick;
 
 public class PalsAdapter extends RecyclerView.Adapter<PalsAdapter.PalsViewHolder> {
 
-    private List<String> mPals;
+    private List<User> mPals;
     private Callback mCallback;
 
     @Inject
@@ -29,7 +30,7 @@ public class PalsAdapter extends RecyclerView.Adapter<PalsAdapter.PalsViewHolder
         mPals = new ArrayList<>();
     }
 
-    public void setPals(List<String> pals) {
+    public void setPals(List<User> pals) {
         mPals = pals;
     }
 
@@ -47,9 +48,9 @@ public class PalsAdapter extends RecyclerView.Adapter<PalsAdapter.PalsViewHolder
 
     @Override
     public void onBindViewHolder(PalsViewHolder holder, int position) {
-        String s = mPals.get(position);
-        holder.setPalName(s);
-        holder.textPalName.setText(s);
+        User pal = mPals.get(position);
+        holder.setPalName(pal.getName());
+        holder.textPalName.setText(pal.getName());
     }
 
     @Override
@@ -60,8 +61,8 @@ public class PalsAdapter extends RecyclerView.Adapter<PalsAdapter.PalsViewHolder
     @Nullable
     private Integer getPalPosition(String palName) {
         for (int position = 0; position < getItemCount(); position++) {
-            String s = mPals.get(position);
-            if (s.equals(palName)) {
+            User pal = mPals.get(position);
+            if (pal.getName().equals(palName)) {
                 return position;
             }
         }

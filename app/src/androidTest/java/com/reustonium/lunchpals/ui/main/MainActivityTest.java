@@ -66,7 +66,7 @@ public class MainActivityTest {
         matchToolbarTitle(title);
 
         //RecyclerView get's setup and displayed
-        onView(withId(R.id.recycler_pal_list)).check(matches(isDisplayed()));
+        onView(withId(R.id.activity_main_recycler_pal_list)).check(matches(isDisplayed()));
 
         //mainPresenter attaches the view
         //mainPresenter loads pals
@@ -84,7 +84,7 @@ public class MainActivityTest {
 
         int position = 0;
         for (String s : testPals) {
-            onView(withId(R.id.recycler_pal_list))
+            onView(withId(R.id.activity_main_recycler_pal_list))
                     .perform(RecyclerViewActions.scrollToPosition(position));
             String name = s;
             onView(withText(name))
@@ -111,7 +111,7 @@ public class MainActivityTest {
     public void testOnPalClicked() throws Exception {
         //ProfileActivity Intent get's launched
         main.launchActivity(null);
-        onView(withId(R.id.toolbar)).perform(click());
+        onView(withId(R.id.activity_main_toolbar)).perform(click());
     }
 
     private static ViewInteraction matchToolbarTitle(CharSequence title) {
