@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.reustonium.lunchpals.LoginActivity"
+    android:background="@color/colorPrimary">
+
+    <TextView
+        android:text="@string/login_text_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/login_text_signup"
+        android:textColor="@color/colorBackground"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_login"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/activity_login"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_login"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:text="Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/login_button_signin"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_login"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/activity_login"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/login_text_signup"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/editText"
+        android:hint="Email Address"
+        android:singleLine="true"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_login"
+        android:layout_marginStart="16dp"
+        app:layout_constraintRight_toRightOf="@+id/activity_login"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/editText2"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintHorizontal_bias="1.0" />
+
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editText2"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_login"
+        android:layout_marginStart="16dp"
+        app:layout_constraintRight_toRightOf="@+id/activity_login"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/login_button_signin"
+        android:layout_marginBottom="32dp"
+        tools:layout_constraintBottom_creator="1"
+        android:hint="Password"
+        android:selectAllOnFocus="true" />
+
+</android.support.constraint.ConstraintLayout>
