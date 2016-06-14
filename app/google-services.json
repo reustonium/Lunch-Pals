@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "214036615961",
+    "firebase_url": "https://lunch-pals-fac24.firebaseio.com",
+    "project_id": "lunch-pals-fac24",
+    "storage_bucket": "lunch-pals-fac24.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214036615961:android:6a9542be687c03c3",
+        "android_client_info": {
+          "package_name": "com.reustonium.lunchpals"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "214036615961-c538sa3j2bfvm4rmlaam3c2htnhh2blm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.reustonium.lunchpals",
+            "certificate_hash": "7F592E8A682EA03D9C58BEBF6F27F309855AE182"
+          }
+        },
+        {
+          "client_id": "214036615961-kt102n2ulkso99g74seqgt407lmojg94.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLv-1TadcL6mPusOFqKefvZBrpjuQKZak"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "214036615961-kt102n2ulkso99g74seqgt407lmojg94.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
