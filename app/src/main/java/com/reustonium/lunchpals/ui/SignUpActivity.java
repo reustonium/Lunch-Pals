@@ -3,6 +3,7 @@ package com.reustonium.lunchpals.ui;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -45,7 +46,7 @@ import com.reustonium.lunchpals.R;
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
- * A login screen that offers login via email/password.
+ * A Sign Up screen that offers Sign Up via email/password.
  */
 public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
@@ -229,12 +230,17 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
 
+
                             // If sign in fails, display a message to the user. If sign in succeeds
                             // the auth state listener will be notified and logic to handle the
                             // signed in user can be handled in the listener.
                             if (!task.isSuccessful()) {
                                 Toast.makeText(SignUpActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
+                            } else {
+                                showProgress(false);
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
                             }
 
                             // ...
