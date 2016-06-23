@@ -5,6 +5,12 @@ import java.lang.annotation.RetentionPolicy;
 
 import javax.inject.Qualifier;
 
+<<<<<<< HEAD
+=======
+/**
+ * Created by andy on 6/21/16.
+ */
+>>>>>>> d5a53c60ab47c63e2116e2a684b08cfef4a1189f
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ApplicationContext {

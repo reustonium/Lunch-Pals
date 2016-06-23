@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Lunch Pals</string>
+<<<<<<< HEAD
     <string name="signup_profile_iv_desc">Profile Image</string>
     <string name="signup_hint_email">Email Address</string>
     <string name="signup_hint_password">Password</string>
+=======
+>>>>>>> d5a53c60ab47c63e2116e2a684b08cfef4a1189f
 </resources>

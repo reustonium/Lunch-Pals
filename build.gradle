@@ -1,12 +1,24 @@
+<<<<<<< HEAD
+=======
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+>>>>>>> d5a53c60ab47c63e2116e2a684b08cfef4a1189f
 buildscript {
     repositories {
         jcenter()
     }
     dependencies {
+<<<<<<< HEAD
         classpath 'com.android.tools.build:gradle:2.1.0'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         //noinspection GradleDynamicVersion
         classpath 'com.google.gms:google-services:3.0.0'
+=======
+        classpath 'com.android.tools.build:gradle:2.2.0-alpha3'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+>>>>>>> d5a53c60ab47c63e2116e2a684b08cfef4a1189f
     }
 }
 
@@ -15,3 +27,10 @@ allprojects {
         jcenter()
     }
 }
+<<<<<<< HEAD
+=======
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+>>>>>>> d5a53c60ab47c63e2116e2a684b08cfef4a1189f

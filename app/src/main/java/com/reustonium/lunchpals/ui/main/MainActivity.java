@@ -11,7 +11,10 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+<<<<<<< HEAD
 
+=======
+>>>>>>> d5a53c60ab47c63e2116e2a684b08cfef4a1189f
         getActivityComponent().inject(this);
     }
 }
