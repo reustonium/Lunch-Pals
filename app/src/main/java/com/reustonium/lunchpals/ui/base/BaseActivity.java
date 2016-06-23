@@ -8,10 +8,6 @@ import com.reustonium.lunchpals.injection.component.ActivityComponent;
 import com.reustonium.lunchpals.injection.component.DaggerActivityComponent;
 import com.reustonium.lunchpals.injection.module.ActivityModule;
 
-/**
- * Created by Andrew on 6/21/2016.
- */
-
 public class BaseActivity extends AppCompatActivity {
 
     private ActivityComponent mActivityComponent;
@@ -30,4 +26,5 @@ public class BaseActivity extends AppCompatActivity {
         }
         return mActivityComponent;
     }
+
 }
