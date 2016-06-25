@@ -13,20 +13,7 @@
           "package_name": "com.reustonium.lunchpals"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "929594853227-ne05jdjj6v2c9403pfjivna8jgbn4hmb.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.reustonium.lunchpals",
-            "certificate_hash": "05F3F328C2749E28D99F248F199B71D1A739BDF7"
-          }
-        },
-        {
-          "client_id": "929594853227-am1nrlugu6977aoevmocoqcgsuue8aen.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
           "current_key": "AIzaSyBo4clV8fPLEI9R82SwwodIChCuwsMAXeM"
@@ -37,13 +24,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "929594853227-am1nrlugu6977aoevmocoqcgsuue8aen.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

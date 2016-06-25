@@ -10,6 +10,7 @@ import com.reustonium.lunchpals.injection.module.ApplicationModule;
 import timber.log.Timber;
 
 public class LunchPalsApplication extends Application {
+
     ApplicationComponent mApplicationComponent;
 
     @Override
@@ -19,7 +20,6 @@ public class LunchPalsApplication extends Application {
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
-
     }
 
     public static LunchPalsApplication get(Context context) {
