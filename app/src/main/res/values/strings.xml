@@ -1,7 +1,12 @@
 <resources>
     <string name="app_name">Lunch Pals</string>
+
+    <!--SignUpActivity-->
     <string name="signup_profile_iv_desc">Profile Image</string>
     <string name="signup_hint_email">Email Address</string>
     <string name="signup_hint_password">Password</string>
+    <string name="signup_lede">Join your pals for lunch.</string>
+    <string name="signup_button">Become a Lunch Pal!</string>
+    <string name="signup_user_signin">Already a user? <b>sign in.</b></string>
 
 </resources>

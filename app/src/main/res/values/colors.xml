@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2B798F</color>
-    <color name="colorPrimaryDark">#246577</color>
-    <color name="colorAccent">#E65540</color>
+
     <color name="blackText">#334044</color>
-    <color name="whiteText">#F8FAFA</color>
+
+    <color name="primary">#2B798F</color>
+    <color name="primary_dark">#246577</color>
+    <color name="accent">#E65540</color>
+    <color name="background">#FFFFFF</color>
+    <color name="card_list_background">#F8FAFA</color>
+    <color name="format_toolbar_background">#DFDFDF</color>
+
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#727272</color>
+    <color name="text_tertiary">#939393</color>
+    <color name="text_primary_inverted">#FFFFFF</color>
+    <color name="text_primary_inverted_dim">#88FFFFFF</color>
+    <color name="text_secondary_inverted">#D7CCC8</color>
+    <color name="text_shadow">#000000</color>
+    <color name="text_shadow_login">#333333</color>
 </resources>

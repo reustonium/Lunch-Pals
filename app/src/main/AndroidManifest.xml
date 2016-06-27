@@ -11,7 +11,11 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ui.main.MainActivity">
         </activity>
-        <activity android:name=".ui.signup.SignUpActivity">
+        <activity
+            android:name=".ui.signup.SignUpActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:launchMode="singleTop"
+            android:theme="@style/LoginTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

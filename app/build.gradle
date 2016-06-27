@@ -30,6 +30,7 @@ dependencies {
     final SUPPORT_LIBRARY_VERSION = '24.0.0'
     final DAGGER_VERSION = '2.2'
     final RUNNER_VERSION = '0.4'
+    final BUTTERKNIFE_VERSION = '8.0.1'
 
     def daggerCompiler = "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
     def jUnit = "junit:junit:4.12"
@@ -44,6 +45,7 @@ dependencies {
     compile "com.android.support:design:$SUPPORT_LIBRARY_VERSION"
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha2'
     compile 'com.jakewharton.timber:timber:4.1.0'
+    compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
     compile  "com.google.dagger:dagger:$DAGGER_VERSION"
     provided 'org.glassfish:javax.annotation:10.0-b28' //Required by Dagger2
 
@@ -56,8 +58,10 @@ dependencies {
 
     // Unit tests dependencies
     testCompile jUnit
+    testCompile mockito
 
     // APT dependencies
+    apt "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION"
     apt daggerCompiler
     testApt daggerCompiler
     androidTestApt daggerCompiler
