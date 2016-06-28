@@ -12,7 +12,6 @@ import com.reustonium.lunchpals.ui.signup.SignUpActivity;
 public class BaseActivity extends AppCompatActivity {
 
     private ActivityComponent mActivityComponent;
-    private static final String TAG = SignUpActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
