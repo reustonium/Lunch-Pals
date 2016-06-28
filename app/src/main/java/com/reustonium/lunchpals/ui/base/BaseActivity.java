@@ -7,7 +7,6 @@ import com.reustonium.lunchpals.LunchPalsApplication;
 import com.reustonium.lunchpals.injection.component.ActivityComponent;
 import com.reustonium.lunchpals.injection.component.DaggerActivityComponent;
 import com.reustonium.lunchpals.injection.module.ActivityModule;
-import com.reustonium.lunchpals.ui.signup.SignUpActivity;
 
 public class BaseActivity extends AppCompatActivity {
 
