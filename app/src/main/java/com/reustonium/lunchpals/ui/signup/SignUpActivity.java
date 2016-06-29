@@ -1,6 +1,8 @@
 package com.reustonium.lunchpals.ui.signup;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -66,13 +68,31 @@ public class SignUpActivity extends BaseActivity implements SignUpView{
 
     private void createUser() {
 
-        //TODO Validate Inputs
-
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
+        boolean cancel = false;
 
-        mSignUpPresenter.signUpNewUser(email, password);
-    }
+        if (TextUtils.isEmpty(email)) {
+            mEmailView.setError("Oh Noes! Looks like you forgot an email address.");
+            cancel = true;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            mEmailView.setError("Doh! Are you sure that's your email address?");
+            cancel = true;
+        }
+
+        if (password.length() < 8) {
+            mPasswordView.setError("Opps! Passwords should be at least 8 characters long.");
+            cancel = true;
+        }
+
+        if (!cancel) {
+            mSignUpPresenter.signUpNewUser(email, password);
+        } else {
+            hideProgress();
+        }
+}
 
     @Override
     public void showProgress() {

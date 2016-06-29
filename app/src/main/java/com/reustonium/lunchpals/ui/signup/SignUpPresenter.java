@@ -33,6 +33,7 @@ public class SignUpPresenter extends BasePresenter<SignUpView> {
     }
 
     public void signUpNewUser(final String email, final String password) {
+
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
