@@ -8,5 +8,6 @@
     <string name="signup_lede">Join your pals for lunch.</string>
     <string name="signup_button">Become a Lunch Pal!</string>
     <string name="signup_user_signin">Already a user? <b>sign in.</b></string>
+    <string name="signup_hint_username">Username</string>
 
 </resources>

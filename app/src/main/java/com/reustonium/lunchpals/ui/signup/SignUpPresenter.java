@@ -8,6 +8,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.reustonium.lunchpals.data.model.User;
 import com.reustonium.lunchpals.ui.base.BasePresenter;
 
 import javax.inject.Inject;
@@ -32,7 +35,7 @@ public class SignUpPresenter extends BasePresenter<SignUpView> {
         super.detachView();
     }
 
-    public void signUpNewUser(final String email, final String password) {
+    public void signUpNewUser(final String username, final String email, final String password) {
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -43,6 +46,11 @@ public class SignUpPresenter extends BasePresenter<SignUpView> {
                 }
 
                 else {
+                    FirebaseDatabase db = FirebaseDatabase.getInstance();
+                    String uuid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    DatabaseReference ref = db.getReference("user").child(uuid);
+                    ref.setValue(new User(username, email));
+
                     signInUser(email, password);
                     getMvpView().hideProgress();
                 }

@@ -45,6 +45,27 @@
                 />
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/username_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_default"
+                app:errorTextAppearance="@style/MyErrorTextAppearance">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/signup_hint_username"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/text_primary_inverted"
+                    tools:text="HungryJoe"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
                 android:id="@+id/email_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -61,7 +82,7 @@
                     android:maxLines="1"
                     android:includeFontPadding="false"
                     android:textColor="@color/text_primary_inverted"
-                    tools:text="me@example.com"
+                    tools:text="joe@hangerpangs.com"
                     />
 
             </android.support.design.widget.TextInputLayout>

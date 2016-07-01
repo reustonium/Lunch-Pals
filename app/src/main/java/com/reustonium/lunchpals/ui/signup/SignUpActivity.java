@@ -1,6 +1,7 @@
 package com.reustonium.lunchpals.ui.signup;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.KeyEvent;
@@ -20,7 +21,7 @@ import butterknife.ButterKnife;
 
 import javax.inject.Inject;
 
-public class SignUpActivity extends BaseActivity implements SignUpView{
+public class SignUpActivity extends BaseActivity implements SignUpView {
 
     @Inject SignUpPresenter mSignUpPresenter;
 
@@ -29,6 +30,7 @@ public class SignUpActivity extends BaseActivity implements SignUpView{
     @BindView(R.id.sign_in_btn) Button mSignInButton;
     @BindView(R.id.login_progress) ProgressBar mProgressBar;
     @BindView(R.id.email_login_form) View mEmailLoginForm;
+    @BindView(R.id.username) EditText mUsernameView;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +70,7 @@ public class SignUpActivity extends BaseActivity implements SignUpView{
 
     private void createUser() {
 
+        String username = mUsernameView.getText().toString();
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
         boolean cancel = false;
@@ -88,7 +91,7 @@ public class SignUpActivity extends BaseActivity implements SignUpView{
         }
 
         if (!cancel) {
-            mSignUpPresenter.signUpNewUser(email, password);
+            mSignUpPresenter.signUpNewUser(username, email, password);
         } else {
             hideProgress();
         }
@@ -109,6 +112,6 @@ public class SignUpActivity extends BaseActivity implements SignUpView{
     @Override
     public void showError(String message) {
         hideProgress();
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        Snackbar.make(mEmailLoginForm, message, Snackbar.LENGTH_LONG).show();
     }
 }
