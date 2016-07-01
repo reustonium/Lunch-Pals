@@ -11,7 +11,7 @@
 
     <!-- Login progress -->
     <ProgressBar
-        android:id="@+id/signup_progress"
+        android:id="@+id/signin_progress"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
         />
 
     <ScrollView
-        android:id="@+id/signup_form"
+        android:id="@+id/signin_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/padding_large"
@@ -28,52 +28,31 @@
         android:scrollbarStyle="outsideOverlay">
 
         <LinearLayout
-            android:id="@+id/signup_email_login_form"
+            android:id="@+id/signin_email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/signup_login_heading"
+                android:id="@+id/signin_login_heading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="56dp"
                 android:gravity="center_horizontal"
-                android:text="@string/signup_lede"
+                android:text="@string/signin_lede"
                 android:textAppearance="@style/TextAppearance.UltraLarge"
                 android:textColor="@color/text_primary_inverted"
                 />
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/signup_username_layout"
+                android:id="@+id/signin_email_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/padding_default"
                 app:errorTextAppearance="@style/MyErrorTextAppearance">
 
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/signup_username_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/signup_hint_username"
-                    android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/text_primary_inverted"
-                    tools:text="HungryJoe"
-                    />
-
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/signup_email_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/padding_default"
-                app:errorTextAppearance="@style/MyErrorTextAppearance">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/signup_email_edit_text"
+                    android:id="@+id/signin_email_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/signup_hint_email"
@@ -88,19 +67,19 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/signup_password_layout"
+                android:id="@+id/signin_password_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
                 app:errorTextAppearance="@style/MyErrorTextAppearance">
 
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/signup_password_edit_text"
+                    android:id="@+id/signin_password_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/signup_hint_password"
                     android:imeActionId="769"
-                    android:imeActionLabel="@string/signup_lede"
+                    android:imeActionLabel="@string/signup_hint_password"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
@@ -112,23 +91,23 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/signup_btn"
+                android:id="@+id/signin_btn"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_height="54dp"
                 android:layout_marginTop="@dimen/padding_large"
                 android:layout_marginBottom="@dimen/padding_large"
                 android:padding="@dimen/padding_large"
-                android:text="@string/signup_button"
+                android:text="@string/signin_button"
                 android:textStyle="bold"
                 />
 
             <TextView
-                android:id="@+id/signup_signin_text"
+                android:id="@+id/signin_signup_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="@string/signup_user_signin"
+                android:text="@string/signin_user_signup"
                 android:textAppearance="@style/TextAppearance"
                 android:textColor="@color/text_primary_inverted"/>
 

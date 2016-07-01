@@ -3,6 +3,7 @@ package com.reustonium.lunchpals.injection.component;
 import com.reustonium.lunchpals.ui.main.MainActivity;
 import com.reustonium.lunchpals.injection.PerActivity;
 import com.reustonium.lunchpals.injection.module.ActivityModule;
+import com.reustonium.lunchpals.ui.signin.SignInActivity;
 import com.reustonium.lunchpals.ui.signup.SignUpActivity;
 
 import dagger.Component;
@@ -18,4 +19,6 @@ public interface ActivityComponent {
     void inject(MainActivity mainActivity);
 
     void inject(SignUpActivity signUpActivity);
+
+    void inject(SignInActivity signInActivity);
 }

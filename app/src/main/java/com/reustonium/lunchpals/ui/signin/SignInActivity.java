@@ -1,4 +1,4 @@
-package com.reustonium.lunchpals.ui.signup;
+package com.reustonium.lunchpals.ui.signin;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,31 +15,32 @@ import android.widget.TextView;
 
 import com.reustonium.lunchpals.R;
 import com.reustonium.lunchpals.ui.base.BaseActivity;
-import com.reustonium.lunchpals.ui.signin.SignInActivity;
+import com.reustonium.lunchpals.ui.signup.SignUpActivity;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import javax.inject.Inject;
+public class SignInActivity extends BaseActivity implements SignInView {
 
-public class SignUpActivity extends BaseActivity implements SignUpView {
+    @Inject
+    SignInPresenter mSignInPresenter;
 
-    @Inject SignUpPresenter mSignUpPresenter;
+    @BindView(R.id.signin_password_edit_text) EditText mPasswordView;
+    @BindView(R.id.signin_btn) Button mSignInButton;
+    @BindView(R.id.signin_email_edit_text) EditText mEmailView;
+    @BindView(R.id.signin_progress) ProgressBar mProgressBar;
+    @BindView(R.id.signin_email_login_form) View mEmailLoginForm;
 
-    @BindView(R.id.signup_password_edit_text) EditText mPasswordView;
-    @BindView(R.id.signup_email_edit_text) EditText mEmailView;
-    @BindView(R.id.signup_btn) Button mSignUpButton;
-    @BindView(R.id.signup_progress) ProgressBar mProgressBar;
-    @BindView(R.id.signup_email_login_form) View mEmailLoginForm;
-    @BindView(R.id.signup_username_edit_text) EditText mUsernameView;
-
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivityComponent().inject(this);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.activity_sign_in);
         ButterKnife.bind(this);
-        mSignUpPresenter.attachView(this);
+        mSignInPresenter.attachView(this);
 
         if (getIntent().hasExtra("EXTRA_EMAIL")) {
             String email = getIntent().getStringExtra("EXTRA_EMAIL");
@@ -51,7 +52,7 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == 769 || actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL) {
                     showProgress();
-                    createUser();
+                    signIn();
                     // don't consume the event, so the keyboard can also be hidden
                     // http://stackoverflow.com/questions/2342620/how-to-hide-keyboard-after-typing-in-edittext-in-android#comment20849208_10184099
                     return false;
@@ -60,54 +61,53 @@ public class SignUpActivity extends BaseActivity implements SignUpView {
             }
         });
 
-        mSignUpButton.setOnClickListener(new View.OnClickListener() {
+        mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showProgress();
-                createUser();
+                signIn();
             }
         });
+    }
+
+    private void signIn() {
+        String email = mEmailView.getText().toString();
+        String password = mPasswordView.getText().toString();
+        boolean cancel = false;
+
+        if (TextUtils.isEmpty(email)) {
+            mEmailView.setError("Oh Noes! Looks like you forgot an email address.");
+            cancel = true;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            mEmailView.setError("Doh! Are you sure that's your email address?");
+            cancel = true;
+        }
+
+        if (password.length() < 8) {
+            mPasswordView.setError("Opps! Passwords should be at least 8 characters long.");
+            cancel = true;
+        }
+
+        if (!cancel) {
+            mSignInPresenter.signInUser(email, password);
+        } else {
+            hideProgress();
+        }
+    }
+
+    @OnClick(R.id.signin_signup_text)
+    public void signUp() {
+        Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+        intent.putExtra("EXTRA_EMAIL", mEmailView.getText().toString());
+        startActivity(intent);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mSignUpPresenter.detachView();
-    }
-
-    private void createUser() {
-
-        String username = mUsernameView.getText().toString();
-            String email = mEmailView.getText().toString();
-            String password = mPasswordView.getText().toString();
-            boolean cancel = false;
-
-            if (TextUtils.isEmpty(email)) {
-                mEmailView.setError("Oh Noes! Looks like you forgot an email address.");
-                cancel = true;
-            }
-
-            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                mEmailView.setError("Doh! Are you sure that's your email address?");
-                cancel = true;
-            }
-
-            if (password.length() < 8) {
-                mPasswordView.setError("Opps! Passwords should be at least 8 characters long.");
-                cancel = true;
-            }
-
-            if (!cancel) {
-                mSignUpPresenter.signUpNewUser(username, email, password);
-            } else {
-                hideProgress();
-            }
-}
-    @OnClick(R.id.signup_signin_text)
-    public void signUp() {
-        Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
-        intent.putExtra("EXTRA_EMAIL", mEmailView.getText().toString());
-        startActivity(intent);
+        mSignInPresenter.detachView();
     }
 
     @Override

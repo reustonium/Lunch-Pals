@@ -48,7 +48,7 @@ public class SignUpPresenter extends BasePresenter<SignUpView> {
                 else {
                     FirebaseDatabase db = FirebaseDatabase.getInstance();
                     String uuid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    DatabaseReference ref = db.getReference("user").child(uuid);
+                    DatabaseReference ref = db.getReference("users").child(uuid);
                     ref.setValue(new User(username, email));
 
                     signInUser(email, password);
