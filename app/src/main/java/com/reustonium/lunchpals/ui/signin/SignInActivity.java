@@ -3,6 +3,7 @@ package com.reustonium.lunchpals.ui.signin;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.KeyEvent;
@@ -28,8 +29,10 @@ public class SignInActivity extends BaseActivity implements SignInView {
     @Inject
     SignInPresenter mSignInPresenter;
 
+    @BindView(R.id.signup_password_layout) TextInputLayout mPasswordLayout;
     @BindView(R.id.signin_password_edit_text) EditText mPasswordView;
     @BindView(R.id.signin_btn) Button mSignInButton;
+    @BindView(R.id.signin_email_layout) TextInputLayout mEmailLayout;
     @BindView(R.id.signin_email_edit_text) EditText mEmailView;
     @BindView(R.id.signin_progress) ProgressBar mProgressBar;
     @BindView(R.id.signin_email_login_form) View mEmailLoginForm;
@@ -76,18 +79,23 @@ public class SignInActivity extends BaseActivity implements SignInView {
         boolean cancel = false;
 
         if (TextUtils.isEmpty(email)) {
-            mEmailView.setError("Oh Noes! Looks like you forgot an email address.");
+            mEmailLayout.setError("Oh Noes! Looks like you forgot an email address.");
             cancel = true;
         }
 
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            mEmailView.setError("Doh! Are you sure that's your email address?");
+        else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            mEmailLayout.setError("Doh! Are you sure that's your email address?");
             cancel = true;
+        }
+        else {
+            mEmailLayout.setErrorEnabled(false);
         }
 
         if (password.length() < 8) {
-            mPasswordView.setError("Opps! Passwords should be at least 8 characters long.");
+            mPasswordLayout.setError("Opps! Passwords should be at least 8 characters long.");
             cancel = true;
+        } else {
+            mPasswordLayout.setErrorEnabled(false);
         }
 
         if (!cancel) {

@@ -63,7 +63,6 @@
                     android:textColor="@color/text_primary_inverted"
                     tools:text="HungryJoe"
                     />
-
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/signup_email_layout"

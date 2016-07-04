@@ -20,7 +20,7 @@
         <item name="android:textColorHint">@color/text_primary_inverted_dim</item>
         <item name="colorControlNormal">@color/text_primary_inverted_dim</item>
         <item name="colorControlActivated">@color/text_primary_inverted</item>
-        <item name="textColorError">?attr/colorAccent</item>
+        <item name="textColorError">@color/accent</item>
         <item name="android:windowBackground">@drawable/lunch2</item>
     </style>
 

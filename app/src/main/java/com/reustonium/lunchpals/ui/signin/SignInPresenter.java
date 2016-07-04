@@ -28,7 +28,7 @@ public class SignInPresenter extends BasePresenter<SignInView> {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
-                            getMvpView().showError(task.getResult().toString());
+                            getMvpView().showError(task.getException().getMessage().toString());
                         }
 
                         else {
